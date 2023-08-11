@@ -24,7 +24,6 @@ c64list asm.raster.asm -prg -ovr
 
 REM BLITZ
 blitz main.prg -o blitz.prg
-REM reblitz64.js main.prg blitz.prg i,j
 
 REM EXOMIZER
 exomizer sfx basic blitz.prg -o game.prg -n
