@@ -13,6 +13,6 @@ strNewText = Replace(strNewText, "[", "{")
 strNewText = Replace(strNewText, "]", "}")
 
 ' Neue Datei erstellen mit neuen Inhalten füllen
-set resultFile = objFSO.CreateTextFile("main_tile.bas", true)
+set resultFile = objFSO.CreateTextFile("main_include.bas", true)
 resultFile.WriteLine strNewText
 resultFile.Close

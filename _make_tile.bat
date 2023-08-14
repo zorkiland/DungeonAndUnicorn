@@ -12,6 +12,7 @@ REM COPY PETSCII\bin\*.prg-> ROOT
 xcopy PETSCII\bin\tile.prg *.* /Y
 xcopy PETSCII\bin\tilecolor.prg *.* /Y
 
+REM C64List
 c64list maketile.bas -prg -ovr -rem -crunch -supervariables -labels
 
 
@@ -54,3 +55,10 @@ xcopy VICE\bin\txt.datatile.txt *.* /Y
 
 REM AUSTAUSCH ->! ->[ ->]
 cscript //nologo _make_tile.vbs "parameter1"
+
+REM CLEAR TEMPDATA
+del maketile.prg
+del tile.prg
+del tilecolor.prg
+del maketile.d64
+del txt.datatile.txt

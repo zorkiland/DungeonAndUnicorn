@@ -75,6 +75,20 @@ cd..
 REM COPY VICE\bin\dungen.D64-> ROOT
 xcopy VICE\bin\unicorn.d64 *.* /Y
 
+REM CLEAN TEMPDATA
+del main.prg
+del blitz.prg
+REM del game.prg
+del asm.raster.prg
+del asm.tile.prg
+del charset.prg
+del map0.prg
+del map1.prg
+del sprite.prg
+
 rem C64Debugger.exe -clearsettings
-C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg blitz.prg -autojmp
+C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
+
+
+
 
