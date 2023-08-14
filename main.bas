@@ -327,8 +327,8 @@ goto{:goto_newgame}
 {:mainloop_print_map}
 	'-> sprite off
 	poke {var:sprite_on_off},{%:00000000}
-	if cr=0 or cr=1 or cr=4 or cr=6 or cr=7 or cr=10 then poke 1020,{var:farbe_br}  : gb$="schlafender wald"
-	if cr=3  then poke 1020,{var:farbe_br}  : gb$="nibelheim"
+	if cr=0 or cr=1 or cr=4 or cr=6 or cr=7 or cr=10 then poke 1020,{var:farbe_dgr}  : gb$="schlafender wald"
+	if cr=3  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
 	if cr=8 or cr=5 or cr=2 then poke 1020,{var:farbe_dgr}  : gb$="im haus von lena"
 
 	'-> new
@@ -1978,13 +1978,13 @@ data"{brown}{rvrs off}{177}{rvrs off}{brown}{179}{down}{left:2}{rvrs off}{brown}
 data"{brown}{rvrs off}{179}{rvrs off}{brown}{177}{down}{left:2}{rvrs off}{brown}{178}{rvrs off}{brown}{178}{rvrs off}"
 data"{brown}{rvrs on}{36}{rvrs on}{brown}{37}{down}{left:2}{rvrs on}{brown}{38}{rvrs on}{brown}{39}{rvrs off}"
 data"{gray1}{rvrs on}{44}{rvrs on}{gray1}{45}{down}{left:2}{rvrs on}{gray1}{46}{rvrs on}{gray1}{47}{rvrs off}"
-data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
+data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{lt. green}{rvrs off}{180}{rvrs off}{lt. green}{215}{down}{left:2}{rvrs off}{lt. green}{215}{rvrs off}{lt. green}{181}{rvrs off}"
 data"{lt. green}{rvrs off}{182}{rvrs off}{lt. green}{183}{down}{left:2}{rvrs off}{lt. green}{184}{rvrs off}{lt. green}{185}{rvrs off}"
 data"{lt. green}{rvrs off}{186}{rvrs off}{lt. green}{187}{down}{left:2}{rvrs off}{lt. green}{186}{rvrs off}{lt. green}{187}{rvrs off}"
 data"{lt. green}{rvrs off}{188}{rvrs off}{lt. green}{189}{down}{left:2}{rvrs off}{lt. green}{190}{rvrs off}{lt. green}{191}{rvrs off}"
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
-data"{gray1}{rvrs on}{81}{rvrs on}{gray1}{81}{down}{left:2}{rvrs on}{gray1}{81}{rvrs on}{gray1}{81}{rvrs off}"
+data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{lt. blue}{rvrs off}{192}{rvrs off}{lt. blue}{192}{down}{left:2}{rvrs off}{lt. blue}{192}{rvrs off}{lt. blue}{192}{rvrs off}"
@@ -1993,8 +1993,8 @@ data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{lt. red}{rvrs on}{40}{rvrs on}{lt. red}{41}{down}{left:2}{rvrs on}{lt. red}{42}{rvrs on}{lt. red}{43}{rvrs off}"
-data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
-data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
+data"{lt. blue}{rvrs on}{92}{rvrs on}{lt. blue}{93}{down}{left:2}{rvrs on}{lt. blue}{94}{rvrs on}{lt. blue}{95}{rvrs off}"
+data"{lt. green}{rvrs off}{192}{rvrs off}{lt. green}{192}{down}{left:2}{rvrs off}{lt. green}{192}{rvrs off}{lt. green}{192}{rvrs off}"
 data"{gray1}{rvrs off}{215}{rvrs off}{gray1}{215}{down}{left:2}{rvrs off}{gray1}{215}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{64}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{65}{rvrs off}{gray1}{215}{rvrs off}"
