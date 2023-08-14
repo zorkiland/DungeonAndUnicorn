@@ -562,10 +562,10 @@ goto{:goto_newgame}
 	bi%={%:00000010}:gosub{:gosub_sprite_off}
 	bi%={%:00000001}:gosub{:gosub_sprite_off}
 	va$="zzzzz!" : gosub{:gosub_print_info_txt}
-	poke 1020,{var:farbe_sw}
+	'poke 1020,{var:farbe_sw}
 	gosub{:gosub_delay_text}
-	poke 1020,{var:farbe_dgr}
-	gosub{:gosub_heilen} : gosub{:gosub_print_player_hp}
+	'poke 1020,{var:farbe_dgr}
+	gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_clear_info_txt}
 	bi%={%:00000001}:gosub{:gosub_sprite_on}
 	return
 {:gosub_raumaktion_variabeln}
