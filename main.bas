@@ -2000,8 +2000,8 @@ data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{64
 data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{65}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{67}{down}{left:2}{rvrs on}{gray1}{68}{rvrs on}{gray1}{68}{rvrs off}"
 data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{66}{down}{left:2}{rvrs on}{gray1}{77}{rvrs on}{gray1}{68}{rvrs off}"
-data"{gray2}{rvrs off}{192}{rvrs off}{gray2}{192}{down}{left:2}{rvrs off}{gray2}{192}{rvrs off}{gray2}{192}{rvrs off}"
-data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
+data"{gray1}{rvrs on}{78}{rvrs on}{gray1}{78}{down}{left:2}{rvrs off}{gray1}{215}{rvrs off}{gray1}{215}{rvrs off}"
+data"{gray1}{rvrs on}{79}{rvrs on}{gray1}{78}{down}{left:2}{rvrs on}{gray1}{64}{rvrs off}{gray1}{215}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
 data"{lt. red}{rvrs on}{192}{rvrs on}{lt. red}{193}{down}{left:2}{rvrs on}{lt. red}{194}{rvrs on}{lt. red}{195}{rvrs off}"
 data"{gray1}{rvrs on}{196}{rvrs on}{gray1}{193}{down}{left:2}{rvrs on}{gray1}{194}{rvrs on}{gray1}{195}{rvrs off}"
@@ -2035,10 +2035,6 @@ data"{gray1}{rvrs on}{247}{rvrs on}{gray1}{248}{down}{left:2}{rvrs on}{gray1}{24
 data"{gray1}{rvrs on}{251}{rvrs on}{gray1}{252}{down}{left:2}{rvrs on}{gray1}{253}{rvrs on}{gray1}{254}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
-
-
-
-
 
 'items
 	'{var:item_ident}(0-18) 0 = weappon
