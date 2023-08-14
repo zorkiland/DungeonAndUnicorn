@@ -327,8 +327,8 @@ goto{:goto_newgame}
 {:mainloop_print_map}
 	'-> sprite off
 	poke {var:sprite_on_off},{%:00000000}
-	if cr=0 or cr=1 or cr=4 or cr=6 or cr=7 or cr=10 then poke 1020,{var:farbe_dgr}  : gb$="schlafender wald"
-	if cr=3  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
+	if cr=10 then poke 1020,{var:farbe_dgr} : gb$="schlafender wald"
+	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
 	if cr=8 or cr=5 or cr=2 then poke 1020,{var:farbe_dgr}  : gb$="im haus von lena"
 
 	'-> new
@@ -1999,7 +1999,7 @@ data"{gray1}{rvrs off}{215}{rvrs off}{gray1}{215}{down}{left:2}{rvrs off}{gray1}
 data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{64}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{65}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{67}{down}{left:2}{rvrs on}{gray1}{68}{rvrs on}{gray1}{68}{rvrs off}"
-data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
+data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{66}{down}{left:2}{rvrs on}{gray1}{77}{rvrs on}{gray1}{68}{rvrs off}"
 data"{gray2}{rvrs off}{192}{rvrs off}{gray2}{192}{down}{left:2}{rvrs off}{gray2}{192}{rvrs off}{gray2}{192}{rvrs off}"
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
@@ -2035,6 +2035,10 @@ data"{gray1}{rvrs on}{247}{rvrs on}{gray1}{248}{down}{left:2}{rvrs on}{gray1}{24
 data"{gray1}{rvrs on}{251}{rvrs on}{gray1}{252}{down}{left:2}{rvrs on}{gray1}{253}{rvrs on}{gray1}{254}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
+
+
+
+
 
 'items
 	'{var:item_ident}(0-18) 0 = weappon

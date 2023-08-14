@@ -52,3 +52,5 @@ cd..
 REM COPY VICE\bin\maketile.D64-> ROOT
 xcopy VICE\bin\txt.datatile.txt *.* /Y
 
+REM AUSTAUSCH ->! ->[ ->]
+cscript //nologo _make_tile.vbs "parameter1"
