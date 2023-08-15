@@ -192,7 +192,7 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 	'inventar
 		dim {var:inventar_slot}(99),{var:inventar_slottemp}(99)
 	'tile
-		dim {var:map_tile}(79)
+		dim {var:map_tile}(111)
 	'schlater aktor flag
 		dim {var:schalter_raum}(10),{var:schalter_posx}(10),{var:schalter_posy}(10),{var:schalter_flag}(10),{var:aktor_raum}(10),{var:aktor_posx}(10),{var:aktor_posy}(10)
 	'npc flag
@@ -272,7 +272,7 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 		read {var:player_atk}(i),{var:player_def}(i),{var:player_speed}(i),{var:player_waffe}(i),{var:player_ruestung}(i)
 	next
 'read tile
-	for i=0 to 79
+	for i=0 to 111
 		read {var:map_tile}(i)
 	next
 'copy tile player
@@ -401,6 +401,10 @@ goto{:goto_newgame}
 	'wenn nextpos
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 
+		
+		if c>=80 and c<=111 then {:mainloop_set_newpos}	'wenn c=80-100 begehbar
+		if c=7              then {:mainloop_set_newpos}	'wenn c=07 bruecke
+
 		if c=09  then {:goto_raumaktion_durchgang}      'wenn c=09 leiter
 		if c=10  then {:goto_raumaktion_durchgang}      'wenn c=10 brunnen
 		if c=11  then {:goto_raumaktion_durchgang}      'wenn c=11 tuere
@@ -416,8 +420,9 @@ goto{:goto_newgame}
 
 		if c=13  then {:goto_raumaktion_fragezeichen}   'wenn c=13 tuere
 
-		if c>=48 then {:goto_raumaktion_npc}            'wenn c>=48 npc
-		if c>7   then {:mainloop_oldpos}                'wenn c>7 nicht begehbar
+		if c>=48 and c<=79 then {:goto_raumaktion_npc}  'wenn 48-79 npc
+
+		goto {:mainloop_oldpos}                			'else
 {:mainloop_set_newpos}
 	'sprite 1 off
 		bi%={%:00000010}:gosub{:gosub_sprite_off}
@@ -605,7 +610,7 @@ goto{:goto_newgame}
 		poke {var:start_map}+1000+{var:schalter_posx}(1)+{var:schalter_posy}(1)*60,14+{var:schalter_flag}(1)
 		poke {var:start_map}+1000+{var:schalter_posx}(2)+{var:schalter_posy}(2)*60,14+{var:schalter_flag}(2)
 
-		if {var:schalter_flag}(0)=1  and {var:schalter_flag}(1)=0  and {var:schalter_flag}(2)=1 then t=2 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
+		if {var:schalter_flag}(0)=1  and {var:schalter_flag}(1)=0  and {var:schalter_flag}(2)=1 then t=82 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
 		t=13 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
 		return
 		{:raumaktion_poke_mapspeicher_map0_aktor0}
@@ -1955,13 +1960,13 @@ goto{:goto_newgame}
 	data"mira",   9   ,23  ,1    ,1    ,1    ,7    ,0     ,0
 'tile
 
-data"{gray1}{rvrs off}{208}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{208}{rvrs off}"
-data"{gray1}{rvrs off}{209}{rvrs off}{gray1}{210}{down}{left:2}{rvrs off}{gray1}{208}{rvrs off}{gray1}{192}{rvrs off}"
-data"{black}{rvrs on}{88}{rvrs on}{black}{89}{down}{left:2}{rvrs on}{black}{90}{rvrs on}{black}{91}{rvrs off}"
-data"{black}{rvrs on}{192}{rvrs on}{black}{193}{down}{left:2}{rvrs on}{black}{194}{rvrs on}{black}{195}{rvrs off}"
-data"{black}{rvrs on}{196}{rvrs on}{black}{197}{down}{left:2}{rvrs on}{black}{198}{rvrs on}{black}{199}{rvrs off}"
-data"{black}{rvrs on}{200}{rvrs on}{black}{201}{down}{left:2}{rvrs on}{black}{202}{rvrs on}{black}{203}{rvrs off}"
-data"{black}{rvrs on}{204}{rvrs on}{black}{205}{down}{left:2}{rvrs on}{black}{206}{rvrs on}{black}{207}{rvrs off}"
+data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
+data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
+data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
+data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
+data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
+data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
+data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
 data"{lt. red}{rvrs on}{84}{rvrs on}{lt. red}{85}{down}{left:2}{rvrs on}{lt. red}{86}{rvrs on}{lt. red}{87}{rvrs off}"
 data"{orange}{rvrs off}{215}{rvrs off}{orange}{215}{down}{left:2}{rvrs off}{orange}{215}{rvrs off}{orange}{215}{rvrs off}"
 data"{gray1}{rvrs off}{216}{rvrs off}{gray1}{217}{down}{left:2}{rvrs off}{gray1}{218}{rvrs off}{gray1}{219}{rvrs off}"
@@ -2035,6 +2040,38 @@ data"{gray1}{rvrs on}{242}{rvrs on}{gray1}{243}{down}{left:2}{rvrs on}{gray1}{24
 data"{lt. green}{rvrs on}{250}{rvrs on}{lt. green}{251}{down}{left:2}{rvrs on}{lt. green}{252}{rvrs on}{lt. green}{253}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
 data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
+data"{orange}{rvrs off}{208}{rvrs off}{orange}{192}{down}{left:2}{rvrs off}{orange}{192}{rvrs off}{orange}{208}{rvrs off}"
+data"{orange}{rvrs off}{209}{rvrs off}{orange}{210}{down}{left:2}{rvrs off}{orange}{192}{rvrs off}{orange}{208}{rvrs off}"
+data"{black}{rvrs on}{88}{rvrs on}{black}{89}{down}{left:2}{rvrs on}{black}{90}{rvrs on}{black}{91}{rvrs off}"
+data"{black}{rvrs on}{192}{rvrs on}{black}{193}{down}{left:2}{rvrs on}{black}{194}{rvrs on}{black}{195}{rvrs off}"
+data"{black}{rvrs on}{196}{rvrs on}{black}{197}{down}{left:2}{rvrs on}{black}{198}{rvrs on}{black}{199}{rvrs off}"
+data"{black}{rvrs on}{200}{rvrs on}{black}{201}{down}{left:2}{rvrs on}{black}{202}{rvrs on}{black}{203}{rvrs off}"
+data"{black}{rvrs on}{204}{rvrs on}{black}{205}{down}{left:2}{rvrs on}{black}{206}{rvrs on}{black}{207}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
 
 'items
 	'{var:item_ident}(0-18) 0 = weappon

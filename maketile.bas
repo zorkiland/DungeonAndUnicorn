@@ -5,7 +5,7 @@ open 15,8,15,"s:txt.datatile":close 15
 open 1,8,2,"txt.datatile,s,w"
 
 'anzahl tile
-for j=0 to 79
+for j=0 to 111
     z=0
 
     'anzahl daten tile
