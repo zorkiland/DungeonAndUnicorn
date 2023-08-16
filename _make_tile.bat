@@ -3,6 +3,11 @@
 cd PETSCII
 cd bin
 
+REM CAHRPAD KOMPLETT EXPORT NAME RICHTIG STELLEN
+copy "map0 - Tiles.bin" tile.bin /Y
+copy "map0 - TileAttribs.bin" tilecolor.bin /Y
+
+REM MAKE SOME PRG
 copy /b c800.bin + tile.bin tile.prg
 copy /b ca00.bin + tilecolor.bin tilecolor.prg
 cd..

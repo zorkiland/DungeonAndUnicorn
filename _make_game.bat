@@ -3,10 +3,21 @@
 cd PETSCII
 cd bin
 
+REM CAHRPAD KOMPLETT EXPORT NAME RICHTIG STELLEN
+copy "map0 - Chars.bin" charset.bin /Y
+copy "map0 - Map (60x24).bin" map0.bin /Y
+copy "map0 - Tiles.bin" tile.bin /Y
+copy "map0 - TileAttribs.bin" tilecolor.bin /Y
+copy "map1 - Map (60x24).bin" map1.bin /Y
+
+REM MAKE SOME PRG
 copy /b e000.bin + charset.bin charset.prg
 copy /b c400.bin + map0.bin map0.prg
 copy /b c400.bin + map1.bin map1.prg
 copy /b e800.bin + sprite.bin sprite.prg
+copy /b c800.bin + tile.bin tile.prg
+copy /b ca00.bin + tilecolor.bin tilecolor.prg
+
 cd..
 cd..
 
@@ -35,7 +46,6 @@ xcopy main.prg VICE\bin\*.* /Y
 xcopy blitz.prg VICE\bin\*.* /Y
 xcopy game.prg VICE\bin\*.* /Y
 xcopy asm.raster.prg VICE\bin\*.* /Y
-xcopy asm.tile.prg VICE\bin\*.* /Y
 xcopy txt.intro.seq VICE\bin\*.* /Y
 xcopy txt.ende.seq VICE\bin\*.* /Y
 xcopy txt.welcome.lena.seq VICE\bin\*.* /Y
@@ -60,7 +70,6 @@ c1541 -attach unicorn.d64 -write map0.prg map0
 c1541 -attach unicorn.d64 -write map1.prg map1
 c1541 -attach unicorn.d64 -write sprite.prg sprite
 c1541 -attach unicorn.d64 -write asm.raster.prg asm.raster
-c1541 -attach unicorn.d64 -write asm.tile.prg asm.tile
 c1541 -attach unicorn.d64 -write txt.intro.seq txt.intro,s
 c1541 -attach unicorn.d64 -write txt.ende.seq txt.ende,s
 c1541 -attach unicorn.d64 -write txt.fight.seq txt.fight,s
@@ -79,7 +88,6 @@ del main.prg
 del blitz.prg
 REM del game.prg
 del asm.raster.prg
-del asm.tile.prg
 del charset.prg
 del map0.prg
 del map1.prg
