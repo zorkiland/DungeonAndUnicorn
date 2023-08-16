@@ -31,7 +31,6 @@ REM C64List BAS->PRG
 c64list main.bas -prg -ovr -rem -crunch -supervariables -labels
 c64list asm.raster.asm -prg -ovr
 
-
 REM BLITZ
 blitz main.prg -o blitz.prg
 
