@@ -12,6 +12,9 @@ REM COPY PETSCII\bin\*.prg-> ROOT
 xcopy PETSCII\bin\tile.prg *.* /Y
 xcopy PETSCII\bin\tilecolor.prg *.* /Y
 
+REM MAKE BACKUP MAKETILE
+copy _make_tile.bas maketile.bas
+
 REM C64List
 c64list maketile.bas -prg -ovr -rem -crunch -supervariables -labels
 
@@ -46,19 +49,20 @@ cd bin
 
 REM LESE DISK
 c1541 maketile.d64 -dir
-c1541 maketile.d64 -read txt.datatile,s txt.datatile.txt
+c1541 maketile.d64 -read datatile,s datatile.txt
 cd..
 cd..
 
 REM COPY VICE\bin\maketile.D64-> ROOT
-xcopy VICE\bin\txt.datatile.txt *.* /Y
+xcopy VICE\bin\datatile.txt *.* /Y
 
 REM AUSTAUSCH ->! ->[ ->]
 cscript //nologo _make_tile.vbs "parameter1"
 
 REM CLEAR TEMPDATA
+del maketile.bas
 del maketile.prg
 del tile.prg
 del tilecolor.prg
 del maketile.d64
-del txt.datatile.txt
+del datatile.txt

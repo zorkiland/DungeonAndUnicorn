@@ -271,6 +271,10 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 		read {var:player_name}(i),{var:player_hp}(i),{var:player_mp}(i),{var:player_level}(i)
 		read {var:player_atk}(i),{var:player_def}(i),{var:player_speed}(i),{var:player_waffe}(i),{var:player_ruestung}(i)
 	next
+'read item
+	for i=0 to 99
+		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_level}(i),{var:item_speed}(i),{var:item_mana}(i),{var:item_ident}(i)
+	next
 'read tile
 	for i=0 to 111
 		read {var:map_tile}(i)
@@ -286,10 +290,6 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 	{var:monster_tile}(i) = {var:map_tile}(zz)
 	zz=zz+1
 	next i
-'read item
-	for i=0 to 99
-		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_level}(i),{var:item_speed}(i),{var:item_mana}(i),{var:item_ident}(i)
-	next
 'sprite speicherbank zeichensatz color
 	{var:spritebank}={$:a0}'                                spritebank $10=$400 versatz von $c000
 	poke {var:video_interface_chip}+21,0'                   sprites aus
@@ -1958,7 +1958,120 @@ goto{:goto_newgame}
 	data"lena",   17  ,7   ,1    ,3    ,3    ,10   ,0     ,0
 	data"dolm",   9   ,7   ,1    ,1    ,1    ,8    ,0     ,0
 	data"mira",   9   ,23  ,1    ,1    ,1    ,7    ,0     ,0
+
+'items
+	'{var:item_ident}(0-18) 0 = weappon
+	'{var:item_ident}(0-18) 1 = ruestung
+	'{var:item_ident}(0-18) 2 = essbar
+	'{var:item_ident}(0-18) 3 = magie
+	'{var:item_ident}(0-18) 4 = relikt
+	'{var:item_ident}(0-18) 9 = zurueck
+	'{var:item_xxx}(x)
+	'     name      at de lv sp,ma id
+	data "        ",00,00,00,00,00,-1  :'item 0
+	data "dolch   ",03,00,00,00,00,00  :'item 1 kron
+	data "helm    ",00,02,-1,00,00,01  :'item 2 kron
+	data "pilz    ",00,00,-1,00,10,02  :'item 3 {var:event_item}(x)
+	data "feuer   ",00,00,00,00,05,03  :'item 4 {var:event_item}(x)
+	data "polar   ",00,00,00,00,08,03  :'item 5 {var:event_item}(x)
+	data "groll   ",00,00,00,00,23,03  :'item 6 
+	data "bombe   ",00,00,00,00,50,03  :'item 7 {var:event_item}(x)
+	data "apfel   ",00,00,-1,00,15,02  :'item 8 {var:event_item}(x)
+	data "heilen  ",00,00,00,00,04,03  :'item 9 {var:event_item}(x)
+	data "scull   ",00,00,00,00,00,04  :'item 10
+	data "flegel  ",07,00,-1,00,00,00  :'item 11 {var:event_item}(x)
+	data "blind   ",00,00,00,00,04,03  :'item 12
+	data "speer   ",12,00,00,00,00,00  :'item 13 {var:event_item}(x)
+	data "rock    ",00,10,00,00,00,01  :'item 14
+	data "schwert ",23,00,00,00,00,00  :'item 15 {var:event_item}(x)
+	data "weste   ",00,14,00,00,00,01  :'item 16 {var:event_item}(x)
+	data "schild  ",00,24,00,00,00,01  :'item 17 {var:event_item}(x)
+	data "level   ",00,00,05,00,05,04  :'item 18
+	data "attack  ",05,00,00,00,05,04  :'item 19
+	data "defence ",00,05,00,00,05,04  :'item 20
+	data "level   ",00,00,10,00,10,04  :'item 21
+	data "attack  ",10,00,00,00,10,04  :'item 22
+	data "defence ",00,10,00,00,10,04  :'item 23
+	data "level   ",00,00,15,00,15,04  :'item 24
+	data "attack  ",15,00,00,00,15,04  :'item 25
+	data "defence ",00,15,00,00,15,04  :'item 26
+	data "schnell ",00,00,00,05,05,04  :'item 27
+	data "schnell ",00,00,00,10,10,04  :'item 28
+	data "schnell ",00,00,00,15,15,04  :'item 29
+	data "        ",00,00,00,00,00,-1  :'item 30
+	data "        ",00,00,00,00,00,-1  :'item 31
+	data "        ",00,00,00,00,00,-1  :'item 32
+	data "        ",00,00,00,00,00,-1  :'item 33
+	data "        ",00,00,00,00,00,-1  :'item 34
+	data "        ",00,00,00,00,00,-1  :'item 35
+	data "        ",00,00,00,00,00,-1  :'item 36
+	data "        ",00,00,00,00,00,-1  :'item 37
+	data "        ",00,00,00,00,00,-1  :'item 38
+	data "        ",00,00,00,00,00,-1  :'item 39
+	data "        ",00,00,00,00,00,-1  :'item 40
+	data "        ",00,00,00,00,00,-1  :'item 41
+	data "        ",00,00,00,00,00,-1  :'item 42
+	data "        ",00,00,00,00,00,-1  :'item 43
+	data "        ",00,00,00,00,00,-1  :'item 44
+	data "        ",00,00,00,00,00,-1  :'item 45
+	data "        ",00,00,00,00,00,-1  :'item 46
+	data "        ",00,00,00,00,00,-1  :'item 47
+	data "        ",00,00,00,00,00,-1  :'item 48
+	data "        ",00,00,00,00,00,-1  :'item 49
+	data "        ",00,00,00,00,00,-1  :'item 50
+	data "        ",00,00,00,00,00,-1  :'item 51
+	data "        ",00,00,00,00,00,-1  :'item 52
+	data "        ",00,00,00,00,00,-1  :'item 53
+	data "        ",00,00,00,00,00,-1  :'item 54
+	data "        ",00,00,00,00,00,-1  :'item 55
+	data "        ",00,00,00,00,00,-1  :'item 56
+	data "        ",00,00,00,00,00,-1  :'item 57
+	data "        ",00,00,00,00,00,-1  :'item 58
+	data "        ",00,00,00,00,00,-1  :'item 59
+	data "        ",00,00,00,00,00,-1  :'item 60
+	data "        ",00,00,00,00,00,-1  :'item 61
+	data "        ",00,00,00,00,00,-1  :'item 62
+	data "        ",00,00,00,00,00,-1  :'item 63
+	data "        ",00,00,00,00,00,-1  :'item 64
+	data "        ",00,00,00,00,00,-1  :'item 65
+	data "        ",00,00,00,00,00,-1  :'item 66
+	data "        ",00,00,00,00,00,-1  :'item 67
+	data "        ",00,00,00,00,00,-1  :'item 68
+	data "        ",00,00,00,00,00,-1  :'item 69
+	data "        ",00,00,00,00,00,-1  :'item 70
+	data "        ",00,00,00,00,00,-1  :'item 71
+	data "        ",00,00,00,00,00,-1  :'item 72
+	data "        ",00,00,00,00,00,-1  :'item 73
+	data "        ",00,00,00,00,00,-1  :'item 74
+	data "        ",00,00,00,00,00,-1  :'item 75
+	data "        ",00,00,00,00,00,-1  :'item 76
+	data "        ",00,00,00,00,00,-1  :'item 77
+	data "        ",00,00,00,00,00,-1  :'item 78
+	data "        ",00,00,00,00,00,-1  :'item 79
+	data "        ",00,00,00,00,00,-1  :'item 80
+	data "        ",00,00,00,00,00,-1  :'item 81
+	data "        ",00,00,00,00,00,-1  :'item 82
+	data "        ",00,00,00,00,00,-1  :'item 83
+	data "        ",00,00,00,00,00,-1  :'item 84
+	data "        ",00,00,00,00,00,-1  :'item 85
+	data "        ",00,00,00,00,00,-1  :'item 86
+	data "        ",00,00,00,00,00,-1  :'item 87
+	data "        ",00,00,00,00,00,-1  :'item 88
+	data "        ",00,00,00,00,00,-1  :'item 89
+	data "        ",00,00,00,00,00,-1  :'item 90
+	data "        ",00,00,00,00,00,-1  :'item 91
+	data "        ",00,00,00,00,00,-1  :'item 92
+	data "        ",00,00,00,00,00,-1  :'item 93
+	data "        ",00,00,00,00,00,-1  :'item 94
+	data "        ",00,00,00,00,00,-1  :'item 95
+	data "        ",00,00,00,00,00,-1  :'item 96
+	data "        ",00,00,00,00,00,-1  :'item 97
+	data "        ",00,00,00,00,00,-1  :'item 98
+	data "zurueck ",00,00,00,00,00,09  :'item 99
+'
+'"""""""""""""""""""""""""""""""""""""""""""""""""
 'tile
+'"""""""""""""""""""""""""""""""""""""""""""""""""
 
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
@@ -2073,113 +2186,3 @@ data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{19
 data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
 data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
 
-'items
-	'{var:item_ident}(0-18) 0 = weappon
-	'{var:item_ident}(0-18) 1 = ruestung
-	'{var:item_ident}(0-18) 2 = essbar
-	'{var:item_ident}(0-18) 3 = magie
-	'{var:item_ident}(0-18) 4 = relikt
-	'{var:item_ident}(0-18) 9 = zurueck
-	'{var:item_xxx}(x)
-	'     name      at de lv sp,ma id
-	data "        ",00,00,00,00,00,-1  :'item 0
-	data "dolch   ",03,00,00,00,00,00  :'item 1 kron
-	data "helm    ",00,02,-1,00,00,01  :'item 2 kron
-	data "pilz    ",00,00,-1,00,10,02  :'item 3 {var:event_item}(x)
-	data "feuer   ",00,00,00,00,05,03  :'item 4 {var:event_item}(x)
-	data "polar   ",00,00,00,00,08,03  :'item 5 {var:event_item}(x)
-	data "groll   ",00,00,00,00,23,03  :'item 6 
-	data "bombe   ",00,00,00,00,50,03  :'item 7 {var:event_item}(x)
-	data "apfel   ",00,00,-1,00,15,02  :'item 8 {var:event_item}(x)
-	data "heilen  ",00,00,00,00,04,03  :'item 9 {var:event_item}(x)
-	data "scull   ",00,00,00,00,00,04  :'item 10
-	data "flegel  ",07,00,-1,00,00,00  :'item 11 {var:event_item}(x)
-	data "blind   ",00,00,00,00,04,03  :'item 12
-	data "speer   ",12,00,00,00,00,00  :'item 13 {var:event_item}(x)
-	data "rock    ",00,10,00,00,00,01  :'item 14
-	data "schwert ",23,00,00,00,00,00  :'item 15 {var:event_item}(x)
-	data "weste   ",00,14,00,00,00,01  :'item 16 {var:event_item}(x)
-	data "schild  ",00,24,00,00,00,01  :'item 17 {var:event_item}(x)
-	data "level   ",00,00,05,00,05,04  :'item 18
-	data "attack  ",05,00,00,00,05,04  :'item 19
-	data "defence ",00,05,00,00,05,04  :'item 20
-	data "level   ",00,00,10,00,10,04  :'item 21
-	data "attack  ",10,00,00,00,10,04  :'item 22
-	data "defence ",00,10,00,00,10,04  :'item 23
-	data "level   ",00,00,15,00,15,04  :'item 24
-	data "attack  ",15,00,00,00,15,04  :'item 25
-	data "defence ",00,15,00,00,15,04  :'item 26
-	data "schnell ",00,00,00,05,05,04  :'item 27
-	data "schnell ",00,00,00,10,10,04  :'item 28
-	data "schnell ",00,00,00,15,15,04  :'item 29
-	data "        ",00,00,00,00,00,-1  :'item 30
-	data "        ",00,00,00,00,00,-1  :'item 31
-	data "        ",00,00,00,00,00,-1  :'item 32
-	data "        ",00,00,00,00,00,-1  :'item 33
-	data "        ",00,00,00,00,00,-1  :'item 34
-	data "        ",00,00,00,00,00,-1  :'item 35
-	data "        ",00,00,00,00,00,-1  :'item 36
-	data "        ",00,00,00,00,00,-1  :'item 37
-	data "        ",00,00,00,00,00,-1  :'item 38
-	data "        ",00,00,00,00,00,-1  :'item 39
-	data "        ",00,00,00,00,00,-1  :'item 40
-	data "        ",00,00,00,00,00,-1  :'item 41
-	data "        ",00,00,00,00,00,-1  :'item 42
-	data "        ",00,00,00,00,00,-1  :'item 43
-	data "        ",00,00,00,00,00,-1  :'item 44
-	data "        ",00,00,00,00,00,-1  :'item 45
-	data "        ",00,00,00,00,00,-1  :'item 46
-	data "        ",00,00,00,00,00,-1  :'item 47
-	data "        ",00,00,00,00,00,-1  :'item 48
-	data "        ",00,00,00,00,00,-1  :'item 49
-	data "        ",00,00,00,00,00,-1  :'item 50
-	data "        ",00,00,00,00,00,-1  :'item 51
-	data "        ",00,00,00,00,00,-1  :'item 52
-	data "        ",00,00,00,00,00,-1  :'item 53
-	data "        ",00,00,00,00,00,-1  :'item 54
-	data "        ",00,00,00,00,00,-1  :'item 55
-	data "        ",00,00,00,00,00,-1  :'item 56
-	data "        ",00,00,00,00,00,-1  :'item 57
-	data "        ",00,00,00,00,00,-1  :'item 58
-	data "        ",00,00,00,00,00,-1  :'item 59
-	data "        ",00,00,00,00,00,-1  :'item 60
-	data "        ",00,00,00,00,00,-1  :'item 61
-	data "        ",00,00,00,00,00,-1  :'item 62
-	data "        ",00,00,00,00,00,-1  :'item 63
-	data "        ",00,00,00,00,00,-1  :'item 64
-	data "        ",00,00,00,00,00,-1  :'item 65
-	data "        ",00,00,00,00,00,-1  :'item 66
-	data "        ",00,00,00,00,00,-1  :'item 67
-	data "        ",00,00,00,00,00,-1  :'item 68
-	data "        ",00,00,00,00,00,-1  :'item 69
-	data "        ",00,00,00,00,00,-1  :'item 70
-	data "        ",00,00,00,00,00,-1  :'item 71
-	data "        ",00,00,00,00,00,-1  :'item 72
-	data "        ",00,00,00,00,00,-1  :'item 73
-	data "        ",00,00,00,00,00,-1  :'item 74
-	data "        ",00,00,00,00,00,-1  :'item 75
-	data "        ",00,00,00,00,00,-1  :'item 76
-	data "        ",00,00,00,00,00,-1  :'item 77
-	data "        ",00,00,00,00,00,-1  :'item 78
-	data "        ",00,00,00,00,00,-1  :'item 79
-	data "        ",00,00,00,00,00,-1  :'item 80
-	data "        ",00,00,00,00,00,-1  :'item 81
-	data "        ",00,00,00,00,00,-1  :'item 82
-	data "        ",00,00,00,00,00,-1  :'item 83
-	data "        ",00,00,00,00,00,-1  :'item 84
-	data "        ",00,00,00,00,00,-1  :'item 85
-	data "        ",00,00,00,00,00,-1  :'item 86
-	data "        ",00,00,00,00,00,-1  :'item 87
-	data "        ",00,00,00,00,00,-1  :'item 88
-	data "        ",00,00,00,00,00,-1  :'item 89
-	data "        ",00,00,00,00,00,-1  :'item 90
-	data "        ",00,00,00,00,00,-1  :'item 91
-	data "        ",00,00,00,00,00,-1  :'item 92
-	data "        ",00,00,00,00,00,-1  :'item 93
-	data "        ",00,00,00,00,00,-1  :'item 94
-	data "        ",00,00,00,00,00,-1  :'item 95
-	data "        ",00,00,00,00,00,-1  :'item 96
-	data "        ",00,00,00,00,00,-1  :'item 97
-	data "        ",00,00,00,00,00,-1  :'item 98
-	data "zurueck ",00,00,00,00,00,09  :'item 99
-end

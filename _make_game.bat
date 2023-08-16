@@ -16,6 +16,8 @@ xcopy PETSCII\bin\map0.prg *.* /Y
 xcopy PETSCII\bin\map1.prg *.* /Y
 xcopy PETSCII\bin\sprite.prg *.* /Y
 
+REM MAKE MAIN
+REM copy main_code.bas + main_tile.bas main.bas
 
 REM C64List BAS->PRG
 c64list main.bas -prg -ovr -rem -crunch -supervariables -labels
