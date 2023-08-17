@@ -1,8 +1,5 @@
 @echo off
 
-REM EOL VON CR -> LF
-mac2unix main_tile.bas
-
 cd PETSCII
 cd bin
 

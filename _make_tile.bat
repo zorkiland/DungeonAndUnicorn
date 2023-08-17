@@ -65,6 +65,9 @@ xcopy VICE\bin\datatile.txt *.* /Y
 REM AUSTAUSCH ->! ->[ ->]
 cscript //nologo _make_tile.vbs "parameter1"
 
+REM EOL VON CR -> LF
+mac2unix main_tile.bas
+
 REM CLEAR TEMPDATA
 del maketile.bas
 del maketile.prg
