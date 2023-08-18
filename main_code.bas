@@ -610,7 +610,7 @@ goto{:goto_newgame}
 		poke {var:start_map}+1000+{var:schalter_posx}(1)+{var:schalter_posy}(1)*60,14+{var:schalter_flag}(1)
 		poke {var:start_map}+1000+{var:schalter_posx}(2)+{var:schalter_posy}(2)*60,14+{var:schalter_flag}(2)
 
-		if {var:schalter_flag}(0)=1  and {var:schalter_flag}(1)=0  and {var:schalter_flag}(2)=1 then t=92 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
+		if {var:schalter_flag}(0)=1  and {var:schalter_flag}(1)=0  and {var:schalter_flag}(2)=1 then t=82 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
 		t=13 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
 		return
 		{:raumaktion_poke_mapspeicher_map0_aktor0}
