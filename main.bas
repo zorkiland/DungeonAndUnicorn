@@ -408,7 +408,6 @@ goto{:goto_newgame}
 		if c=09  then {:goto_raumaktion_durchgang}      'wenn c=09 leiter
 		if c=10  then {:goto_raumaktion_durchgang}      'wenn c=10 brunnen
 		if c=11  then {:goto_raumaktion_durchgang}      'wenn c=11 tuere
-		if c=29  then {:goto_raumaktion_durchgang}      'wenn c=29 tunnel
 
 		if c=12  then {:goto_raumaktion_ausrufezeichen} 'wenn c=12 truhe
 		if c=14  then {:goto_raumaktion_ausrufezeichen} 'wenn c=14 schalter aus
