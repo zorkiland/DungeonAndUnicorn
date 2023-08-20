@@ -51,11 +51,7 @@ xcopy blitz.prg VICE\bin\*.* /Y
 xcopy game.prg VICE\bin\*.* /Y
 xcopy asm.raster.prg VICE\bin\*.* /Y
 xcopy txt.intro.seq VICE\bin\*.* /Y
-xcopy txt.ende.seq VICE\bin\*.* /Y
-xcopy txt.welcome.lena.seq VICE\bin\*.* /Y
-xcopy txt.welcome.dolm.seq VICE\bin\*.* /Y
-xcopy txt.welcome.mira.seq VICE\bin\*.* /Y
-xcopy txt.fight.seq VICE\bin\*.* /Y
+xcopy txt.nibelheim.seq VICE\bin\*.* /Y
 xcopy charset.prg VICE\bin\*.* /Y
 xcopy map0.prg VICE\bin\*.* /Y
 xcopy map1.prg VICE\bin\*.* /Y
@@ -75,11 +71,8 @@ c1541 -attach unicorn.d64 -write map1.prg map1
 c1541 -attach unicorn.d64 -write sprite.prg sprite
 c1541 -attach unicorn.d64 -write asm.raster.prg asm.raster
 c1541 -attach unicorn.d64 -write txt.intro.seq txt.intro,s
-c1541 -attach unicorn.d64 -write txt.ende.seq txt.ende,s
-c1541 -attach unicorn.d64 -write txt.fight.seq txt.fight,s
-c1541 -attach unicorn.d64 -write txt.welcome.lena.seq txt.welcome.lena,s
-c1541 -attach unicorn.d64 -write txt.welcome.dolm.seq txt.welcome.dolm,s
-c1541 -attach unicorn.d64 -write txt.welcome.mira.seq txt.welcome.mira,s
+c1541 -attach unicorn.d64 -write txt.nibelheim.seq txt.nibelheim,s
+
 
 cd..
 cd..
@@ -99,7 +92,3 @@ del sprite.prg
 
 rem C64Debugger.exe -clearsettings
 C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
-
-
-
-
