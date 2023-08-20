@@ -1816,13 +1816,13 @@ goto{:goto_newgame}
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}
 	'
 	'text kron
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}[" ;{var:player_name}(pa);"]"
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}["  ;{var:player_name}(pa);"]"
 		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}<" ;sb$(3);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{white}"  ;sb$(4);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{white}"  ;sb$(5);">"
 		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}[" ;{var:player_name}(pa);"]"
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}["  ;{var:player_name}(pa);"]"
 		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(6);:sy=20:sx=11:ss=3		
 		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}		
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}		
