@@ -1820,7 +1820,7 @@ goto{:goto_newgame}
 		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}"  ;{var:player_name}(pa);":"
 		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{white}<";sb$(3);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{white}" ;sb$(4);">"
-		if pt=1 and ma=3 then print"{home}{right:2}{down:23}{white}" ;sb$(5);:sy=23:sx=11
+		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{cyan}"  ;sb$(5);:sy=22:sx=11
 		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}	
 
