@@ -1805,7 +1805,7 @@ goto{:goto_newgame}
 		gosub{:gosub_joywait_fire}
 		return
 {:gosub_print_txt_game}	
-	gosub{:gosub_print_rahmen_unten_txt}		
+	gosub{:gosub_print_rahmen_unten_txt}
 
 	'text nacho
 		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}";{var:monster_name}(ma);":"
@@ -1818,7 +1818,7 @@ goto{:goto_newgame}
 		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}";{var:player_name}(pa);":"
 		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{cyan}<";sb$(3);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{cyan}" ;sb$(4);">"
-		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{white}";sb$(5);:sy=22:sx=11
+		if pt=1 and ma=3 then print"{home}{right:2}{down:23}{white}";sb$(5);:sy=23:sx=11
 		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}	
 
