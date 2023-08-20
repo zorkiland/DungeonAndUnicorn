@@ -1810,24 +1810,24 @@ goto{:goto_newgame}
 	gosub{:gosub_print_rahmen_unten_txt}		
 
 	'text nacho
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}"  ;{var:monster_name}(ma);":"
-		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{white}<";sb$(0);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{white}" ;sb$(1);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{white}" ;sb$(2);">"
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}";{var:monster_name}(ma);":"
+		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{cyan}<";sb$(0);
+		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{cyan}" ;sb$(1);
+		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{cyan}" ;sb$(2);">"
 		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}
 	'text kron
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}"  ;{var:player_name}(pa);":"
-		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{white}<";sb$(3);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{white}" ;sb$(4);">"
-		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{cyan}"  ;sb$(5);:sy=22:sx=11
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}";{var:player_name}(pa);":"
+		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{cyan}<";sb$(3);
+		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{cyan}" ;sb$(4);">"
+		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{white}";sb$(5);:sy=22:sx=11
 		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}	
 
 	'text lena
-		if pt=1 and pa=1 then print"{home}{right:2}{down:19}{cyan}"  ;{var:player_name}(pa);":"
-		if pt=1 and pa=1 then print"{home}{right:1}{down:20}{white}<";sb$(6);
-		if pt=1 and pa=1 then print"{home}{right:2}{down:21}{white}" ;sb$(7);">"
+		if pt=1 and pa=1 then print"{home}{right:2}{down:19}{white}";{var:player_name}(pa);":"
+		if pt=1 and pa=1 then print"{home}{right:1}{down:20}{cyan}<";sb$(6);
+		if pt=1 and pa=1 then print"{home}{right:2}{down:21}{cyan}" ;sb$(7);">"
 		if pt=1 and pa=1 then gosub{:gosub_joywait_fire}
 		gosub{:gosub_print_rahmen_unten_txt}
 
