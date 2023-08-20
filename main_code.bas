@@ -1749,7 +1749,7 @@ goto{:goto_newgame}
 		print dd$;"{dk. gray}{up}{$c1}{$c2:38}{$c3}";		
 		for i=0 to 3:print"{$c4}                                      {$c5}";:next
 		print"{$c6}{$c7:12}{$c7:12}{$c7:2}{$c7:12}";
-		poke 50151,72:poke 56295,9
+		poke 50151,72:poke 56295,11
 	return
 {:gosub_print_rahmen_mitte}
 	print"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";

@@ -978,7 +978,7 @@
 977 PRINTDD$;"{gray1}{up}{$c1}{$c2:38}{$c3}";
 978 FORI=0TO3:PRINT"{$c4}                                      {$c5}";:NEXT
 979 PRINT"{$c6}{$c7:38}";
-980 POKE50151,72:POKE56295,9
+980 POKE50151,72:POKE56295,11
 981 RETURN
 982 PRINT"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";
 983 FORI=0TO13
