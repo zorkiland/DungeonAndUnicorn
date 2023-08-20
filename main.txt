@@ -88,7 +88,7 @@
 87 POKE1021,Q7%
 88 SYS820
 89 GOSUB240
-90 AA$="NIBELHEIM":GOSUB992
+90 AA$="NIBELHEIM":GOSUB997
 91 GOTO876
 92 GOSUB958
 93 GOSUB817
@@ -96,7 +96,7 @@
 95 GOSUB719
 96 GB$=""
 97 GOSUB821
-98 GOSUB984
+98 GOSUB989
 99 POKEI6,0
 100 IFCR=10THENPOKE1020,CB%:GB$="SCHLAFENDER WALD"
 101 IFCR=0ORCR=1ORCR=3ORCR=4ORCR=6ORCR=7THENPOKE1020,CB%:GB$="NIBELHEIM"
@@ -129,7 +129,7 @@
 128 OX=ZX:OY=ZY
 129 ZX=X:ZY=Y
 130 JM%=1
-131 GOSUB1078
+131 GOSUB1082
 132 IFA$="W"THENZY=Y-1:GOTO142
 133 IFA$="A"THENZX=X-1:GOTO142
 134 IFA$="D"THENZX=X+1:GOTO142
@@ -163,7 +163,7 @@
 162 IFC>=48ANDC<=79THEN208
 163 GOTO128
 164 BI%=2:GOSUB956
-165 GOSUB984
+165 GOSUB989
 166 X=ZX:Y=ZY
 167 IFX=-1ANDCR=1THENX=19:CR=0:GOTO99
 168 IFX=-1ANDCR=7THENX=19:CR=6:GOTO99
@@ -175,14 +175,14 @@
 174 IFY=-1ANDCR=7THENY=7:CR=4:GOTO99
 175 IFY=-1ANDCR=8THENY=7:CR=5:GOTO99
 176 IFY=-1ANDCR=5THENY=7:CR=2:GOTO99
-177 IFY=-1ANDCR=10THENY=7:CR=6:ML$="MAP0":GOSUB1055:GOSUB250:GOTO99
+177 IFY=-1ANDCR=10THENY=7:CR=6:ML$="MAP0":GOSUB1059:GOSUB250:GOTO99
 178 IFY=8ANDCR=0THENY=0:CR=3:GOTO99
 179 IFY=8ANDCR=1THENY=0:CR=4:GOTO99
 180 IFY=8ANDCR=4THENY=0:CR=7:GOTO99
 181 IFY=8ANDCR=3THENY=0:CR=6:GOTO99
 182 IFY=8ANDCR=5THENY=0:CR=8:GOTO99
 183 IFY=8ANDCR=2THENY=0:CR=5:GOTO99
-184 IFY=8ANDCR=6THENY=0:CR=10:ML$="MAP1":GOSUB1055::GOSUB250:GOTO99
+184 IFY=8ANDCR=6THENY=0:CR=10:ML$="MAP1":GOSUB1059::GOSUB250:GOTO99
 185 IFX=-1THENX=0:GOTO125
 186 IFX=20THENX=19:GOTO125
 187 IFY=-1THENY=0:GOTO125
@@ -191,7 +191,7 @@
 190 IFCR=3ANDY=4THENCR=8:X=10:Y=6:GOTO99
 191 IFCR=8ANDY=6THENCR=3:X=5:Y=4:GOTO99
 192 GOTO99
-193 GOSUB984
+193 GOSUB989
 194 IFC=12ANDAA%=0THENGOTO128
 195 IFC=12ANDAA%=1THENGOSUB928:UT$="GEFUNDEN":GOTO128
 196 IFC=24ANDAA%=0THENGOTO128
@@ -203,39 +203,39 @@
 202 IFC=14ANDA$="W"THENGOSUB928:UT$="SCHALTER":GOTO128
 203 IFC=15ANDA$="W"THENGOSUB928:UT$="SCHALTER":GOTO128
 204 GOTO128
-205 GOSUB984
+205 GOSUB989
 206 IFC=13THENGOSUB935:GOTO128
 207 GOTO128
-208 IFC=50THENAA$="LENA":PT=1:PA=1:N3%(0)=1:GOSUB250:P3%(1)=1:GOSUB1018:GOSUB848:GOTO128
-209 IFC=52THENAA$="DOLM":PT=1:PA=2:N3%(1)=1:GOSUB250:P3%(2)=1:GOSUB1018:GOSUB848:GOTO128
-210 IFC=51THENAA$="MIRA":PT=1:PA=3:N3%(2)=1:GOSUB250:P3%(3)=1:GOSUB1018:GOSUB848:GOTO128
-211 IFC=67THENAA$="NACHO":PT=1:MA=3:GOSUB1018:IFCH=0THENGOTO128:FF=4:N3%(3)=1:GOSUB250:GOTO340
-212 IFC=72THENAA$="TROLL":PT=1:MA=8:GOSUB1018:IFCH=0THENGOTO128:FF=9:N3%(4)=1:GOSUB250:GOTO340
-213 IFC=76THENAA$="DRACU":PT=1:MA=12:GOSUB1018:IFCH=0THENGOTO128:FF=13:N3%(5)=1:GOSUB250:GOTO340
-214 IFC=77THENAA$="GLADO":PT=1:MA=13:GOSUB1018:IFCH=0THENGOTO128:FF=14:N3%(6)=1:GOSUB250:GOTO340
+208 IFC=50THENAA$="LENA":PT=1:PA=1:N3%(0)=1:GOSUB250:P3%(1)=1:GOSUB1023:GOSUB848:GOTO128
+209 IFC=52THENAA$="DOLM":PT=1:PA=2:N3%(1)=1:GOSUB250:P3%(2)=1:GOSUB1023:GOSUB848:GOTO128
+210 IFC=51THENAA$="MIRA":PT=1:PA=3:N3%(2)=1:GOSUB250:P3%(3)=1:GOSUB1023:GOSUB848:GOTO128
+211 IFC=67THENAA$="NACHO":PT=1:MA=3:GOSUB1023:IFCH=0THENGOTO128:FF=4:N3%(3)=1:GOSUB250:GOTO340
+212 IFC=72THENAA$="TROLL":PT=1:MA=8:GOSUB1023:IFCH=0THENGOTO128:FF=9:N3%(4)=1:GOSUB250:GOTO340
+213 IFC=76THENAA$="DRACU":PT=1:MA=12:GOSUB1023:IFCH=0THENGOTO128:FF=13:N3%(5)=1:GOSUB250:GOTO340
+214 IFC=77THENAA$="GLADO":PT=1:MA=13:GOSUB1023:IFCH=0THENGOTO128:FF=14:N3%(6)=1:GOSUB250:GOTO340
 215 BI%=2:GOSUB956
-216 GOSUB984
+216 GOSUB989
 217 EI=0
 218 IFER%(EI)<>CROREX%(EI)<>OXOREY%(EI)<>OYTHEN224
 219 NI%=ET%(EI):GOSUB812
-220 IFIS=49THENVA$="DU KANNST NICHT MEHR TRAGEN":GOSUB981:RETURN
+220 IFIS=49THENVA$="DU KANNST NICHT MEHR TRAGEN":GOSUB986:RETURN
 221 ER%(EI)=-1
 222 IFIT%(IN%(IS))=2THENBI%=4:GOSUB956
-223 VA$="GEFUNDEN: "+I$(IN%(IS)):GOSUB981:RETURN
+223 VA$="GEFUNDEN: "+I$(IN%(IS)):GOSUB986:RETURN
 224 EI=EI+1
 225 IFEI=12THENRETURN
 226 GOTO218
 227 BI%=2:GOSUB956
-228 VA$="CLICK!":GOSUB981
+228 VA$="CLICK!":GOSUB986
 229 IF(C=14OR15)ANDCR=S0%(0)ANDX=S1%(0)THENS3%(0)=1-S3%(0):GOSUB250:GOSUB848:RETURN
 230 IF(C=14OR15)ANDCR=S0%(1)ANDX=S1%(1)THENS3%(1)=1-S3%(1):GOSUB250:GOSUB848:RETURN
 231 IF(C=14OR15)ANDCR=S0%(2)ANDX=S1%(2)THENS3%(2)=1-S3%(2):GOSUB250:GOSUB848:RETURN
 232 STOP
 233 BI%=2:GOSUB956
 234 BI%=1:GOSUB956
-235 VA$="ZZZZZ!":GOSUB981
-236 GOSUB1116
-237 GOSUB714:GOSUB719:GOSUB984
+235 VA$="ZZZZZ!":GOSUB986
+236 GOSUB1120
+237 GOSUB714:GOSUB719:GOSUB989
 238 BI%=1:GOSUB954
 239 RETURN
 240 N0%(0)=1:PA(0)=10:MA(0)=4:N3%(0)=0
@@ -262,10 +262,10 @@
 261 RETURN
 262 RETURN
 263 GOSUB821
-264 GOSUB984
+264 GOSUB989
 265 POKEI6,0
 266 POKE1020,Q1%
-267 GOSUB977
+267 GOSUB982
 268 PRINT"{home}{down}{right}{white}INVENTAR: WAEHLE DEIN ITEM           ";
 269 MT=2:MX=2:MY=4:MC=14:EE=2
 270 GOSUB728
@@ -281,7 +281,7 @@
 280 FORI=0TO3:PM%(I)=PM%(I)+IE%(IN%(M)):IFPM%(I)>P2%(I)THENPM%(I)=P2%(I)
 281 FM%(I)=PM%(I):NEXT:RETURN
 282 GOSUB821
-283 GOSUB984
+283 GOSUB989
 284 POKEI6,0
 285 POKE1020,Q1%
 286 PJ=0
@@ -293,7 +293,7 @@
 292 P=PJ
 293 CP=QS+2+(4-8*(P>1))*40:IFP=1ORP=3THENCP=CP+20
 294 POKECP,35
-295 GOSUB1078
+295 GOSUB1082
 296 POKECP,32
 297 IFA$="FD"THENGOSUB817:GOTO96
 298 IFP=0ANDA$="D"ANDP3%(1)=1THENP=1:PJ=1:GOTO293
@@ -313,7 +313,7 @@
 312 EM=0:CP=CP+81
 313 PRINT"{home}{down}{right}{white}EQUIPMENT: WAEHLE DEIN ATTRIBUT      ";
 314 POKECP+EM*40,35
-315 GOSUB1078
+315 GOSUB1082
 316 POKECP+EM*40,32
 317 IFA$="S"ANDEM<2THENEM=EM+1
 318 IFA$="W"ANDEM>0THENEM=EM-1
@@ -371,7 +371,7 @@
 370 GOSUB663
 371 MY=0:FZ=0
 372 POKEQS+816+MY*40,35
-373 GOSUB1078
+373 GOSUB1082
 374 IFA$="S"THENPOKEQS+816+MY*40,32:FZ=0:MY=MY+1:GOTO378
 375 IFA$="W"THENPOKEQS+816+MY*40,32:FZ=0:MY=MY-1:GOTO378
 376 IFA$=CHR$(13)THENFZ=0:GOTO381
@@ -386,10 +386,10 @@
 385 PRINTDD$;SPC(16)"{white}         {down}{left:9}         {down}{left:9}         {down}{left:9}         ";
 386 IFIN%(M)=0ORIT%(IN%(M))<>3THEN365
 387 M=IN%(M)
-388 IFIE%(M)>FM%(C)THENGOSUB821:GOSUB1113:PRINT"{home}{down}{right}NICHT GENUG MANA                     ";:GOSUB1116:GOTO365
+388 IFIE%(M)>FM%(C)THENGOSUB821:GOSUB1117:PRINT"{home}{down}{right}NICHT GENUG MANA                     ";:GOSUB1120:GOTO365
 389 GOSUB545
 390 GOSUB821
-391 IFCE<4ANDM<>9THENGOSUB821:GOSUB1113:PRINT"{home}{down}{right}WAEHLE EIN NEUES ZIEL                ";:GOSUB1116:GOTO365
+391 IFCE<4ANDM<>9THENGOSUB821:GOSUB1117:PRINT"{home}{down}{right}WAEHLE EIN NEUES ZIEL                ";:GOSUB1120:GOTO365
 392 IFFT%(C)=-2ANDM=9THEN480
 393 IFFT%(C)=-2ANDM=12THEN512
 394 IFFT%(C)=7ANDFM%(C)>=IE%(9)THENM=9:GOTO480
@@ -404,9 +404,9 @@
 403 GOSUB673:GOTO353
 404 GOSUB545
 405 GOSUB821
-406 IFCE<4ANDM<>9THENGOSUB821:GOSUB1113:PRINT"{home}{down}{right}ZIEL NICH WAEHLBAR                   ";:GOSUB1116:GOTO365
+406 IFCE<4ANDM<>9THENGOSUB821:GOSUB1117:PRINT"{home}{down}{right}ZIEL NICH WAEHLBAR                   ";:GOSUB1120:GOTO365
 407 AP=FA%(C)-FD%(CE)
-408 IFAP<=0THENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{white}MISS";:GOSUB1113:GOTO434
+408 IFAP<=0THENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{white}MISS";:GOSUB1117:GOTO434
 409 AP=AP-INT(RND(0)*(AP/2))
 410 FH%(CE)=FH%(CE)-AP
 411 IFFH%(CE)<0THENFH%(CE)=0
@@ -422,10 +422,10 @@
 421 POKEJ0,1
 422 POKEI7,0
 423 POKEI6,1
-424 GOSUB1069
+424 GOSUB1073
 425 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{white}";AP$
 426 FORI=0TO5
-427 GOSUB1114
+427 GOSUB1118
 428 POKEH0,PEEK(H0)+2
 429 POKEH1,PEEK(H1)+2
 430 NEXTI
@@ -459,12 +459,12 @@
 458 POKEJ1,B
 459 POKEI6,1
 460 GOSUB669
-461 GOSUB1069
+461 GOSUB1073
 462 PRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{white}";AP$
 463 FORK=0TO3
 464 FORI=0TO1
 465 POKEJ1,B+I
-466 GOSUB1115
+466 GOSUB1119
 467 NEXTI
 468 NEXTK
 469 IFCE<4THENGOSUB719
@@ -491,14 +491,14 @@
 490 POKEJ1,B
 491 POKEI6,1
 492 GOSUB669
-493 GOSUB1069
+493 GOSUB1073
 494 IFC=CEANDC<4THENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{left}{green}";AP$
 495 IFC=CEANDC>3THENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{right}{green}";AP$
 496 IFC<>CETHENPRINT"{home}"LEFT$(CD$,FY%(CE))SPC(FX%(CE))"{up}{green}";AP$
 497 FORK=0TO3
 498 FORI=0TO1
 499 POKEJ1,B+I
-500 GOSUB1115
+500 GOSUB1119
 501 NEXTI
 502 NEXTK
 503 IFCE<4THENGOSUB719
@@ -523,7 +523,7 @@
 522 FORK=0TO3
 523 FORI=0TO1
 524 POKEJ1,B+I
-525 GOSUB1115
+525 GOSUB1119
 526 NEXTI
 527 NEXTK
 528 IFCE<4THENGOSUB719
@@ -535,18 +535,18 @@
 534 GOSUB660
 535 GOTO353
 536 GOSUB821
-537 GOSUB1113
+537 GOSUB1117
 538 PRINT"{white}{home}{down}{right}"M$(FT%(C))": GREIFT AN                    "
 539 GOSUB666
-540 IFFT%(C)=7THENIFFM%(C)>=IE%(9)THENM=9:GOSUB577:GOSUB1113:GOTO480
-541 IFFT%(C)=9THENIFFM%(C)>=IE%(6)THENM=6:GOSUB571:GOSUB1113:GOTO442
-542 IFFT%(C)=10THENIFFM%(C)>=IE%(4)THENM=4:GOSUB571:GOSUB1113:GOTO442
-543 IFFT%(C)=11THENIFFM%(C)>=IE%(12)THENM=12:GOSUB571:GOSUB1113:GOTO512
-544 GOSUB571:GOSUB1113:GOTO407
+540 IFFT%(C)=7THENIFFM%(C)>=IE%(9)THENM=9:GOSUB577:GOSUB1117:GOTO480
+541 IFFT%(C)=9THENIFFM%(C)>=IE%(6)THENM=6:GOSUB571:GOSUB1117:GOTO442
+542 IFFT%(C)=10THENIFFM%(C)>=IE%(4)THENM=4:GOSUB571:GOSUB1117:GOTO442
+543 IFFT%(C)=11THENIFFM%(C)>=IE%(12)THENM=12:GOSUB571:GOSUB1117:GOTO512
+544 GOSUB571:GOSUB1117:GOTO407
 545 CE=4:PRINT"{home}{down}{right}{white}"P$(C)": WAEHLE DEIN ZIEL               "
 546 IFFT%(CE)=-1THEN555
 547 POKEQS-2+FX%(CE)+FY%(CE)*40,35
-548 GOSUB1078
+548 GOSUB1082
 549 IFA$=CHR$(13)THENPOKEQS-2+FX%(CE)+FY%(CE)*40,32:RETURN
 550 IFA$="S"THENGOTO555
 551 IFA$="W"THENGOTO563
@@ -648,7 +648,7 @@
 647 CM=0
 648 FORI=4TO7
 649 IFFT%(I)=-1THENNEXT:RETURN
-650 A=FH%(I):GOSUB1067
+650 A=FH%(I):GOSUB1071
 651 PRINT"{home}{right}"LEFT$(CD$,20+CM)M$(FT%(I));
 652 PRINT"{home}{right}"LEFT$(CD$,20+CM);"{right:7}";D$
 653 CM=CM+1
@@ -679,12 +679,12 @@
 678 POKE1020,Q1%
 679 PRINTDD$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}HP{brown}{$c2:2}{white}MP{brown}{$c2}{$c3}{white}";
 680 PRINT"{home}{down}{right}DU HAST GEWONNEN                     ";:GOSUB640
-681 GOSUB977
+681 GOSUB982
 682 FORI=0TO3:IFP3%(I)=0THEN688
 683 PRINT"{home}{white}{right:3}";:IFPH%(I)=0THENPRINT"{red}";
 684 PRINTLEFT$(CD$,4+I*3)P$(I)
-685 A=PL%(I)+IL%(PE%(I)):GOSUB1072
-686 B=PX%(I):GOSUB1075
+685 A=PL%(I)+IL%(PE%(I)):GOSUB1076
+686 B=PX%(I):GOSUB1079
 687 PRINT"{home}{white}"LEFT$(CD$,5+I*3)"{right:3}LV ";D$;"   EX ";E$
 688 NEXT
 689 FORI=0TO3:IFPH%(I)=0ORP3%(I)=0THEN701
@@ -696,8 +696,8 @@
 695 TX=TX-XS
 696 PX%(I)=PX%(I)+XS
 697 LL=10+PL%(I)*PL%(I)*10:IFPX%(I)>=LLTHENGOSUB703:GOTO697
-698 A=PL%(I)+IL%(PE%(I)):GOSUB1072
-699 B=PX%(I):GOSUB1075
+698 A=PL%(I)+IL%(PE%(I)):GOSUB1076
+699 B=PX%(I):GOSUB1079
 700 PRINT"{home}{white}"LEFT$(CD$,5+I*3)"{right:3}LV ";D$;"   EX ";E$:GOTO691
 701 NEXTI
 702 GOTO709
@@ -707,10 +707,10 @@
 706 IFP1%(I)>999THENP1%(I)=999
 707 IFP2%(I)>999THENP2%(I)=999
 708 RETURN
-709 GOSUB1106
+709 GOSUB1110
 710 GOTO92
 711 PRINT"{home}{down}{right}{white}DU HAST VERLOREN                     "
-712 GOSUB1106
+712 GOSUB1110
 713 GOTO89
 714 FORI=0TO3:IFP3%(I)=0THEN717
 715 PH%(I)=P1%(I)
@@ -720,9 +720,9 @@
 719 PRINTDD$;
 720 FORI=0TO3:IFP3%(I)=0THENPRINTSPC(40);:GOTO726
 721 PRINT"{white}";:IFPH%(I)=0THENPRINT"{red}";
-722 PRINTSPC(27)P$(I)" ";:A=PH%(I):GOSUB1067
+722 PRINTSPC(27)P$(I)" ";:A=PH%(I):GOSUB1071
 723 PRINTD$;
-724 A=PM%(I):GOSUB1067
+724 A=PM%(I):GOSUB1071
 725 PRINT" "D$"{right}";
 726 NEXT
 727 RETURN
@@ -754,7 +754,7 @@
 753 IFMI<=49THEN733
 754 CP=QS+MX+MY*40
 755 POKECP+(M-MO)*40,35
-756 GOSUB1078
+756 GOSUB1082
 757 POKECP+(M-MO)*40,32
 758 IFA$="W"THENM=M-1:GOTO764
 759 IFA$="S"THENM=M+1:GOTO764
@@ -890,8 +890,8 @@
 889 GOSUB250
 890 AA$="INTRO"
 891 POKE1020,Q7%
-892 GOSUB1001
-893 GOSUB1010
+892 GOSUB1006
+893 GOSUB1015
 894 IN%(1)=4
 895 IN%(2)=5
 896 IN%(3)=6
@@ -975,202 +975,202 @@
 974 PRINT"{$c6}{$c7:38}";
 975 POKE50151,72:POKE56295,9
 976 RETURN
-977 PRINT"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";
-978 FORI=0TO13
-979 PRINT"{$c4}                                      {$c5}";:NEXT
-980 PRINT"{$c6}{$c7:38}{$c8}";:RETURN
-981 GOSUB984
-982 PRINTDD$;"{right}";VA$
-983 RETURN
-984 PRINTDD$;"{right}{white}                        ";
-985 RETURN
-986 GOSUB821
-987 POKEI6,0
-988 PRINT"{brown}{home}{down:3}";
-989 FORI=0TO15
-990 PRINT"{rvrs on}{brown}!{rvrs off}{orange}{$d7:38}{rvrs on}{brown}#{white}{rvrs off}";:NEXT
-991 RETURN
-992 POKE56322,224
-993 IFAA$="NIBELHEIM"THENOPEN1,8,4,"TXT.NIBELHEIM,S,R"
-994 IFAA$=""THENRETURN
-995 FORI=0TO99:SB$(I)="":NEXTI
-996 I=0
-997 INPUT#1,SB$(I)
-998 IFST=0THENI=I+1:GOTO997
-999 CLOSE1:POKE56322,255
-1000 RETURN
-1001 POKE56322,224
-1002 IFAA$="INTRO"THENOPEN1,8,4,"TXT.INTRO,S,R"
-1003 IFAA$=""THENRETURN
-1004 FORI=0TO5:SI$(I)="":NEXTI
-1005 I=0
-1006 INPUT#1,SI$(I)
-1007 IFST=0THENI=I+1:GOTO1006
-1008 CLOSE1:POKE56322,255
-1009 RETURN
-1010 PRINT"{home}{right:2}{down:2}{white}";SI$(0);
-1011 PRINT"{home}{right:2}{down:4}{white}";SI$(1);
-1012 PRINT"{home}{right:2}{down:6}{white}";SI$(2);
-1013 PRINT"{home}{right:2}{down:8}{white}";SI$(3);
-1014 PRINT"{home}{right:2}{down:10}{white}";SI$(4);
-1015 PRINT"{home}{right:2}{down:12}{white}";SI$(5);
-1016 GOSUB1106
-1017 RETURN
-1018 GOSUB972
-1019 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:19}{white}[";M$(MA);"]"
-1020 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:20}{cyan}<";SB$(0);
-1021 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:21}{cyan}";SB$(1);
-1022 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:22}{cyan}";SB$(2);">"
-1023 IFPT=1ANDMA=3THENGOSUB1106
-1024 IFPT=1ANDMA=3THENGOSUB972
-1025 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:19}{cyan}[";P$(PA);"]"
-1026 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:20}{white}<";SB$(3);
-1027 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:21}{white}";SB$(4);
-1028 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:22}{white}";SB$(5);">"
-1029 IFPT=1ANDMA=3THENGOSUB1106
-1030 IFPT=1ANDMA=3THENGOSUB972
-1031 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:19}{cyan}[";P$(PA);"]"
-1032 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:20}{white}";SB$(6);:SY=20:SX=11:SS=3
-1033 IFPT=1ANDMA=3THENGOSUB1044
-1034 IFPT=1ANDMA=3THENGOSUB972
-1035 IFPT=1ANDPA=1THENPRINT"{home}{right:2}{down:19}{white}[";P$(PA);"]"
-1036 IFPT=1ANDPA=1THENPRINT"{home}{right:2}{down:20}{cyan}<";SB$(7);
-1037 IFPT=1ANDPA=1THENPRINT"{home}{right:2}{down:21}{cyan}";SB$(8);">"
-1038 IFPT=1ANDPA=1THENGOSUB1106
-1039 IFPT=1ANDPA=1THENGOSUB972
-1040 GOSUB967
-1041 GOSUB719
-1042 PT=0:PA=0:MA=0
-1043 RETURN
-1044 CH=1:A$=""
-1045 VA$=""
-1046 PY=(SY*40)
-1047 PX=SX
-1048 POKEQS+PY+PX,35
-1049 JM%=0:GOSUB1078
-1050 IFA$="A"THENCH=1:POKEQS+PY+PX+SS,32:POKEQS+PY+PX,35
-1051 IFA$="D"THENCH=0:POKEQS+PY+PX,32:POKEQS+PY+PX+SS,35
-1052 IFA$=CHR$(13)ANDCH=1THENRETURN
-1053 IFA$=CHR$(13)ANDCH=0THENRETURN
-1054 GOTO1049
-1055 POKEI6,0
-1056 POKE1020,Q7%
-1057 GOSUB821
-1058 GOSUB817
-1059 PRINT"{home}{down:10}{right:16}{white}LOADING..."
-1060 PRINT"{home}{right:2}{down:3}{blue}"
-1061 SYS(57812)ML$,8,0:POKE780,0:POKE781,0:POKE782,196:SYS65493
-1062 IFML$="MAP0"THENAA$="NIBELHEIM"
-1063 IFML$="MAP1"THENAA$="MAP1"
-1064 GOSUB992
-1065 GOSUB817
-1066 RETURN
-1067 T$=STR$(A)
-1068 D$=RIGHT$("000"+RIGHT$(T$,LEN(T$)-1),3):RETURN
-1069 IFAP>99THENAP=99
-1070 DA$=STR$(AP)
-1071 AP$=RIGHT$("00"+RIGHT$(DA$,LEN(DA$)-1),2):RETURN
-1072 IFA>99THENA=99
-1073 T$=STR$(A)
-1074 D$=RIGHT$("00"+RIGHT$(T$,LEN(T$)-1),2):RETURN
-1075 IFB>9999THENB=9999
-1076 T$=STR$(B)
-1077 E$=RIGHT$("0000"+RIGHT$(T$,LEN(T$)-1),4):RETURN
-1078 A$="":B$=""
-1079 J=PEEK(56320)
-1080 IFJM%=1ANDJ<>111ANDJ<>107ANDJ<>103ANDJ<>110ANDJ<>109THEN1084
-1081 IFJ=127THEN1084
-1082 IFJ=107ORJ=103ORJ=110ORJ=109THEN1084
-1083 GOTO1079
-1084 J=PEEK(56320)
-1085 GETB$
-1086 IFB$=CHR$(133)THENA$="FU":RETURN
-1087 IFB$=CHR$(134)THENA$="FD":RETURN
-1088 IFB$=CHR$(135)THENA$="FL":RETURN
-1089 IFB$=CHR$(136)THENA$="FR":RETURN
-1090 IFB$="A"THENA$="A":RETURN
-1091 IFB$="D"THENA$="D":RETURN
-1092 IFB$="W"THENA$="W":RETURN
-1093 IFB$="S"THENA$="S":RETURN
-1094 IFB$=CHR$(13)THENA$=CHR$(13):RETURN
-1095 IFJ=127ANDA$=CHR$(13)THENRETURN
-1096 IFJ=107THENA$="FL":RETURN
-1097 IFJ=103THENA$="FR":RETURN
-1098 IFJ=110THENA$="FU":RETURN
-1099 IFJ=109THENA$="FD":RETURN
-1100 IFJ=123THENA$="A":RETURN
-1101 IFJ=119THENA$="D":RETURN
-1102 IFJ=126THENA$="W":RETURN
-1103 IFJ=125THENA$="S":RETURN
-1104 IFJ=111THENA$=CHR$(13)
-1105 GOTO1084
-1106 A$="":B$=""
-1107 J=PEEK(56320)
-1108 GETB$
-1109 IFB$=CHR$(13)THENA$=CHR$(13):RETURN
-1110 IFJ=127ANDA$=CHR$(13)THENRETURN
-1111 IFJ=111THENA$=CHR$(13)
-1112 GOTO1107
-1113 POKE162,0:WAIT162,32:RETURN
-1114 POKE162,0:WAIT162,2:RETURN
-1115 POKE162,0:WAIT162,16:RETURN
-1116 POKE162,0:WAIT162,32
-1117 POKE162,0:WAIT162,32
-1118 POKE162,0:WAIT162,32
-1119 POKE162,0:WAIT162,32
-1120 RETURN
-1121 DATA"IMP",5   ,0   ,8    ,4    ,1    ,8     ,3
-1122 DATA"SNAKE",8   ,0   ,12   ,6    ,1    ,12    ,5
-1123 DATA"VIPER",12  ,0   ,18   ,6    ,1    ,18    ,9
-1124 DATA"NACHO",30  ,0   ,22   ,15   ,5    ,22    ,50
-1125 DATA"GOLEM",20  ,0   ,4    ,20   ,8    ,4     ,17
-1126 DATA"MOSS" ,30  ,0   ,7    ,26   ,9    ,7     ,21
-1127 DATA"BONES",50  ,0   ,20   ,18   ,8    ,20    ,15
-1128 DATA"WISP" ,25  ,50  ,15   ,0    ,8    ,15    ,17
-1129 DATA"TROLL",100 ,0   ,9    ,40   ,13   ,9     ,100
-1130 DATA"SPARK",30  ,50  ,22   ,0    ,8    ,22    ,17
-1131 DATA"BURNY",80  ,90  ,30   ,25   ,13   ,30    ,42
-1132 DATA"TBERY",120 ,10  ,60   ,60   ,20   ,60    ,150
-1133 DATA"DRACU",250 ,60  ,50   ,70   ,25   ,50    ,500
-1134 DATA"GLADO",500 ,70  ,60   ,80   ,30   ,60    ,1000
-1135 DATA"KRON",15  ,7   ,1    ,4    ,3    ,10   ,0     ,0
-1136 DATA"LENA",17  ,7   ,1    ,3    ,3    ,10   ,0     ,0
-1137 DATA"DOLM",9   ,7   ,1    ,1    ,1    ,8    ,0     ,0
-1138 DATA"MIRA",9   ,23  ,1    ,1    ,1    ,7    ,0     ,0
-1139 DATA"        ",00,00,00,00,00,-1  
-1140 DATA"DOLCH   ",03,00,00,00,00,00  
-1141 DATA"HELM    ",00,02,-1,00,00,01  
-1142 DATA"PILZ    ",00,00,-1,00,10,02  
-1143 DATA"FEUER   ",00,00,00,00,05,03  
-1144 DATA"POLAR   ",00,00,00,00,08,03  
-1145 DATA"GROLL   ",00,00,00,00,23,03  
-1146 DATA"BOMBE   ",00,00,00,00,50,03  
-1147 DATA"APFEL   ",00,00,-1,00,15,02  
-1148 DATA"HEILEN  ",00,00,00,00,04,03  
-1149 DATA"SCULL   ",00,00,00,00,00,04  
-1150 DATA"FLEGEL  ",07,00,-1,00,00,00  
-1151 DATA"BLIND   ",00,00,00,00,04,03  
-1152 DATA"SPEER   ",12,00,00,00,00,00  
-1153 DATA"ROCK    ",00,10,00,00,00,01  
-1154 DATA"SCHWERT ",23,00,00,00,00,00  
-1155 DATA"WESTE   ",00,14,00,00,00,01  
-1156 DATA"SCHILD  ",00,24,00,00,00,01  
-1157 DATA"LEVEL   ",00,00,05,00,05,04  
-1158 DATA"ATTACK  ",05,00,00,00,05,04  
-1159 DATA"DEFENCE ",00,05,00,00,05,04  
-1160 DATA"LEVEL   ",00,00,10,00,10,04  
-1161 DATA"ATTACK  ",10,00,00,00,10,04  
-1162 DATA"DEFENCE ",00,10,00,00,10,04  
-1163 DATA"LEVEL   ",00,00,15,00,15,04  
-1164 DATA"ATTACK  ",15,00,00,00,15,04  
-1165 DATA"DEFENCE ",00,15,00,00,15,04  
-1166 DATA"SCHNELL ",00,00,00,05,05,04  
-1167 DATA"SCHNELL ",00,00,00,10,10,04  
-1168 DATA"SCHNELL ",00,00,00,15,15,04  
-1169 DATA"        ",00,00,00,00,00,-1  
-1170 DATA"        ",00,00,00,00,00,-1  
-1171 DATA"        ",00,00,00,00,00,-1  
-1172 DATA"        ",00,00,00,00,00,-1  
+977 PRINTDD$;"{gray1}{up}{$c1}{$c2:38}{$c3}";
+978 FORI=0TO3:PRINT"{$c4}                                      {$c5}";:NEXT
+979 PRINT"{$c6}{$c7:38}";
+980 POKE50151,72:POKE56295,9
+981 RETURN
+982 PRINT"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";
+983 FORI=0TO13
+984 PRINT"{$c4}                                      {$c5}";:NEXT
+985 PRINT"{$c6}{$c7:38}{$c8}";:RETURN
+986 GOSUB989
+987 PRINTDD$;"{right}";VA$
+988 RETURN
+989 PRINTDD$;"{right}{white}                        ";
+990 RETURN
+991 GOSUB821
+992 POKEI6,0
+993 PRINT"{brown}{home}{down:3}";
+994 FORI=0TO15
+995 PRINT"{rvrs on}{brown}!{rvrs off}{orange}{$d7:38}{rvrs on}{brown}#{white}{rvrs off}";:NEXT
+996 RETURN
+997 POKE56322,224
+998 IFAA$="NIBELHEIM"THENOPEN1,8,4,"TXT.NIBELHEIM,S,R"
+999 IFAA$=""THENRETURN
+1000 FORI=0TO99:SB$(I)="":NEXTI
+1001 I=0
+1002 INPUT#1,SB$(I)
+1003 IFST=0THENI=I+1:GOTO1002
+1004 CLOSE1:POKE56322,255
+1005 RETURN
+1006 POKE56322,224
+1007 IFAA$="INTRO"THENOPEN1,8,4,"TXT.INTRO,S,R"
+1008 IFAA$=""THENRETURN
+1009 FORI=0TO5:SI$(I)="":NEXTI
+1010 I=0
+1011 INPUT#1,SI$(I)
+1012 IFST=0THENI=I+1:GOTO1011
+1013 CLOSE1:POKE56322,255
+1014 RETURN
+1015 PRINT"{home}{right:2}{down:2}{white}";SI$(0);
+1016 PRINT"{home}{right:2}{down:4}{white}";SI$(1);
+1017 PRINT"{home}{right:2}{down:6}{white}";SI$(2);
+1018 PRINT"{home}{right:2}{down:8}{white}";SI$(3);
+1019 PRINT"{home}{right:2}{down:10}{white}";SI$(4);
+1020 PRINT"{home}{right:2}{down:12}{white}";SI$(5);
+1021 GOSUB1110
+1022 RETURN
+1023 GOSUB972
+1024 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:19}{white}";M$(MA);":"
+1025 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:20}{cyan}<";SB$(0);
+1026 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:21}{cyan}";SB$(1);
+1027 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:22}{cyan}";SB$(2);">"
+1028 IFPT=1ANDMA=3THENGOSUB1110
+1029 IFPT=1ANDMA=3THENGOSUB977
+1030 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:19}{cyan}";P$(PA);":"
+1031 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:20}{white}<";SB$(3);
+1032 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:21}{white}";SB$(4);
+1033 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:22}{white}";SB$(5);">"
+1034 IFPT=1ANDMA=3THENGOSUB1110
+1035 IFPT=1ANDMA=3THENGOSUB977
+1036 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:19}{cyan}";P$(PA);":"
+1037 IFPT=1ANDMA=3THENPRINT"{home}{right:2}{down:20}{white}";SB$(6);:SY=20:SX=11:SS=3
+1038 IFPT=1ANDMA=3THENGOSUB1048
+1039 IFPT=1ANDPA=1THENPRINT"{home}{right:2}{down:19}{white}";P$(PA);":"
+1040 IFPT=1ANDPA=1THENPRINT"{home}{right:2}{down:20}{cyan}<";SB$(7);
+1041 IFPT=1ANDPA=1THENPRINT"{home}{right:2}{down:21}{cyan}";SB$(8);">"
+1042 IFPT=1ANDPA=1THENGOSUB1110
+1043 GOSUB972
+1044 GOSUB967
+1045 GOSUB719
+1046 PT=0:PA=0:MA=0
+1047 RETURN
+1048 CH=1:A$=""
+1049 VA$=""
+1050 PY=(SY*40)
+1051 PX=SX
+1052 POKEQS+PY+PX,35
+1053 JM%=0:GOSUB1082
+1054 IFA$="A"THENCH=1:POKEQS+PY+PX+SS,32:POKEQS+PY+PX,35
+1055 IFA$="D"THENCH=0:POKEQS+PY+PX,32:POKEQS+PY+PX+SS,35
+1056 IFA$=CHR$(13)ANDCH=1THENRETURN
+1057 IFA$=CHR$(13)ANDCH=0THENRETURN
+1058 GOTO1053
+1059 POKEI6,0
+1060 POKE1020,Q7%
+1061 GOSUB821
+1062 GOSUB817
+1063 PRINT"{home}{down:10}{right:16}{white}LOADING..."
+1064 PRINT"{home}{right:2}{down:3}{blue}"
+1065 SYS(57812)ML$,8,0:POKE780,0:POKE781,0:POKE782,196:SYS65493
+1066 IFML$="MAP0"THENAA$="NIBELHEIM"
+1067 IFML$="MAP1"THENAA$="MAP1"
+1068 GOSUB997
+1069 GOSUB817
+1070 RETURN
+1071 T$=STR$(A)
+1072 D$=RIGHT$("000"+RIGHT$(T$,LEN(T$)-1),3):RETURN
+1073 IFAP>99THENAP=99
+1074 DA$=STR$(AP)
+1075 AP$=RIGHT$("00"+RIGHT$(DA$,LEN(DA$)-1),2):RETURN
+1076 IFA>99THENA=99
+1077 T$=STR$(A)
+1078 D$=RIGHT$("00"+RIGHT$(T$,LEN(T$)-1),2):RETURN
+1079 IFB>9999THENB=9999
+1080 T$=STR$(B)
+1081 E$=RIGHT$("0000"+RIGHT$(T$,LEN(T$)-1),4):RETURN
+1082 A$="":B$=""
+1083 J=PEEK(56320)
+1084 IFJM%=1ANDJ<>111ANDJ<>107ANDJ<>103ANDJ<>110ANDJ<>109THEN1088
+1085 IFJ=127THEN1088
+1086 IFJ=107ORJ=103ORJ=110ORJ=109THEN1088
+1087 GOTO1083
+1088 J=PEEK(56320)
+1089 GETB$
+1090 IFB$=CHR$(133)THENA$="FU":RETURN
+1091 IFB$=CHR$(134)THENA$="FD":RETURN
+1092 IFB$=CHR$(135)THENA$="FL":RETURN
+1093 IFB$=CHR$(136)THENA$="FR":RETURN
+1094 IFB$="A"THENA$="A":RETURN
+1095 IFB$="D"THENA$="D":RETURN
+1096 IFB$="W"THENA$="W":RETURN
+1097 IFB$="S"THENA$="S":RETURN
+1098 IFB$=CHR$(13)THENA$=CHR$(13):RETURN
+1099 IFJ=127ANDA$=CHR$(13)THENRETURN
+1100 IFJ=107THENA$="FL":RETURN
+1101 IFJ=103THENA$="FR":RETURN
+1102 IFJ=110THENA$="FU":RETURN
+1103 IFJ=109THENA$="FD":RETURN
+1104 IFJ=123THENA$="A":RETURN
+1105 IFJ=119THENA$="D":RETURN
+1106 IFJ=126THENA$="W":RETURN
+1107 IFJ=125THENA$="S":RETURN
+1108 IFJ=111THENA$=CHR$(13)
+1109 GOTO1088
+1110 A$="":B$=""
+1111 J=PEEK(56320)
+1112 GETB$
+1113 IFB$=CHR$(13)THENA$=CHR$(13):RETURN
+1114 IFJ=127ANDA$=CHR$(13)THENRETURN
+1115 IFJ=111THENA$=CHR$(13)
+1116 GOTO1111
+1117 POKE162,0:WAIT162,32:RETURN
+1118 POKE162,0:WAIT162,2:RETURN
+1119 POKE162,0:WAIT162,16:RETURN
+1120 POKE162,0:WAIT162,32
+1121 POKE162,0:WAIT162,32
+1122 POKE162,0:WAIT162,32
+1123 POKE162,0:WAIT162,32
+1124 RETURN
+1125 DATA"IMP",5   ,0   ,8    ,4    ,1    ,8     ,3
+1126 DATA"SNAKE",8   ,0   ,12   ,6    ,1    ,12    ,5
+1127 DATA"VIPER",12  ,0   ,18   ,6    ,1    ,18    ,9
+1128 DATA"NACHO",30  ,0   ,22   ,15   ,5    ,22    ,50
+1129 DATA"GOLEM",20  ,0   ,4    ,20   ,8    ,4     ,17
+1130 DATA"MOSS" ,30  ,0   ,7    ,26   ,9    ,7     ,21
+1131 DATA"BONES",50  ,0   ,20   ,18   ,8    ,20    ,15
+1132 DATA"WISP" ,25  ,50  ,15   ,0    ,8    ,15    ,17
+1133 DATA"TROLL",100 ,0   ,9    ,40   ,13   ,9     ,100
+1134 DATA"SPARK",30  ,50  ,22   ,0    ,8    ,22    ,17
+1135 DATA"BURNY",80  ,90  ,30   ,25   ,13   ,30    ,42
+1136 DATA"TBERY",120 ,10  ,60   ,60   ,20   ,60    ,150
+1137 DATA"DRACU",250 ,60  ,50   ,70   ,25   ,50    ,500
+1138 DATA"GLADO",500 ,70  ,60   ,80   ,30   ,60    ,1000
+1139 DATA"KRON",15  ,7   ,1    ,4    ,3    ,10   ,0     ,0
+1140 DATA"LENA",17  ,7   ,1    ,3    ,3    ,10   ,0     ,0
+1141 DATA"DOLM",9   ,7   ,1    ,1    ,1    ,8    ,0     ,0
+1142 DATA"MIRA",9   ,23  ,1    ,1    ,1    ,7    ,0     ,0
+1143 DATA"        ",00,00,00,00,00,-1  
+1144 DATA"DOLCH   ",03,00,00,00,00,00  
+1145 DATA"HELM    ",00,02,-1,00,00,01  
+1146 DATA"PILZ    ",00,00,-1,00,10,02  
+1147 DATA"FEUER   ",00,00,00,00,05,03  
+1148 DATA"POLAR   ",00,00,00,00,08,03  
+1149 DATA"GROLL   ",00,00,00,00,23,03  
+1150 DATA"BOMBE   ",00,00,00,00,50,03  
+1151 DATA"APFEL   ",00,00,-1,00,15,02  
+1152 DATA"HEILEN  ",00,00,00,00,04,03  
+1153 DATA"SCULL   ",00,00,00,00,00,04  
+1154 DATA"FLEGEL  ",07,00,-1,00,00,00  
+1155 DATA"BLIND   ",00,00,00,00,04,03  
+1156 DATA"SPEER   ",12,00,00,00,00,00  
+1157 DATA"ROCK    ",00,10,00,00,00,01  
+1158 DATA"SCHWERT ",23,00,00,00,00,00  
+1159 DATA"WESTE   ",00,14,00,00,00,01  
+1160 DATA"SCHILD  ",00,24,00,00,00,01  
+1161 DATA"LEVEL   ",00,00,05,00,05,04  
+1162 DATA"ATTACK  ",05,00,00,00,05,04  
+1163 DATA"DEFENCE ",00,05,00,00,05,04  
+1164 DATA"LEVEL   ",00,00,10,00,10,04  
+1165 DATA"ATTACK  ",10,00,00,00,10,04  
+1166 DATA"DEFENCE ",00,10,00,00,10,04  
+1167 DATA"LEVEL   ",00,00,15,00,15,04  
+1168 DATA"ATTACK  ",15,00,00,00,15,04  
+1169 DATA"DEFENCE ",00,15,00,00,15,04  
+1170 DATA"SCHNELL ",00,00,00,05,05,04  
+1171 DATA"SCHNELL ",00,00,00,10,10,04  
+1172 DATA"SCHNELL ",00,00,00,15,15,04  
 1173 DATA"        ",00,00,00,00,00,-1  
 1174 DATA"        ",00,00,00,00,00,-1  
 1175 DATA"        ",00,00,00,00,00,-1  
@@ -1236,110 +1236,110 @@
 1235 DATA"        ",00,00,00,00,00,-1  
 1236 DATA"        ",00,00,00,00,00,-1  
 1237 DATA"        ",00,00,00,00,00,-1  
-1238 DATA"ZURUECK ",00,00,00,00,00,09  
-1239 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1240 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
-1241 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
-1242 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
-1243 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
-1244 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
-1245 DATA"{gray2}{rvrs off}{$c0}{rvrs off}{gray2}{$c0}{down}{left:2}{rvrs off}{gray2}{$c0}{rvrs off}{gray2}{$c0}{rvrs off}"
-1246 DATA"{lt. red}{rvrs on}T{rvrs on}{lt. red}U{down}{left:2}{rvrs on}{lt. red}V{rvrs on}{lt. red}W{rvrs off}"
-1247 DATA"{orange}{rvrs off}{$d7}{rvrs off}{orange}{$d7}{down}{left:2}{rvrs off}{orange}{$d7}{rvrs off}{orange}{$d7}{rvrs off}"
-1248 DATA"{lt. red}{rvrs off}{$d8}{rvrs off}{lt. red}{$d9}{down}{left:2}{rvrs off}{lt. red}{$da}{rvrs off}{lt. red}{$db}{rvrs off}"
-1249 DATA"{black}{rvrs off}{$dc}{rvrs off}{black}{$dd}{down}{left:2}{rvrs off}{black}{$de}{rvrs off}{black}{$df}{rvrs off}"
-1250 DATA"{gray1}{rvrs off}{$a1}{rvrs off}{gray1}{$a2}{down}{left:2}{rvrs off}{gray1}{$a3}{rvrs off}{gray1}{$a4}{rvrs off}"
-1251 DATA"{gray1}{rvrs off}{cmdr pound}{rvrs off}{gray1}{shft pound}{down}{left:2}{rvrs off}{gray1}{$aa}{rvrs off}{gray1}{$ab}{rvrs off}"
-1252 DATA"{lt. red}{rvrs off}{$a1}{rvrs off}{lt. red}{$a2}{down}{left:2}{rvrs off}{lt. red}{$a3}{rvrs off}{lt. red}{$a4}{rvrs off}"
-1253 DATA"{lt. red}{rvrs on}E{rvrs on}{lt. red}F{down}{left:2}{rvrs on}{lt. red}G{rvrs on}{lt. red}H{rvrs off}"
-1254 DATA"{lt. red}{rvrs on}I{rvrs on}{lt. red}J{down}{left:2}{rvrs on}{lt. red}K{rvrs on}{lt. red}L{rvrs off}"
-1255 DATA"{lt. red}{rvrs off}{$ac}{rvrs off}{lt. red}{$ad}{down}{left:2}{rvrs off}{lt. red}{$ae}{rvrs off}{lt. red}{$af}{rvrs off}"
-1256 DATA"{lt. red}{rvrs off}{$b0}{rvrs off}{lt. red}{$b0}{down}{left:2}{rvrs off}{lt. red}{$b0}{rvrs off}{lt. red}{$b0}{rvrs off}"
-1257 DATA"{brown}{rvrs off}{$b1}{rvrs off}{brown}{$b1}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b2}{rvrs off}"
-1258 DATA"{brown}{rvrs off}{$b1}{rvrs off}{brown}{$b3}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b2}{rvrs off}"
-1259 DATA"{brown}{rvrs off}{$b3}{rvrs off}{brown}{$b1}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b2}{rvrs off}"
-1260 DATA"{brown}{rvrs on}${rvrs on}{brown}%{down}{left:2}{rvrs on}{brown}&{rvrs on}{brown}'{rvrs off}"
-1261 DATA"{gray1}{rvrs on},{rvrs on}{gray1}-{down}{left:2}{rvrs on}{gray1}.{rvrs on}{gray1}/{rvrs off}"
-1262 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1263 DATA"{lt. green}{rvrs off}{$b4}{rvrs off}{lt. green}{$d7}{down}{left:2}{rvrs off}{lt. green}{$d7}{rvrs off}{lt. green}{$b5}{rvrs off}"
-1264 DATA"{lt. green}{rvrs off}{$b6}{rvrs off}{lt. green}{$b7}{down}{left:2}{rvrs off}{lt. green}{$b8}{rvrs off}{lt. green}{$b9}{rvrs off}"
-1265 DATA"{lt. green}{rvrs off}{$ba}{rvrs off}{lt. green}{$bb}{down}{left:2}{rvrs off}{lt. green}{$ba}{rvrs off}{lt. green}{$bb}{rvrs off}"
-1266 DATA"{lt. green}{rvrs off}{$bc}{rvrs off}{lt. green}{$bd}{down}{left:2}{rvrs off}{lt. green}{$be}{rvrs off}{lt. green}{$bf}{rvrs off}"
-1267 DATA"{lt. red}{rvrs on}0{rvrs on}{lt. red}1{down}{left:2}{rvrs on}{lt. red}2{rvrs on}{lt. red}3{rvrs off}"
-1268 DATA"{lt. red}{rvrs on}4{rvrs on}{lt. red}5{down}{left:2}{rvrs on}{lt. red}6{rvrs on}{lt. red}7{rvrs off}"
-1269 DATA"{lt. red}{rvrs on}8{rvrs on}{lt. red}9{down}{left:2}{rvrs on}{lt. red}:{rvrs on}{lt. red};{rvrs off}"
-1270 DATA"{lt. red}{rvrs on}<{rvrs on}{lt. red}={down}{left:2}{rvrs on}{lt. red}>{rvrs on}{lt. red}?{rvrs off}"
-1271 DATA"{lt. red}{rvrs off}{$d3}{rvrs off}{lt. red}{$d4}{down}{left:2}{rvrs off}{lt. red}{$d5}{rvrs off}{lt. red}{$d6}{rvrs off}"
-1272 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1273 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
-1274 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
-1275 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1276 DATA"{lt. red}{rvrs on}({rvrs on}{lt. red}){down}{left:2}{rvrs on}{lt. red}*{rvrs on}{lt. red}+{rvrs off}"
-1277 DATA"{lt. blue}{rvrs on}{pound}{rvrs on}{lt. blue}]{down}{left:2}{rvrs on}{lt. blue}{^}{rvrs on}{lt. blue}{back arrow}{rvrs off}"
-1278 DATA"{lt. green}{rvrs off}{$c0}{rvrs off}{lt. green}{$c0}{down}{left:2}{rvrs off}{lt. green}{$c0}{rvrs off}{lt. green}{$c0}{rvrs off}"
-1279 DATA"{gray1}{rvrs off}{$d7}{rvrs off}{gray1}{$d7}{down}{left:2}{rvrs off}{gray1}{$d7}{rvrs off}{gray1}{$d7}{rvrs off}"
-1280 DATA"{gray1}{rvrs on}@{rvrs off}{gray1}{$d7}{down}{left:2}{rvrs on}{gray1}@{rvrs off}{gray1}{$d7}{rvrs off}"
-1281 DATA"{gray1}{rvrs on}@{rvrs off}{gray1}{$d7}{down}{left:2}{rvrs on}{gray1}A{rvrs off}{gray1}{$d7}{rvrs off}"
-1282 DATA"{gray1}{rvrs on}B{rvrs on}{gray1}C{down}{left:2}{rvrs on}{gray1}D{rvrs on}{gray1}D{rvrs off}"
-1283 DATA"{gray1}{rvrs on}B{rvrs on}{gray1}B{down}{left:2}{rvrs on}{gray1}M{rvrs on}{gray1}D{rvrs off}"
-1284 DATA"{gray1}{rvrs on}D{rvrs on}{gray1}D{down}{left:2}{rvrs off}{gray1}{$d7}{rvrs off}{gray1}{$d7}{rvrs off}"
-1285 DATA"{gray1}{rvrs on}M{rvrs on}{gray1}D{down}{left:2}{rvrs on}{gray1}@{rvrs off}{gray1}{$d7}{rvrs off}"
-1286 DATA"{brown}{rvrs off}{$c0}{rvrs off}{brown}{$c0}{down}{left:2}{rvrs off}{brown}{$c0}{rvrs off}{brown}{$c0}{rvrs off}"
-1287 DATA"{lt. red}{rvrs on}{$d0}{rvrs on}{lt. red}{$d1}{down}{left:2}{rvrs on}{lt. red}{$d2}{rvrs on}{lt. red}{$d3}{rvrs off}"
-1288 DATA"{gray1}{rvrs on}{$d4}{rvrs on}{gray1}{$d1}{down}{left:2}{rvrs on}{gray1}{$d2}{rvrs on}{gray1}{$d3}{rvrs off}"
-1289 DATA"{lt. green}{rvrs on}{$d5}{rvrs on}{lt. green}{$d6}{down}{left:2}{rvrs on}{lt. green}{$d7}{rvrs on}{lt. green}{$d8}{rvrs off}"
-1290 DATA"{gray2}{rvrs on}{$d9}{rvrs on}{gray2}{$da}{down}{left:2}{rvrs on}{gray2}{$db}{rvrs on}{gray2}{$dc}{rvrs off}"
-1291 DATA"{gray1}{rvrs on}{$dd}{rvrs on}{gray1}{$de}{down}{left:2}{rvrs on}{gray1}{$df}{rvrs on}{gray1}{$e0}{rvrs off}"
-1292 DATA"{gray1}{rvrs on}{$e1}{rvrs on}{gray1}{$e2}{down}{left:2}{rvrs on}{gray1}{$e3}{rvrs on}{gray1}{$e4}{rvrs off}"
-1293 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
-1294 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1295 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1296 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1297 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1238 DATA"        ",00,00,00,00,00,-1  
+1239 DATA"        ",00,00,00,00,00,-1  
+1240 DATA"        ",00,00,00,00,00,-1  
+1241 DATA"        ",00,00,00,00,00,-1  
+1242 DATA"ZURUECK ",00,00,00,00,00,09  
+1243 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1244 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
+1245 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
+1246 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
+1247 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
+1248 DATA"{black}{rvrs off}{$c0}{rvrs off}{black}{$c0}{down}{left:2}{rvrs off}{black}{$c0}{rvrs off}{black}{$c0}{rvrs off}"
+1249 DATA"{gray2}{rvrs off}{$c0}{rvrs off}{gray2}{$c0}{down}{left:2}{rvrs off}{gray2}{$c0}{rvrs off}{gray2}{$c0}{rvrs off}"
+1250 DATA"{lt. red}{rvrs on}T{rvrs on}{lt. red}U{down}{left:2}{rvrs on}{lt. red}V{rvrs on}{lt. red}W{rvrs off}"
+1251 DATA"{orange}{rvrs off}{$d7}{rvrs off}{orange}{$d7}{down}{left:2}{rvrs off}{orange}{$d7}{rvrs off}{orange}{$d7}{rvrs off}"
+1252 DATA"{lt. red}{rvrs off}{$d8}{rvrs off}{lt. red}{$d9}{down}{left:2}{rvrs off}{lt. red}{$da}{rvrs off}{lt. red}{$db}{rvrs off}"
+1253 DATA"{black}{rvrs off}{$dc}{rvrs off}{black}{$dd}{down}{left:2}{rvrs off}{black}{$de}{rvrs off}{black}{$df}{rvrs off}"
+1254 DATA"{gray1}{rvrs off}{$a1}{rvrs off}{gray1}{$a2}{down}{left:2}{rvrs off}{gray1}{$a3}{rvrs off}{gray1}{$a4}{rvrs off}"
+1255 DATA"{gray1}{rvrs off}{cmdr pound}{rvrs off}{gray1}{shft pound}{down}{left:2}{rvrs off}{gray1}{$aa}{rvrs off}{gray1}{$ab}{rvrs off}"
+1256 DATA"{lt. red}{rvrs off}{$a1}{rvrs off}{lt. red}{$a2}{down}{left:2}{rvrs off}{lt. red}{$a3}{rvrs off}{lt. red}{$a4}{rvrs off}"
+1257 DATA"{lt. red}{rvrs on}E{rvrs on}{lt. red}F{down}{left:2}{rvrs on}{lt. red}G{rvrs on}{lt. red}H{rvrs off}"
+1258 DATA"{lt. red}{rvrs on}I{rvrs on}{lt. red}J{down}{left:2}{rvrs on}{lt. red}K{rvrs on}{lt. red}L{rvrs off}"
+1259 DATA"{lt. red}{rvrs off}{$ac}{rvrs off}{lt. red}{$ad}{down}{left:2}{rvrs off}{lt. red}{$ae}{rvrs off}{lt. red}{$af}{rvrs off}"
+1260 DATA"{lt. red}{rvrs off}{$b0}{rvrs off}{lt. red}{$b0}{down}{left:2}{rvrs off}{lt. red}{$b0}{rvrs off}{lt. red}{$b0}{rvrs off}"
+1261 DATA"{brown}{rvrs off}{$b1}{rvrs off}{brown}{$b1}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b2}{rvrs off}"
+1262 DATA"{brown}{rvrs off}{$b1}{rvrs off}{brown}{$b3}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b2}{rvrs off}"
+1263 DATA"{brown}{rvrs off}{$b3}{rvrs off}{brown}{$b1}{down}{left:2}{rvrs off}{brown}{$b2}{rvrs off}{brown}{$b2}{rvrs off}"
+1264 DATA"{brown}{rvrs on}${rvrs on}{brown}%{down}{left:2}{rvrs on}{brown}&{rvrs on}{brown}'{rvrs off}"
+1265 DATA"{gray1}{rvrs on},{rvrs on}{gray1}-{down}{left:2}{rvrs on}{gray1}.{rvrs on}{gray1}/{rvrs off}"
+1266 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1267 DATA"{lt. green}{rvrs off}{$b4}{rvrs off}{lt. green}{$d7}{down}{left:2}{rvrs off}{lt. green}{$d7}{rvrs off}{lt. green}{$b5}{rvrs off}"
+1268 DATA"{lt. green}{rvrs off}{$b6}{rvrs off}{lt. green}{$b7}{down}{left:2}{rvrs off}{lt. green}{$b8}{rvrs off}{lt. green}{$b9}{rvrs off}"
+1269 DATA"{lt. green}{rvrs off}{$ba}{rvrs off}{lt. green}{$bb}{down}{left:2}{rvrs off}{lt. green}{$ba}{rvrs off}{lt. green}{$bb}{rvrs off}"
+1270 DATA"{lt. green}{rvrs off}{$bc}{rvrs off}{lt. green}{$bd}{down}{left:2}{rvrs off}{lt. green}{$be}{rvrs off}{lt. green}{$bf}{rvrs off}"
+1271 DATA"{lt. red}{rvrs on}0{rvrs on}{lt. red}1{down}{left:2}{rvrs on}{lt. red}2{rvrs on}{lt. red}3{rvrs off}"
+1272 DATA"{lt. red}{rvrs on}4{rvrs on}{lt. red}5{down}{left:2}{rvrs on}{lt. red}6{rvrs on}{lt. red}7{rvrs off}"
+1273 DATA"{lt. red}{rvrs on}8{rvrs on}{lt. red}9{down}{left:2}{rvrs on}{lt. red}:{rvrs on}{lt. red};{rvrs off}"
+1274 DATA"{lt. red}{rvrs on}<{rvrs on}{lt. red}={down}{left:2}{rvrs on}{lt. red}>{rvrs on}{lt. red}?{rvrs off}"
+1275 DATA"{lt. red}{rvrs off}{$d3}{rvrs off}{lt. red}{$d4}{down}{left:2}{rvrs off}{lt. red}{$d5}{rvrs off}{lt. red}{$d6}{rvrs off}"
+1276 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1277 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
+1278 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
+1279 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1280 DATA"{lt. red}{rvrs on}({rvrs on}{lt. red}){down}{left:2}{rvrs on}{lt. red}*{rvrs on}{lt. red}+{rvrs off}"
+1281 DATA"{lt. blue}{rvrs on}{pound}{rvrs on}{lt. blue}]{down}{left:2}{rvrs on}{lt. blue}{^}{rvrs on}{lt. blue}{back arrow}{rvrs off}"
+1282 DATA"{lt. green}{rvrs off}{$c0}{rvrs off}{lt. green}{$c0}{down}{left:2}{rvrs off}{lt. green}{$c0}{rvrs off}{lt. green}{$c0}{rvrs off}"
+1283 DATA"{gray1}{rvrs off}{$d7}{rvrs off}{gray1}{$d7}{down}{left:2}{rvrs off}{gray1}{$d7}{rvrs off}{gray1}{$d7}{rvrs off}"
+1284 DATA"{gray1}{rvrs on}@{rvrs off}{gray1}{$d7}{down}{left:2}{rvrs on}{gray1}@{rvrs off}{gray1}{$d7}{rvrs off}"
+1285 DATA"{gray1}{rvrs on}@{rvrs off}{gray1}{$d7}{down}{left:2}{rvrs on}{gray1}A{rvrs off}{gray1}{$d7}{rvrs off}"
+1286 DATA"{gray1}{rvrs on}B{rvrs on}{gray1}C{down}{left:2}{rvrs on}{gray1}D{rvrs on}{gray1}D{rvrs off}"
+1287 DATA"{gray1}{rvrs on}B{rvrs on}{gray1}B{down}{left:2}{rvrs on}{gray1}M{rvrs on}{gray1}D{rvrs off}"
+1288 DATA"{gray1}{rvrs on}D{rvrs on}{gray1}D{down}{left:2}{rvrs off}{gray1}{$d7}{rvrs off}{gray1}{$d7}{rvrs off}"
+1289 DATA"{gray1}{rvrs on}M{rvrs on}{gray1}D{down}{left:2}{rvrs on}{gray1}@{rvrs off}{gray1}{$d7}{rvrs off}"
+1290 DATA"{brown}{rvrs off}{$c0}{rvrs off}{brown}{$c0}{down}{left:2}{rvrs off}{brown}{$c0}{rvrs off}{brown}{$c0}{rvrs off}"
+1291 DATA"{lt. red}{rvrs on}{$d0}{rvrs on}{lt. red}{$d1}{down}{left:2}{rvrs on}{lt. red}{$d2}{rvrs on}{lt. red}{$d3}{rvrs off}"
+1292 DATA"{gray1}{rvrs on}{$d4}{rvrs on}{gray1}{$d1}{down}{left:2}{rvrs on}{gray1}{$d2}{rvrs on}{gray1}{$d3}{rvrs off}"
+1293 DATA"{lt. green}{rvrs on}{$d5}{rvrs on}{lt. green}{$d6}{down}{left:2}{rvrs on}{lt. green}{$d7}{rvrs on}{lt. green}{$d8}{rvrs off}"
+1294 DATA"{gray2}{rvrs on}{$d9}{rvrs on}{gray2}{$da}{down}{left:2}{rvrs on}{gray2}{$db}{rvrs on}{gray2}{$dc}{rvrs off}"
+1295 DATA"{gray1}{rvrs on}{$dd}{rvrs on}{gray1}{$de}{down}{left:2}{rvrs on}{gray1}{$df}{rvrs on}{gray1}{$e0}{rvrs off}"
+1296 DATA"{gray1}{rvrs on}{$e1}{rvrs on}{gray1}{$e2}{down}{left:2}{rvrs on}{gray1}{$e3}{rvrs on}{gray1}{$e4}{rvrs off}"
+1297 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
 1298 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1299 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1300 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1301 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1302 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
-1303 DATA"{lt. green}{rvrs on}{$e5}{rvrs on}{lt. green}{$e6}{down}{left:2}{rvrs on}{lt. green}{$e7}{rvrs on}{lt. green}{$e8}{rvrs off}"
-1304 DATA"{gray3}{rvrs on}{$e9}{rvrs on}{gray3}{$ea}{down}{left:2}{rvrs on}{gray3}{$eb}{rvrs on}{gray3}{$ec}{rvrs off}"
-1305 DATA"{gray1}{rvrs on}{$e9}{rvrs on}{gray1}{$ea}{down}{left:2}{rvrs on}{gray1}{$eb}{rvrs on}{gray1}{$ec}{rvrs off}"
-1306 DATA"{orange}{rvrs on}{$e5}{rvrs on}{orange}{$e6}{down}{left:2}{rvrs on}{orange}{$e7}{rvrs on}{orange}{$e8}{rvrs off}"
-1307 DATA"{gray1}{rvrs on}{$ed}{rvrs on}{gray1}{$ee}{down}{left:2}{rvrs on}{gray1}{$f0}{rvrs on}{gray1}{$ef}{rvrs off}"
-1308 DATA"{gray1}{rvrs on}{$ed}{rvrs on}{gray1}{$ee}{down}{left:2}{rvrs on}{gray1}{$f0}{rvrs on}{gray1}{$f1}{rvrs off}"
-1309 DATA"{brown}{rvrs on}{$f2}{rvrs on}{brown}{$f3}{down}{left:2}{rvrs on}{brown}{$f4}{rvrs on}{brown}{$f5}{rvrs off}"
-1310 DATA"{gray1}{rvrs on}{$f6}{rvrs on}{gray1}{$f7}{down}{left:2}{rvrs on}{gray1}{$f8}{rvrs on}{gray1}{$f9}{rvrs off}"
-1311 DATA"{gray1}{rvrs on}{$fa}{rvrs on}{gray1}{$fb}{down}{left:2}{rvrs on}{gray1}{$fc}{rvrs on}{gray1}{$fd}{rvrs off}"
-1312 DATA"{lt. green}{rvrs on}{$f6}{rvrs on}{lt. green}{$f7}{down}{left:2}{rvrs on}{lt. green}{$f8}{rvrs on}{lt. green}{$f9}{rvrs off}"
-1313 DATA"{lt. red}{rvrs on}{$f2}{rvrs on}{lt. red}{$f3}{down}{left:2}{rvrs on}{lt. red}{$f4}{rvrs on}{lt. red}{$f5}{rvrs off}"
-1314 DATA"{lt. green}{rvrs on}{$f2}{rvrs on}{lt. green}{$f3}{down}{left:2}{rvrs on}{lt. green}{$f4}{rvrs on}{lt. green}{$f5}{rvrs off}"
-1315 DATA"{gray1}{rvrs on}{$f2}{rvrs on}{gray1}{$f3}{down}{left:2}{rvrs on}{gray1}{$f4}{rvrs on}{gray1}{$f5}{rvrs off}"
-1316 DATA"{lt. green}{rvrs on}{$fa}{rvrs on}{lt. green}{$fb}{down}{left:2}{rvrs on}{lt. green}{$fc}{rvrs on}{lt. green}{$fd}{rvrs off}"
-1317 DATA"{brown}{rvrs off}{$c0}{rvrs off}{brown}{$c0}{down}{left:2}{rvrs off}{brown}{$c0}{rvrs off}{brown}{$c0}{rvrs off}"
-1318 DATA"{brown}{rvrs off}{$c0}{rvrs off}{brown}{$c0}{down}{left:2}{rvrs off}{brown}{$c0}{rvrs off}{brown}{$c0}{rvrs off}"
-1319 DATA"{orange}{rvrs off}{$d0}{rvrs off}{orange}{$c0}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$d0}{rvrs off}"
-1320 DATA"{orange}{rvrs off}{$d1}{rvrs off}{orange}{$d2}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$d0}{rvrs off}"
-1321 DATA"{black}{rvrs on}X{rvrs on}{black}Y{down}{left:2}{rvrs on}{black}Z{rvrs on}{black}[{rvrs off}"
-1322 DATA"{black}{rvrs on}{$c0}{rvrs on}{black}{$c1}{down}{left:2}{rvrs on}{black}{$c2}{rvrs on}{black}{$c3}{rvrs off}"
-1323 DATA"{black}{rvrs on}{$c4}{rvrs on}{black}{$c5}{down}{left:2}{rvrs on}{black}{$c6}{rvrs on}{black}{$c7}{rvrs off}"
-1324 DATA"{black}{rvrs on}{$c8}{rvrs on}{black}{$c9}{down}{left:2}{rvrs on}{black}{$ca}{rvrs on}{black}{$cb}{rvrs off}"
-1325 DATA"{black}{rvrs on}{$cc}{rvrs on}{black}{$cd}{down}{left:2}{rvrs on}{black}{$ce}{rvrs on}{black}{$cf}{rvrs off}"
-1326 DATA"{green}{rvrs on}P{rvrs on}{green}Q{down}{left:2}{rvrs on}{green}R{rvrs on}{green}S{rvrs off}"
-1327 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
-1328 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
-1329 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
-1330 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1303 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1304 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1305 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1306 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1307 DATA"{lt. green}{rvrs on}{$e5}{rvrs on}{lt. green}{$e6}{down}{left:2}{rvrs on}{lt. green}{$e7}{rvrs on}{lt. green}{$e8}{rvrs off}"
+1308 DATA"{gray3}{rvrs on}{$e9}{rvrs on}{gray3}{$ea}{down}{left:2}{rvrs on}{gray3}{$eb}{rvrs on}{gray3}{$ec}{rvrs off}"
+1309 DATA"{gray1}{rvrs on}{$e9}{rvrs on}{gray1}{$ea}{down}{left:2}{rvrs on}{gray1}{$eb}{rvrs on}{gray1}{$ec}{rvrs off}"
+1310 DATA"{orange}{rvrs on}{$e5}{rvrs on}{orange}{$e6}{down}{left:2}{rvrs on}{orange}{$e7}{rvrs on}{orange}{$e8}{rvrs off}"
+1311 DATA"{gray1}{rvrs on}{$ed}{rvrs on}{gray1}{$ee}{down}{left:2}{rvrs on}{gray1}{$f0}{rvrs on}{gray1}{$ef}{rvrs off}"
+1312 DATA"{gray1}{rvrs on}{$ed}{rvrs on}{gray1}{$ee}{down}{left:2}{rvrs on}{gray1}{$f0}{rvrs on}{gray1}{$f1}{rvrs off}"
+1313 DATA"{brown}{rvrs on}{$f2}{rvrs on}{brown}{$f3}{down}{left:2}{rvrs on}{brown}{$f4}{rvrs on}{brown}{$f5}{rvrs off}"
+1314 DATA"{gray1}{rvrs on}{$f6}{rvrs on}{gray1}{$f7}{down}{left:2}{rvrs on}{gray1}{$f8}{rvrs on}{gray1}{$f9}{rvrs off}"
+1315 DATA"{gray1}{rvrs on}{$fa}{rvrs on}{gray1}{$fb}{down}{left:2}{rvrs on}{gray1}{$fc}{rvrs on}{gray1}{$fd}{rvrs off}"
+1316 DATA"{lt. green}{rvrs on}{$f6}{rvrs on}{lt. green}{$f7}{down}{left:2}{rvrs on}{lt. green}{$f8}{rvrs on}{lt. green}{$f9}{rvrs off}"
+1317 DATA"{lt. red}{rvrs on}{$f2}{rvrs on}{lt. red}{$f3}{down}{left:2}{rvrs on}{lt. red}{$f4}{rvrs on}{lt. red}{$f5}{rvrs off}"
+1318 DATA"{lt. green}{rvrs on}{$f2}{rvrs on}{lt. green}{$f3}{down}{left:2}{rvrs on}{lt. green}{$f4}{rvrs on}{lt. green}{$f5}{rvrs off}"
+1319 DATA"{gray1}{rvrs on}{$f2}{rvrs on}{gray1}{$f3}{down}{left:2}{rvrs on}{gray1}{$f4}{rvrs on}{gray1}{$f5}{rvrs off}"
+1320 DATA"{lt. green}{rvrs on}{$fa}{rvrs on}{lt. green}{$fb}{down}{left:2}{rvrs on}{lt. green}{$fc}{rvrs on}{lt. green}{$fd}{rvrs off}"
+1321 DATA"{brown}{rvrs off}{$c0}{rvrs off}{brown}{$c0}{down}{left:2}{rvrs off}{brown}{$c0}{rvrs off}{brown}{$c0}{rvrs off}"
+1322 DATA"{brown}{rvrs off}{$c0}{rvrs off}{brown}{$c0}{down}{left:2}{rvrs off}{brown}{$c0}{rvrs off}{brown}{$c0}{rvrs off}"
+1323 DATA"{orange}{rvrs off}{$d0}{rvrs off}{orange}{$c0}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$d0}{rvrs off}"
+1324 DATA"{orange}{rvrs off}{$d1}{rvrs off}{orange}{$d2}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$d0}{rvrs off}"
+1325 DATA"{black}{rvrs on}X{rvrs on}{black}Y{down}{left:2}{rvrs on}{black}Z{rvrs on}{black}[{rvrs off}"
+1326 DATA"{black}{rvrs on}{$c0}{rvrs on}{black}{$c1}{down}{left:2}{rvrs on}{black}{$c2}{rvrs on}{black}{$c3}{rvrs off}"
+1327 DATA"{black}{rvrs on}{$c4}{rvrs on}{black}{$c5}{down}{left:2}{rvrs on}{black}{$c6}{rvrs on}{black}{$c7}{rvrs off}"
+1328 DATA"{black}{rvrs on}{$c8}{rvrs on}{black}{$c9}{down}{left:2}{rvrs on}{black}{$ca}{rvrs on}{black}{$cb}{rvrs off}"
+1329 DATA"{black}{rvrs on}{$cc}{rvrs on}{black}{$cd}{down}{left:2}{rvrs on}{black}{$ce}{rvrs on}{black}{$cf}{rvrs off}"
+1330 DATA"{green}{rvrs on}P{rvrs on}{green}Q{down}{left:2}{rvrs on}{green}R{rvrs on}{green}S{rvrs off}"
 1331 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
 1332 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
-1333 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
-1334 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
-1335 DATA"{orange}{rvrs off}{$c0}{rvrs off}{orange}{$c0}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$c0}{rvrs off}"
-1336 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
-1337 DATA"{orange}{rvrs off}{$c0}{rvrs off}{orange}{$c0}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$c0}{rvrs off}"
+1333 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
+1334 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
+1335 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
+1336 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
+1337 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
 1338 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
-1339 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
+1339 DATA"{orange}{rvrs off}{$c0}{rvrs off}{orange}{$c0}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$c0}{rvrs off}"
 1340 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
-1341 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
+1341 DATA"{orange}{rvrs off}{$c0}{rvrs off}{orange}{$c0}{down}{left:2}{rvrs off}{orange}{$c0}{rvrs off}{orange}{$c0}{rvrs off}"
 1342 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
 1343 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
 1344 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
@@ -1349,3 +1349,7 @@
 1348 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
 1349 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
 1350 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
+1351 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
+1352 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
+1353 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"
+1354 DATA"{cyan}{rvrs off}{$c0}{rvrs off}{cyan}{$c0}{down}{left:2}{rvrs off}{cyan}{$c0}{rvrs off}{cyan}{$c0}{rvrs off}"

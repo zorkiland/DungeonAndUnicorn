@@ -1745,6 +1745,12 @@ goto{:goto_newgame}
 		print"{$c6}{$c7:12}{$c7:12}{$c7:2}{$c7:12}";
 		poke 50151,72:poke 56295,9
 	return
+{:gosub_print_rahmen_unten_cyan}
+		print dd$;"{dk. gray}{up}{$c1}{$c2:38}{$c3}";		
+		for i=0 to 3:print"{$c4}                                      {$c5}";:next
+		print"{$c6}{$c7:12}{$c7:12}{$c7:2}{$c7:12}";
+		poke 50151,72:poke 56295,9
+	return
 {:gosub_print_rahmen_mitte}
 	print"{brown}{home}{down:3}{$c1}{$c2:38}{$c3}";
 	fori=0to13
@@ -1805,37 +1811,37 @@ goto{:goto_newgame}
 		gosub{:gosub_joywait_fire}
 		return
 {:gosub_print_txt_game}	
-	gosub{:gosub_print_rahmen_unten_txt}
 	'
 	'text nacho
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}[" ;{var:monster_name}(ma);"]"
+		gosub{:gosub_print_rahmen_unten_txt}
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}"  ;{var:monster_name}(ma);":"
 		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{cyan}<"  ;sb$(0);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{cyan}"   ;sb$(1);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{cyan}"   ;sb$(2);">"
 		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
-		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}
 	'
 	'text kron
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}["  ;{var:player_name}(pa);"]"
+		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_cyan}
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}"   ;{var:player_name}(pa);":"
 		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}<" ;sb$(3);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{white}"  ;sb$(4);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{white}"  ;sb$(5);">"
 		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
-		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}["  ;{var:player_name}(pa);"]"
+		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_cyan}
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}"   ;{var:player_name}(pa);":"
 		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(6);:sy=20:sx=11:ss=3		
 		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}		
-		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}		
+
 
 	'
 	'text lena
-		if pt=1 and pa=1 then print"{home}{right:2}{down:19}{white}[" ;{var:player_name}(pa);"]"
+		if pt=1 and pa=1 then print"{home}{right:2}{down:19}{white}"  ;{var:player_name}(pa);":"
 		if pt=1 and pa=1 then print"{home}{right:2}{down:20}{cyan}<"  ;sb$(7);
 		if pt=1 and pa=1 then print"{home}{right:2}{down:21}{cyan}"   ;sb$(8);">"
 		if pt=1 and pa=1 then gosub{:gosub_joywait_fire}
-		if pt=1 and pa=1 thengosub{:gosub_print_rahmen_unten_txt}
+	
 
-
+		gosub{:gosub_print_rahmen_unten_txt}
 		gosub{:gosub_print_rahmen_unten_map}
 		gosub{:gosub_print_player_hp}
 		pt=0:pa=0:ma=0
