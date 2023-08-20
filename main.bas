@@ -1795,7 +1795,6 @@ goto{:goto_newgame}
 		close 1:poke 56322,255
 	return
 {:gosub_print_txt_screen}
-	gosub{:gosub_clear_top}
 	'infotext blau
 		print"{home}{right:2}{down:2}{white}"  ;si$(0);
 		print"{home}{right:2}{down:4}{white}"  ;si$(1);
@@ -1804,7 +1803,6 @@ goto{:goto_newgame}
 		print"{home}{right:2}{down:10}{white}" ;si$(4);
 		print"{home}{right:2}{down:12}{white}" ;si$(5);	
 		gosub{:gosub_joywait_fire}
-		gosub{:gosub_clear_map}
 		return
 {:gosub_print_txt_game}	
 	gosub{:gosub_print_rahmen_unten_txt}		
