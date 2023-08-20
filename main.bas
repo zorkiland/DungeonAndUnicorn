@@ -530,10 +530,10 @@ goto{:goto_newgame}
 		if c=52 then {var:seq_select}="dolm"  : pt=1 : pa=2  : {var:npc_flag}(1)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(2)=1 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_map} :goto{:mainloop_oldpos}
 		if c=51 then {var:seq_select}="mira"  : pt=1 : pa=3  : {var:npc_flag}(2)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(3)=1 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_map} :goto{:mainloop_oldpos}
 	'monster
-		if c=67 then {var:seq_select}="nacho" : pt=1 : ma=3  : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=4 :{var:npc_flag}(3)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c=72 then {var:seq_select}="troll" : pt=1 : ma=8  : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=9 :{var:npc_flag}(4)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c=76 then {var:seq_select}="dracu" : pt=1 : ma=12 : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=13:{var:npc_flag}(5)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
-		if c=77 then {var:seq_select}="glado" : pt=1 : ma=13 : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=14:{var:npc_flag}(6)=1 :gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:battel}
+		if c=67 then {var:seq_select}="nacho" : pt=1 : ma=3  : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=4 :{var:npc_flag}(3)=1 :poke {var:sprite_on_off},{%:00000000}:gosub{:gosub_clear_map}:goto{:battel}
+		if c=72 then {var:seq_select}="troll" : pt=1 : ma=8  : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=9 :{var:npc_flag}(4)=1 :poke {var:sprite_on_off},{%:00000000}:gosub{:gosub_clear_map}:goto{:battel}
+		if c=76 then {var:seq_select}="dracu" : pt=1 : ma=12 : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=13:{var:npc_flag}(5)=1 :poke {var:sprite_on_off},{%:00000000}:gosub{:gosub_clear_map}:goto{:battel}
+		if c=77 then {var:seq_select}="glado" : pt=1 : ma=13 : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=14:{var:npc_flag}(6)=1 :poke {var:sprite_on_off},{%:00000000}:gosub{:gosub_clear_map}:goto{:battel}
 {:gosub_raumaktion_gefunden}
 	bi%={%:00000010}:gosub{:gosub_sprite_off}	
 	gosub {:gosub_clear_info_txt}
