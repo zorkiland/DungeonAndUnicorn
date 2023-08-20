@@ -1,5 +1,5 @@
 data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
-data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
+data"{cyan}{rvrs off}{192}{rvrs off}{cyan}{192}{down}{left:2}{rvrs off}{cyan}{192}{rvrs off}{cyan}{192}{rvrs off}"
 data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
 data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"
 data"{black}{rvrs off}{192}{rvrs off}{black}{192}{down}{left:2}{rvrs off}{black}{192}{rvrs off}{black}{192}{rvrs off}"

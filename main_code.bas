@@ -1806,34 +1806,41 @@ goto{:goto_newgame}
 		return
 {:gosub_print_txt_game}	
 	gosub{:gosub_print_rahmen_unten_txt}
-
+	'
 	'text nacho
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}";{var:monster_name}(ma);":"
-		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{cyan}<";sb$(0);
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}[" ;{var:monster_name}(ma);"]"
+		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{cyan}<";sb$(0);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{cyan}" ;sb$(1);
 		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{cyan}" ;sb$(2);">"
 		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
 		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}
+	'
 	'text kron
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}";{var:player_name}(pa);":"
-		if pt=1 and ma=3 then print"{home}{right:1}{down:20}{cyan}<";sb$(3);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{cyan}" ;sb$(4);">"
-		if pt=1 and ma=3 then print"{home}{right:2}{down:23}{white}";sb$(5);:sy=23:sx=11
-		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}
-		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}	
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}[" ;{var:player_name}(pa);"]"
+		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}<";sb$(3);
+		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{white}" ;sb$(4);
+		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{white}" ;sb$(5);">"
+		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
+		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}
+		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}[" ;{var:player_name}(pa);"]"
+		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}" ;sb$(6);:sy=20:sx=11:ss=3		
+		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}		
+		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_txt}		
 
+	'
 	'text lena
 		if pt=1 and pa=1 then print"{home}{right:2}{down:19}{white}";{var:player_name}(pa);":"
-		if pt=1 and pa=1 then print"{home}{right:1}{down:20}{cyan}<";sb$(6);
-		if pt=1 and pa=1 then print"{home}{right:2}{down:21}{cyan}" ;sb$(7);">"
+		if pt=1 and pa=1 then print"{home}{right:2}{down:20}{cyan}<";sb$(7);
+		if pt=1 and pa=1 then print"{home}{right:2}{down:21}{cyan}" ;sb$(8);">"
 		if pt=1 and pa=1 then gosub{:gosub_joywait_fire}
-		gosub{:gosub_print_rahmen_unten_txt}
+		if pt=1 and pa=1 thengosub{:gosub_print_rahmen_unten_txt}
 
 
 		gosub{:gosub_print_rahmen_unten_map}
 		gosub{:gosub_print_player_hp}
 		pt=0:pa=0:ma=0
 		return
+
 {:gosub_print_txt_screen_choose}
 	ch=1:a$=""
 	va$=""
@@ -1843,10 +1850,10 @@ goto{:goto_newgame}
 	poke {var:bildschirmspeicher}+py+px,35 : 'print cursor
 	{:joy_choose}
 		jm%=0:gosub{:gosub_joy}
-		if a$="a" then ch=1 : poke {var:bildschirmspeicher}+py+px+3,32 :poke {var:bildschirmspeicher}+py+px,35
-		if a$="d" then ch=0 : poke {var:bildschirmspeicher}+py+px,32   :poke {var:bildschirmspeicher}+py+px+3,35
-		if a$=chr$(13) and ch=1 then gosub{:gosub_clear_top} : return
-		if a$=chr$(13) and ch=0 then gosub{:gosub_clear_top} : return
+		if a$="a" then ch=1 : poke {var:bildschirmspeicher}+py+px+ss,32 :poke {var:bildschirmspeicher}+py+px,35
+		if a$="d" then ch=0 : poke {var:bildschirmspeicher}+py+px,32    :poke {var:bildschirmspeicher}+py+px+ss,35
+		if a$=chr$(13) and ch=1 then return
+		if a$=chr$(13) and ch=0 then return
 	goto{:joy_choose}
 {:gosub_load_map}
 	poke {var:sprite_on_off},{%:00000000} 
