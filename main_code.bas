@@ -197,7 +197,11 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 		dim {var:schalter_raum}(10),{var:schalter_posx}(10),{var:schalter_posy}(10),{var:schalter_flag}(10),{var:aktor_raum}(10),{var:aktor_posx}(10),{var:aktor_posy}(10)
 	'npc flag
 		dim {var:npc_raum}(10),{var:npc_posx}(10),{var:npc_posy}(10),{var:npc_flag}(10)
-		dim sb$(99),si$(5)
+	'txt
+		dim sb$(224),si$(5)
+'
+{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
+'
 'variabeln speicher
 	{var:multifarbspeicher_1}  =53282
 	{var:multifarbspeicher_2}  =53283
@@ -262,6 +266,26 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 'konstante Variabel string
 	dd$="{home}{down:20}{white}"
 	cd$="{down:25}"
+'
+'sprite speicherbank zeichensatz color
+	{var:spritebank}={$:a0}'                                spritebank $10=$400 versatz von $c000
+	poke {var:video_interface_chip}+21,0'                   sprites aus
+	poke 648,{$:c0}'                                        bildschirspeicher ab ($c000) hibyte $c0
+	poke {$:dd00},0'                                        speicherbank 3    ab ($c000)
+	poke {$:d018},{%:00001000}'                             zeichensatz       ab ($e000)
+	poke 53270,peek(53270)or16'                             multicolor (ein=16 aus=239)
+	poke {var:multifarbspeicher_1},{var:farbe_or}'          multicolor 1 =8 (or)
+	poke {var:multifarbspeicher_2},{var:farbe_sw}'          multicolor 2 =0 (sw)
+	poke {var:rahmenfarbe},{var:farbe_sw}'                  rahmenfarbe
+	poke {var:bildschirmfarbe},{var:farbe_bl}'              bildschirmfarbe
+'
+print"{clear}"
+'
+'set raster
+	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
+	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
+	sys 820                  'start asm.raster
+'
 'read monster
 	for i=0 to 13
 		read {var:monster_name}(i),{var:monster_hp}(i),{var:monster_mp}(i),{var:monster_level}(i)
@@ -291,27 +315,10 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 	{var:monster_tile}(i) = {var:map_tile}(zz)
 	zz=zz+1
 	next i
-'sprite speicherbank zeichensatz color
-	{var:spritebank}={$:a0}'                                spritebank $10=$400 versatz von $c000
-	poke {var:video_interface_chip}+21,0'                   sprites aus
-	poke 648,{$:c0}'                                        bildschirspeicher ab ($c000) hibyte $c0
-	poke {$:dd00},0'                                        speicherbank 3    ab ($c000)
-	poke {$:d018},{%:00001000}'                             zeichensatz       ab ($e000)
-	poke 53270,peek(53270)or16'                             multicolor (ein=16 aus=239)
-	poke {var:multifarbspeicher_1},{var:farbe_or}'          multicolor 1 =8 (or)
-	poke {var:multifarbspeicher_2},{var:farbe_sw}'          multicolor 2 =0 (sw)
-	poke {var:rahmenfarbe},{var:farbe_sw}'                  rahmenfarbe
-	poke {var:bildschirmfarbe},{var:farbe_bl}'              bildschirmfarbe
-
-'set raster
-	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
-	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
-	sys 820                  'start asm.raster
-
+'
 '
 {:start}
 gosub {:gosub_raumaktion_variabeln}
-{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
 goto{:goto_newgame}
 '"""""""""""""""""""""""""""""""""""""""""
 'mainloop
@@ -525,15 +532,20 @@ goto{:goto_newgame}
 	'else
 		goto{:mainloop_oldpos}
 {:goto_raumaktion_npc}
-	'player
-		if c=50 then {var:seq_select}="lena"  : pt=1 : pa=1  : {var:npc_flag}(0)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(1)=1 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_map} :goto{:mainloop_oldpos}  
-		if c=52 then {var:seq_select}="dolm"  : pt=1 : pa=2  : {var:npc_flag}(1)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(2)=1 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_map} :goto{:mainloop_oldpos}
-		if c=51 then {var:seq_select}="mira"  : pt=1 : pa=3  : {var:npc_flag}(2)=1 : gosub{:gosub_raumaktion_poke_mapspeicher} : {var:player_activ}(3)=1 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_map} :goto{:mainloop_oldpos}
-	'monster
-		if c=67 then {var:seq_select}="nacho" : pt=1 : ma=3  : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=4 :{var:npc_flag}(3)=1 :goto{:battel}
-		if c=72 then {var:seq_select}="troll" : pt=1 : ma=8  : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=9 :{var:npc_flag}(4)=1 :goto{:battel}
-		if c=76 then {var:seq_select}="dracu" : pt=1 : ma=12 : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=13:{var:npc_flag}(5)=1 :goto{:battel}
-		if c=77 then {var:seq_select}="glado" : pt=1 : ma=13 : gosub{:gosub_print_txt_game} : if ch=0 then goto{:mainloop_oldpos} :ff=14:{var:npc_flag}(6)=1 :goto{:battel}
+	'lena
+		if c=50 then pt=1 :sb=5 :{var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
+		if c=50 then gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos}  
+		
+		'if c=52 then {var:seq_select}="dolm"
+		'if c=51 then {var:seq_select}="mira"
+	'nacho
+		if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}
+		if c=67 then pt=2 : sb=65  :gosub{:gosub_print_txt_game}	
+		if c=67 then pt=3 : sb=193 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear}
+		if c=67 and ch=0 then goto{:mainloop_oldpos} :ff=4 :{var:npc_flag}(3)=1 :goto{:battel}
+		'if c=72 then {var:seq_select}="troll"
+		'if c=76 then {var:seq_select}="dracu"
+		'if c=77 then {var:seq_select}="glado"
 {:gosub_raumaktion_gefunden}
 	bi%={%:00000010}:gosub{:gosub_sprite_off}	
 	gosub {:gosub_clear_info_txt}
@@ -1779,7 +1791,7 @@ goto{:goto_newgame}
 	poke 56322,224 : 'tastatur 224=aus 225=an
 	if {var:seq_select}="nibelheim" then open 1,8,4,"txt.nibelheim,s,r"
 	if {var:seq_select}=""          then return
-	for i= 0 to 99 : sb$(i)="":next i
+	for i= 0 to 224 : sb$(i)="":next i
 	i=0	
 	{:input_game_seq}
 		input#1,sb$(i)
@@ -1811,41 +1823,34 @@ goto{:goto_newgame}
 		gosub{:gosub_joywait_fire}
 		return
 {:gosub_print_txt_game}	
-	'
-	'text nacho
-		gosub{:gosub_print_rahmen_unten_txt}
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{white}"  ;{var:monster_name}(ma);":"
-		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{cyan}<"  ;sb$(0);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{cyan}"   ;sb$(1);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{cyan}"   ;sb$(2);">"
-		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
-	'
-	'text kron
-		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_cyan}
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}"   ;{var:player_name}(pa);":"
-		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}<" ;sb$(3);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:21}{white}"  ;sb$(4);
-		if pt=1 and ma=3 then print"{home}{right:2}{down:22}{white}"  ;sb$(5);">"
-		if pt=1 and ma=3 then gosub{:gosub_joywait_fire}
-		if pt=1 and ma=3 then gosub{:gosub_print_rahmen_unten_cyan}
-		if pt=1 and ma=3 then print"{home}{right:2}{down:19}{cyan}"   ;{var:player_name}(pa);":"
-		if pt=1 and ma=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(6);:sy=20:sx=11:ss=3		
-		if pt=1 and ma=3 then gosub{:gosub_print_txt_screen_choose}		
-
-
-	'
-	'text lena
-		if pt=1 and pa=1 then print"{home}{right:2}{down:19}{white}"  ;{var:player_name}(pa);":"
-		if pt=1 and pa=1 then print"{home}{right:2}{down:20}{cyan}<"  ;sb$(7);
-		if pt=1 and pa=1 then print"{home}{right:2}{down:21}{cyan}"   ;sb$(8);">"
-		if pt=1 and pa=1 then gosub{:gosub_joywait_fire}
-	
-
+	'text npc
+		if pt=1 then gosub{:gosub_print_rahmen_unten_txt}
+		if pt=1 then print"{home}{right:2}{down:19}{white}"  ;sb$(sb-1);":"
+		if pt=1 then print"{home}{right:2}{down:20}{cyan}"   ;sb$(sb+0);
+		if pt=1 then print"{home}{right:2}{down:21}{cyan}"   ;sb$(sb+1);
+		if pt=1 then print"{home}{right:2}{down:22}{cyan}"   ;sb$(sb+2);
+		if pt=1 then gosub{:gosub_joywait_fire} :return
+	'text player
+		if pt=2 then gosub{:gosub_print_rahmen_unten_cyan}
+		if pt=2 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);":"
+		if pt=2 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);
+		if pt=2 then print"{home}{right:2}{down:21}{white}"  ;sb$(sb+1);
+		if pt=2 then print"{home}{right:2}{down:22}{white}"  ;sb$(sb+2);
+		if pt=2 then gosub{:gosub_joywait_fire} :return
+	'text choose
+		if pt=3 then gosub{:gosub_print_rahmen_unten_cyan}
+		if pt=3 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);":"
+		if pt=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);:sy=20 :sx=11 :ss=3
+		if pt=3 then gosub{:gosub_print_txt_screen_choose} :return
+	return
+{:gosub_print_txt_game_clear}
+	'	
+	'txt clear
 		gosub{:gosub_print_rahmen_unten_txt}
 		gosub{:gosub_print_rahmen_unten_map}
 		gosub{:gosub_print_player_hp}
 		pt=0:pa=0:ma=0
-		return
+	return
 
 {:gosub_print_txt_screen_choose}
 	ch=1:a$=""
