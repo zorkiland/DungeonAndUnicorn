@@ -481,7 +481,7 @@ goto{:goto_newgame}
 		if y=8 and cr=2 then y=0 : cr=5  :goto{:mainloop_print_map}
 
 
-		if y=8 and cr=6 then y=0 : cr=10 :ml$="map1":gosub{:gosub_load_map}::gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_print_map}
+		if y=8 and cr=6 then y=0 : cr=10 :ml$="map1":gosub{:gosub_load_map}:gosub{:gosub_raumaktion_poke_mapspeicher}:goto{:mainloop_print_map}
 
 		'"""""""""""""""""""""""""""""""""""""""""""""""""
 		'end of map
@@ -532,20 +532,35 @@ goto{:goto_newgame}
 	'else
 		goto{:mainloop_oldpos}
 {:goto_raumaktion_npc}
-	'lena
-		if c=50 then pt=1 :sb=5 :{var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
-		if c=50 then gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos}  
-		
-		'if c=52 then {var:seq_select}="dolm"
-		'if c=51 then {var:seq_select}="mira"
-	'nacho
-		if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}
-		if c=67 then pt=2 : sb=65  :gosub{:gosub_print_txt_game}	
-		if c=67 then pt=3 : sb=193 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear}
-		if c=67 and ch=0 then goto{:mainloop_oldpos} :ff=4 :{var:npc_flag}(3)=1 :goto{:battel}
-		'if c=72 then {var:seq_select}="troll"
-		'if c=76 then {var:seq_select}="dracu"
-		'if c=77 then {var:seq_select}="glado"
+	'
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'	pt = txt game -> 1=npc 2=player 3=choose
+	'	sb = zeile text lena=5 in seq
+	'	
+	'	c=50 lena
+	'	c=52 dolm
+	'	c=51 mira
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'
+	if c=50 then {var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
+	if c=50 then pt=1 :sb=5 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos} 
+	'
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'	pt = txt game -> 1=npc 2=player 3=choose
+	'	sb = zeile text nacho=1 in seq
+	'	sx = (z.B.: ..kaempfen.X) ss = (z.B.: .jaX)
+	'	
+	'	c=67 nacho
+	'	c=72 troll
+	'	c=76 dracu
+	'	c=77 glado
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'
+	if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}                                                  'txt npc	
+	if c=67 then pt=2 : sb=65  :gosub{:gosub_print_txt_game}                                                  'txt player
+	if c=67 then pt=3 : sb=193 :sx=11 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose	
+	if c=67 and ch=0 then goto{:mainloop_oldpos} :ff=4 :{var:npc_flag}(3)=1 :goto{:battel}                    'oldpos oder battel
+	'
 {:gosub_raumaktion_gefunden}
 	bi%={%:00000010}:gosub{:gosub_sprite_off}	
 	gosub {:gosub_clear_info_txt}
@@ -1751,7 +1766,7 @@ goto{:goto_newgame}
 		print"{$c6}{$c7:12}{$c7:12}{$c8}{$c6}{$c7:12}";
 		poke 50151,72:poke 56295,9
 	return
-{:gosub_print_rahmen_unten_txt}
+{:gosub_print_rahmen_unten_white}
 		print dd$;"{brown}{up}{$c1}{$c2:38}{$c3}";		
 		for i=0 to 3:print"{$c4}                                      {$c5}";:next
 		print"{$c6}{$c7:12}{$c7:12}{$c7:2}{$c7:12}";
@@ -1779,7 +1794,8 @@ goto{:goto_newgame}
 {:gosub_clear_info_txt}
 	printdd$;"{right}{white}{$20:24}";
 	return
-{:gousb_print_black_seq}
+{:gousb_print_map_black}
+	'-> reserve
 	'-> sprite off
 	gosub{:gosub_clear_top}
 	poke {var:sprite_on_off},{%:00000000}
@@ -1803,7 +1819,6 @@ goto{:goto_newgame}
 	poke 56322,224 : 'tastatur 224=aus 225=an
 	if {var:seq_select}="intro"     then open 1,8,4,"txt.intro,s,r"	
 	if {var:seq_select}=""          then return
-	
 	for i=0 to 5 : si$(i)="":next i
 	i=0
 	{:input_screen_seq}
@@ -1823,35 +1838,44 @@ goto{:goto_newgame}
 		gosub{:gosub_joywait_fire}
 		return
 {:gosub_print_txt_game}	
-	'text npc
-		if pt=1 then gosub{:gosub_print_rahmen_unten_txt}
-		if pt=1 then print"{home}{right:2}{down:19}{white}"  ;sb$(sb-1);":"
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	' npc            (pt=1) (txt=cyan)  (rahmen=white) 
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+		if pt=1 then gosub{:gosub_print_rahmen_unten_white}
+		if pt=1 then print"{home}{right:2}{down:19}{white}"  ;sb$(sb-1);
 		if pt=1 then print"{home}{right:2}{down:20}{cyan}"   ;sb$(sb+0);
 		if pt=1 then print"{home}{right:2}{down:21}{cyan}"   ;sb$(sb+1);
 		if pt=1 then print"{home}{right:2}{down:22}{cyan}"   ;sb$(sb+2);
 		if pt=1 then gosub{:gosub_joywait_fire} :return
-	'text player
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	' player / info  (pt=2) (txt=white) (rahmen=cyan) 
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
 		if pt=2 then gosub{:gosub_print_rahmen_unten_cyan}
-		if pt=2 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);":"
+		if pt=2 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);
 		if pt=2 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);
 		if pt=2 then print"{home}{right:2}{down:21}{white}"  ;sb$(sb+1);
 		if pt=2 then print"{home}{right:2}{down:22}{white}"  ;sb$(sb+2);
-		if pt=2 then gosub{:gosub_joywait_fire} :return
-	'text choose
+		if pt=2 then gosub{:gosub_joywait_fire} :return	
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	' choose         (pt=3) (txt=white) (rahmen=cyan)
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
 		if pt=3 then gosub{:gosub_print_rahmen_unten_cyan}
-		if pt=3 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);":"
-		if pt=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);:sy=20 :sx=11 :ss=3
+		if pt=3 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);
+		if pt=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);:sy=20
 		if pt=3 then gosub{:gosub_print_txt_screen_choose} :return
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	' < = anfuerungszeichen unten
+	' > = anfuehrungszeichen oben
+	' % = doppelpunkt
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	return
 {:gosub_print_txt_game_clear}
-	'	
 	'txt clear
-		gosub{:gosub_print_rahmen_unten_txt}
+		gosub{:gosub_print_rahmen_unten_white}
 		gosub{:gosub_print_rahmen_unten_map}
 		gosub{:gosub_print_player_hp}
 		pt=0:pa=0:ma=0
 	return
-
 {:gosub_print_txt_screen_choose}
 	ch=1:a$=""
 	va$=""
