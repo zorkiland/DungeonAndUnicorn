@@ -80,8 +80,9 @@
 	{var:bildschirmfarbe=qq}
 	{var:rahmenfarbe=qr}
 	{var:start_map=sm}
+	{var:offset_map=ze}
 	{var:video_interface_chip=v}
-'superva_sprite
+'supervar_sprite
 	{var:sprite0_x=h0}
 	{var:sprite0_y=h1}
 	{var:sprite1_x=h2}
@@ -171,6 +172,9 @@
 	{var:event_posx=ex%}
 	{var:event_posy=ey%}
 	{var:event_item=et%}
+	{var:event_true=aa%}
+'supervar_joy
+	{var:joy_map_true=jm%}
 '
 if peek(2)=0  then poke 2,99 : load"asm.raster",8,1
 if peek(2)=99 then poke 2,98 : load"charset",8,1
@@ -336,40 +340,16 @@ goto{:goto_newgame}
 {:mainloop_print_map}
 	'-> sprite off
 	poke {var:sprite_on_off},{%:00000000}
+
+	'color und name raum
 	if cr=10 then poke 1020,{var:farbe_dgr} : gb$="schlafender wald"
 	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
 	if cr=8 or cr=5 or cr=2 then poke 1020,{var:farbe_dgr}  : gb$="im haus von lena"
-
-	'-> new
-	if cr=0 then ze=0
-	if cr=1 then ze=20
-	if cr=2 then ze=40
-
-	if cr=3 then ze=480
-	if cr=4 then ze=480+20
-	if cr=5 then ze=480+40
-
-	if cr=6 then ze=960
-	if cr=7 then ze=960+20
-	if cr=8 then ze=960+40
-
-	if cr=10 then ze=0
-	if cr=11 then ze=20
-	if cr=12 then ze=40
-
-	if cr=13 then ze=480
-	if cr=14 then ze=480+20
-	if cr=15 then ze=480+40
-
-	if cr=16 then ze=960
-	if cr=17 then ze=960+20
-	if cr=18 then ze=960+40
-
-	cp={var:start_map}+ze	
-	
+	'
 	gosub{:gosub_clear_top}
 	gosub{:gosub_print_map}
-	print"{home}{down}{right}{white}";gb$	
+	print"{home}{down}{right}{white}";gb$
+	'print"{home}{down}{right}{white}";fre(0)
 {:mainloop_print_playertile}
 	gosub{:gosub_sprite_player}	
 	'if int(ti/60) = 60*15 then gosub{:gosub_raumaktion_variabeln_nachwachsend}
@@ -379,37 +359,35 @@ goto{:goto_newgame}
 	ox=zx:oy=zy
 	zx=x:zy=y
 {:mainloop_joyauswertung}
-	jm%=1
+	{var:joy_map_true}=1
 	gosub{:gosub_joy}	
 	if a$="w"  then zy=y-1:goto{:mainloop_if_newpos}
 	if a$="a"  then zx=x-1:goto{:mainloop_if_newpos}
 	if a$="d"  then zx=x+1:goto{:mainloop_if_newpos}
 	if a$="s"  then zy=y+1:goto{:mainloop_if_newpos}
-	if a$="fu" then jm%=0 : goto {:goto_inventar}
-	if a$="fd" then jm%=0 : goto {:goto_equipment}	
+	if a$="fu" then {var:joy_map_true}=0 : goto {:goto_inventar}
+	if a$="fd" then {var:joy_map_true}=0 : goto {:goto_equipment}	
 
-	if a$=chr$(13) and ut$="gefunden" then jm%=0 :gosub{:gosub_raumaktion_gefunden} :ut$="":goto{:mainloop_oldpos}
-	if a$=chr$(13) and ut$="schalter" then jm%=0 :gosub{:gosub_raumaktion_schalter} :ut$="":goto{:mainloop_oldpos}
-	if a$=chr$(13) and ut$="schlafen" then jm%=0 :gosub{:gosub_raumaktion_schlafen} :ut$="":goto{:mainloop_oldpos}
+	if a$=chr$(13) and ut$="gefunden" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_gefunden} :ut$="":goto{:mainloop_oldpos}
+	if a$=chr$(13) and ut$="schalter" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_schalter} :ut$="":goto{:mainloop_oldpos}
+	if a$=chr$(13) and ut$="schlafen" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_schlafen} :ut$="":goto{:mainloop_oldpos}
 
 	goto {:mainloop_joyauswertung}
 {:mainloop_if_newpos}	
 	'delete ut$
 		ut$=""
 	'wenn event(x) = find item passt
-		aa%=0
+		{var:event_true}=0
 		for i=0 to 12
-		if {var:event_raum}(i)=cr and {var:event_posx}(i)=zx and {var:event_posy}(i)=zy then aa%=1
+		if {var:event_raum}(i)=cr and {var:event_posx}(i)=zx and {var:event_posy}(i)=zy then {var:event_true}=1
 		next i
 	'wenn am rand der map
 		if zx=-1 or zx=20 or zy=-1 or zy=8 then{:mainloop_set_newpos}
 	'read nextpos map
-	'-> new
-		c=peek(cp+zx+zy*60)
+		c=peek({var:start_map}+{var:offset_map}+zx+(zy*60))
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'wenn nextpos
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
-
 		
 		if c>=80 and c<=111 then {:mainloop_set_newpos}	'wenn c=80-100 begehbar
 		if c=7              then {:mainloop_set_newpos}	'wenn c=07 bruecke
@@ -501,27 +479,26 @@ goto{:goto_newgame}
 '->mapedit
 {:goto_raumaktion_durchgang}
 	'haus
-		if cr=3  and y=4 then cr=8:x=10:y=6  :goto{:mainloop_print_map}
+		if cr=3  and y=4 then cr=8:x=10 :y=6 :goto{:mainloop_print_map}
 		if cr=8  and y=6 then cr=3 :x=5 :y=4 :goto{:mainloop_print_map}
 	goto{:mainloop_print_map}
 {:goto_raumaktion_ausrufezeichen}
 	gosub{:gosub_clear_info_txt}
 	'aktion truhe
-		if c=12  and aa%=0 then goto {:mainloop_oldpos}
-		if c=12  and aa%=1 then gosub{:gosub_sprite_aurufezeichen}:ut$="gefunden"  :goto{:mainloop_oldpos}
+		if c=12  and {var:event_true}=0 then goto {:mainloop_oldpos}
+		if c=12  and {var:event_true}=1 then gosub{:gosub_sprite_aurufezeichen}:ut$="gefunden"  :goto{:mainloop_oldpos}
 	'aktion grass
-		if c=24 and aa%=0  then goto {:mainloop_oldpos}
-		if c=24 and aa%=1  then gosub{:gosub_sprite_aurufezeichen} :ut$="gefunden" :goto{:mainloop_oldpos}
+		if c=24 and {var:event_true}=0  then goto {:mainloop_oldpos}
+		if c=24 and {var:event_true}=1  then gosub{:gosub_sprite_aurufezeichen} :ut$="gefunden" :goto{:mainloop_oldpos}
 	'aktion baum
-		if c=25 and aa%=0  then goto {:mainloop_oldpos}
-		if c=25 and aa%=1  then gosub{:gosub_sprite_aurufezeichen} :ut$="gefunden" :goto{:mainloop_oldpos}
+		if c=25 and {var:event_true}=0  then goto {:mainloop_oldpos}
+		if c=25 and {var:event_true}=1  then gosub{:gosub_sprite_aurufezeichen} :ut$="gefunden" :goto{:mainloop_oldpos}
 	'aktion bett
 		if c=21 then gosub{:gosub_sprite_aurufezeichen}: ut$="schlafen" :goto{:mainloop_oldpos}
 		if c=37 then gosub{:gosub_sprite_aurufezeichen}: ut$="schlafen" :goto{:mainloop_oldpos}
 	'aktion schalter
 		if c=14 and a$="w" then gosub{:gosub_sprite_aurufezeichen}: ut$="schalter" :goto{:mainloop_oldpos}
 		if c=15 and a$="w" then gosub{:gosub_sprite_aurufezeichen}: ut$="schalter" :goto{:mainloop_oldpos}
-
 	'else
 		goto{:mainloop_oldpos}
 {:goto_raumaktion_fragezeichen}
@@ -559,7 +536,8 @@ goto{:goto_newgame}
 	if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}                                                  'txt npc	
 	if c=67 then pt=2 : sb=65  :gosub{:gosub_print_txt_game}                                                  'txt player
 	if c=67 then pt=3 : sb=193 :sx=11 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose	
-	if c=67 and ch=0 then goto{:mainloop_oldpos} :ff=4 :{var:npc_flag}(3)=1 :goto{:battel}                    'oldpos oder battel
+	if c=67 and ch=0 then goto{:mainloop_oldpos}                                                              'oldpos
+	if c=67 and ch=1 then ff=4 :{var:npc_flag}(3)=1 :goto{:battel}                                            'battel
 	'
 {:gosub_raumaktion_gefunden}
 	bi%={%:00000010}:gosub{:gosub_sprite_off}	
@@ -618,15 +596,15 @@ goto{:goto_newgame}
 	return
 {:gosub_raumaktion_poke_mapspeicher}
 	'map offset
-		'cr=0 or cr=10 -> offset=0
-		'cr=1 or cr=11 -> offset=20
-		'cr=2 or cr=12 -> offset=40
-		'cr=3 or cr=13 -> offset=480
-		'cr=4 or cr=14 -> offset=500
-		'cr=5 or cr=15 -> offset=520
-		'cr=6 or cr=16 -> offset=960
-		'cr=7 or cr=17 -> offset=980
-		'cr=8 or cr=18 -> offset=1000
+	'cr=0 or cr=10 -> offset=0
+	'cr=1 or cr=11 -> offset=20
+	'cr=2 or cr=12 -> offset=40
+	'cr=3 or cr=13 -> offset=480
+	'cr=4 or cr=14 -> offset=500
+	'cr=5 or cr=15 -> offset=520
+	'cr=6 or cr=16 -> offset=960
+	'cr=7 or cr=17 -> offset=980
+	'cr=8 or cr=18 -> offset=1000
 	if cr <=8 then             goto {:raumaktion_poke_mapspeicher_map0}
 	if cr>=10 and cr <=18 then goto {:raumaktion_poke_mapspeicher_map1}
 	'else
@@ -793,7 +771,7 @@ goto{:goto_newgame}
 
 {:battel}
 	'start
-		jm%=0		
+		{var:joy_map_true}=0		
 		gosub{:gosub_clear_top}
 		'-> player sprite off
 		poke {var:sprite_on_off},{%:00000000}
@@ -1581,44 +1559,65 @@ goto{:goto_newgame}
 	print"{home}{white}{down:4}"left$(cd$,dy)spc(dx+9)"rel"{var:item_mana}({var:player_relikt}(p))
 	return
 {:gosub_print_map}
-	'-> new
-		if cr=0 then ze=0
-		if cr=1 then ze=20
-		if cr=2 then ze=40
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	'offset map
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	'raum 0     raum 1      raum 2
+	'0..........20..........40..........
+	'60.........80..........100.........
+	'120........140.........160.........
+	'180........200.........220.........
+	'240........260.........280.........
+	'300........320.........340.........
+	'360........380.........400.........
+	'420........440.........460.........
+	'
+	'raum 3     raum 4      raum 5
+	'480........500.........520.........
+	'
+	'raum 6     raum 7      raum 8
+	'960........980.........1000........
+	
+	if cr=0 then {var:offset_map}=0
+	if cr=1 then {var:offset_map}=20
+	if cr=2 then {var:offset_map}=40
 
-		if cr=3 then ze=480
-		if cr=4 then ze=480+20
-		if cr=5 then ze=480+40
+	if cr=3 then {var:offset_map}=480
+	if cr=4 then {var:offset_map}=480+20
+	if cr=5 then {var:offset_map}=480+40
 
-		if cr=6 then ze=960
-		if cr=7 then ze=960+20
-		if cr=8 then ze=960+40
+	if cr=6 then {var:offset_map}=960
+	if cr=7 then {var:offset_map}=960+20
+	if cr=8 then {var:offset_map}=960+40
 
-		if cr=10 then ze=0
-		if cr=11 then ze=20
-		if cr=12 then ze=40
+	if cr=10 then {var:offset_map}=0
+	if cr=11 then {var:offset_map}=20
+	if cr=12 then {var:offset_map}=40
 
-		if cr=13 then ze=480
-		if cr=14 then ze=480+20
-		if cr=15 then ze=480+40
+	if cr=13 then {var:offset_map}=480
+	if cr=14 then {var:offset_map}=480+20
+	if cr=15 then {var:offset_map}=480+40
 
-		if cr=16 then ze=960
-		if cr=17 then ze=960+20
-		if cr=18 then ze=960+40
+	if cr=16 then {var:offset_map}=960
+	if cr=17 then {var:offset_map}=960+20
+	if cr=18 then {var:offset_map}=960+40
 
-		sp={var:start_map}+ze
+	sp={var:start_map}+{var:offset_map}	
 
-	'print down
-		for i%=0 to 7
-			print"{home}{down:3}"left$(cd$,i%*2);
-			for j%=0 to 19
-				print {var:map_tile}(peek(sp))"{up}";
-				sp=sp+1
-			next j%
-		sp=sp+40
-		next i%
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	'print map
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	for i%=0 to 7	
+	print"{home}{down:3}"left$(cd$,i%*2);
+
+	for j%=0 to 19
+	print {var:map_tile}(peek(sp))"{up}";
+	sp=sp+1
+	next j%	
+
+	sp=sp+40
+	next i%
 	return
-
 {:goto_newgame}
 	'part 1 start variabeln
 		for i=0 to 3:{var:player_exp}(i)=0:next
@@ -1649,9 +1648,6 @@ goto{:goto_newgame}
 		poke 1020,{var:farbe_bl}
 		gosub {:gosub_load_screen_seq}
 		gosub {:gosub_print_txt_screen}
-		'print"{clr}";fre(0)
-		'stop
-		'gosub {:gosub_joywait_fire}
 
 		'magic
 		{var:inventar_slot}(1) =4   'feuer
@@ -1794,39 +1790,7 @@ goto{:goto_newgame}
 {:gosub_clear_info_txt}
 	printdd$;"{right}{white}{$20:24}";
 	return
-{:gousb_print_map_black}
-	'-> reserve
-	'-> sprite off
-	gosub{:gosub_clear_top}
-	poke {var:sprite_on_off},{%:00000000}
-	print"{brown}{home}{down:3}";
-	fori=0to15
-	print"{rvrs on}{brown}{33}{rvrs off}{orange}{215:38}{rvrs on}{brown}{35}{white}{rvrs off}";:next
-	return
-{:gosub_load_game_seq}
-	poke 56322,224 : 'tastatur 224=aus 225=an
-	if {var:seq_select}="nibelheim" then open 1,8,4,"txt.nibelheim,s,r"
-	if {var:seq_select}=""          then return
-	for i= 0 to 224 : sb$(i)="":next i
-	i=0	
-	{:input_game_seq}
-		input#1,sb$(i)
-		'st=0 status floppy lesen
-		if st=0 then i=i+1: goto{:input_game_seq}
-		close 1:poke 56322,255
-	return
-{:gosub_load_screen_seq}
-	poke 56322,224 : 'tastatur 224=aus 225=an
-	if {var:seq_select}="intro"     then open 1,8,4,"txt.intro,s,r"	
-	if {var:seq_select}=""          then return
-	for i=0 to 5 : si$(i)="":next i
-	i=0
-	{:input_screen_seq}
-		input#1,si$(i)
-		'st=0 status floppy lesen
-		if st=0 then i=i+1: goto{:input_screen_seq}
-		close 1:poke 56322,255
-	return
+
 {:gosub_print_txt_screen}
 	'infotext blau
 		print"{home}{right:2}{down:2}{white}"  ;si$(0);
@@ -1884,12 +1848,15 @@ goto{:goto_newgame}
 	px=sx
 	poke {var:bildschirmspeicher}+py+px,35 : 'print cursor
 	{:joy_choose}
-		jm%=0:gosub{:gosub_joy}
+		{var:joy_map_true}=0:gosub{:gosub_joy}
 		if a$="a" then ch=1 : poke {var:bildschirmspeicher}+py+px+ss,32 :poke {var:bildschirmspeicher}+py+px,35
 		if a$="d" then ch=0 : poke {var:bildschirmspeicher}+py+px,32    :poke {var:bildschirmspeicher}+py+px+ss,35
 		if a$=chr$(13) and ch=1 then return
 		if a$=chr$(13) and ch=0 then return
 	goto{:joy_choose}
+'"""""""""""""""""""""""""""""""""""""""""""""""""
+'load
+'"""""""""""""""""""""""""""""""""""""""""""""""""
 {:gosub_load_map}
 	poke {var:sprite_on_off},{%:00000000} 
 	poke 1020,{var:farbe_bl}	
@@ -1901,9 +1868,33 @@ goto{:goto_newgame}
 	sys (57812)ml$,8,0:poke 780,0:poke 781,{$:00}:poke 782,{$:c4}:sys 65493
 
 	if ml$="map0" then {var:seq_select}="nibelheim"
-	if ml$="map1" then {var:seq_select}="map1"
+	if ml$="map1" then {var:seq_select}="nibelheim"
 	gosub{:gosub_load_game_seq}	
 	gosub{:gosub_clear_map} 
+	return
+{:gosub_load_game_seq}
+	poke 56322,224 : 'tastatur 224=aus 225=an
+	if {var:seq_select}="nibelheim" then open 1,8,4,"txt.nibelheim,s,r"
+	if {var:seq_select}=""          then return
+	for i= 0 to 224 : sb$(i)="":next i
+	i=0	
+	{:input_game_seq}
+		input#1,sb$(i)
+		'st=0 status floppy lesen
+		if st=0 then i=i+1: goto{:input_game_seq}
+		close 1:poke 56322,255
+	return
+{:gosub_load_screen_seq}
+	poke 56322,224 : 'tastatur 224=aus 225=an
+	if {var:seq_select}="intro"     then open 1,8,4,"txt.intro,s,r"	
+	if {var:seq_select}=""          then return
+	for i=0 to 5 : si$(i)="":next i
+	i=0
+	{:input_screen_seq}
+		input#1,si$(i)
+		'st=0 status floppy lesen
+		if st=0 then i=i+1: goto{:input_screen_seq}
+		close 1:poke 56322,255
 	return
 '
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1932,8 +1923,8 @@ goto{:goto_newgame}
 	a$="" : b$=""
 	{:joy_wait}
 		j=peek(56320)			
-		'jump wenn joymap=1 und kein fire (jm%=1 auf der map)
-		if jm%=1 and j<>111 and j<>107 and j<>103 and j<>110 and j<>109 then {:joy}
+		'jump wenn joy_map_true=1 und kein fire (1=auf der map)
+		if {var:joy_map_true}=1 and j<>111 and j<>107 and j<>103 and j<>110 and j<>109 then {:joy}
 		'jump wenn keine bewegung
 		if j=127 then {:joy}
 		'jump wenn fire+left/right/up/down
@@ -2181,10 +2172,10 @@ data"{gray1}{rvrs off}{215}{rvrs off}{gray1}{215}{down}{left:2}{rvrs off}{gray1}
 data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{64}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{64}{rvrs off}{gray1}{215}{down}{left:2}{rvrs on}{gray1}{65}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{67}{down}{left:2}{rvrs on}{gray1}{68}{rvrs on}{gray1}{68}{rvrs off}"
-data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{66}{down}{left:2}{rvrs on}{gray1}{77}{rvrs on}{gray1}{68}{rvrs off}"
+data"{gray1}{rvrs on}{66}{rvrs on}{gray1}{67}{down}{left:2}{rvrs on}{gray1}{77}{rvrs on}{gray1}{68}{rvrs off}"
 data"{gray1}{rvrs on}{68}{rvrs on}{gray1}{68}{down}{left:2}{rvrs off}{gray1}{215}{rvrs off}{gray1}{215}{rvrs off}"
 data"{gray1}{rvrs on}{77}{rvrs on}{gray1}{68}{down}{left:2}{rvrs on}{gray1}{64}{rvrs off}{gray1}{215}{rvrs off}"
-data"{brown}{rvrs off}{192}{rvrs off}{brown}{192}{down}{left:2}{rvrs off}{brown}{192}{rvrs off}{brown}{192}{rvrs off}"
+data"{gray1}{rvrs off}{192}{rvrs off}{gray1}{192}{down}{left:2}{rvrs off}{gray1}{192}{rvrs off}{gray1}{192}{rvrs off}"
 data"{lt. red}{rvrs on}{208}{rvrs on}{lt. red}{209}{down}{left:2}{rvrs on}{lt. red}{210}{rvrs on}{lt. red}{211}{rvrs off}"
 data"{gray1}{rvrs on}{212}{rvrs on}{gray1}{209}{down}{left:2}{rvrs on}{gray1}{210}{rvrs on}{gray1}{211}{rvrs off}"
 data"{lt. green}{rvrs on}{213}{rvrs on}{lt. green}{214}{down}{left:2}{rvrs on}{lt. green}{215}{rvrs on}{lt. green}{216}{rvrs off}"
