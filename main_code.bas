@@ -1466,10 +1466,10 @@ goto{:goto_newgame}
 
 	'clear temp
 		a=0
-		for i%=0 to 99 : {var:inventar_slottemp}(i%)=0 : next i%
+		for i=0 to 99 : {var:inventar_slottemp}(i)=0 : next i
 
 	'copy inventar -> temp : del inventar
-		for i%=0 to 99 : {var:inventar_slottemp}(i%)={var:inventar_slot}(i%): {var:inventar_slot}(i%)=0 : next i%
+		for i=0 to 99 : {var:inventar_slottemp}(i)={var:inventar_slot}(i): {var:inventar_slot}(i)=0 : next i
 
 	'gosub mt
 		if mt=0 then gosub {:mt=9} : gosub {:mt=0} : a=50 :gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
@@ -1488,28 +1488,28 @@ goto{:goto_newgame}
 
 	'copy temp -> inventar
 	{:mt=9}
-		for i%=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i%))=9 then {var:inventar_slot}(a)={var:inventar_slottemp}(i%) : a=a+1 : 'zurueck
-		next i%
+		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=9 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'zurueck
+		next i
 		return
 	{:mt=0}
-		for i%=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i%))=0 then {var:inventar_slot}(a)={var:inventar_slottemp}(i%) : a=a+1 : 'weapon
-		next i%
+		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=0 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'weapon
+		next i
 		return
 	{:mt=1}
-		for i%=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i%))=1 then {var:inventar_slot}(a)={var:inventar_slottemp}(i%) : a=a+1 : 'ruestung
-		next i%
+		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=1 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'ruestung
+		next i
 		return
 	{:mt=2}
-		for i%=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i%))=2 then {var:inventar_slot}(a)={var:inventar_slottemp}(i%) : a=a+1 : 'essbar
-		next i%
+		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=2 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'essbar
+		next i
 		return
 	{:mt=3}
-		for i%=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i%))=3 then {var:inventar_slot}(a)={var:inventar_slottemp}(i%) : a=a+1 : 'magic
-		next i%
+		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=3 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'magic
+		next i
 		return
 	{:mt=4}
-		for i%=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i%))=4 then {var:inventar_slot}(a)={var:inventar_slottemp}(i%) : a=a+1 : 'relikt
-		next i%
+		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=4 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'relikt
+		next i
 		return
 {:gosub_add_item_inventar}
 	'set is
@@ -1603,20 +1603,20 @@ goto{:goto_newgame}
 	if cr=18 then {var:offset_map}=960+40
 
 	sp={var:start_map}+{var:offset_map}	
-
+	
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'print map
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
-	for i%=0 to 7	
-	print"{home}{down:3}"left$(cd$,i%*2);
+	for i=0 to 7	
+	print"{home}{down:3}"left$(cd$,i*2);
 
-	for j%=0 to 19
+	for j=0 to 19
 	print {var:map_tile}(peek(sp))"{up}";
 	sp=sp+1
-	next j%	
+	next j
 
 	sp=sp+40
-	next i%
+	next i
 	return
 {:goto_newgame}
 	'part 1 start variabeln
