@@ -1,0 +1,21 @@
+{asm}
+
+orig $400       ; SYS 1024
+
+'poke 785,{$:00}	'low
+'poke 786,{$:04}	'high
+'us=usr(sp)
+
+jsr $bc9b       ;FAC nach Ganzzahl: wandelt FAC in 4-Byte-Ganzzahl
+lda $64         ;String-Descriptor Low
+sta $fc
+lda $65         ;String-Descriptor High
+sta $fb
+ldy #00
+lda ($fb),y	;Lade High+Low in Aku
+tay
+lda #00
+jsr $b391       ;Wandelt 16-Bit-Ganzzahl in Y/A-Reg. in eine Fließkommazahl
+rts
+
+{endasm}

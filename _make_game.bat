@@ -47,9 +47,6 @@ node reblitz64.js main.prg blitz.prg i,j
 REM EXOMIZER
 exomizer sfx basic blitz.prg -o game.prg -n
 
-REM BACK BASIC
-REM c64list main.prg -txt -ovr
-
 REM COPY PRG->VICE\bin
 xcopy main.prg VICE\bin\*.* /Y
 xcopy blitz.prg VICE\bin\*.* /Y
@@ -94,6 +91,8 @@ del charset.prg
 del map0.prg
 del map1.prg
 del sprite.prg
+del main.bas
+REM del main.txt
 
 rem C64Debugger.exe -clearsettings
 C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
