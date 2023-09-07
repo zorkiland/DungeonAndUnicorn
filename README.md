@@ -1,12 +1,10 @@
 ## C64 DungeonAndUnicorn 
 
+ _Steuerung Joystick 2:_
 
+_Feuer + Auf = Inventar  öffen / schließen_
 
->Joystick 2
-
->Feuer + Auf = Inventar  öffen / schließen
-
->Feuer + Ab  = Equipment öffen / schließen
+_Feuer + Ab  = Equipment öffen / schließen_
 
 ## Screenshot:
 
