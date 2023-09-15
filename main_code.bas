@@ -1,7 +1,7 @@
 '*****************************
 'c64list v4.04
 '*****************************
-
+'
 '$FFFF           """""""""""""""""""""""""""""""""
 '                " ------------- " ||||||||||||| "
 '                " ------------- " || KERNAL ||| "
@@ -30,157 +30,156 @@
 '<---> = wird z.B. bei POKE geschrieben
 '<+++> = lesend + schreibend
 '<   > = von BASIC aus nicht erreichbar
-
+'
 {renumber}
-
-'supervar_tile
-	{var:map_tile=t$}
-'supervar_item
-	{var:item_name=i$}
-	{var:item_atk=ia%}
-	{var:item_def=id%}
-	{var:item_level=il%}
-	{var:item_speed=is%}
-	{var:item_mana=ie%}
-	{var:item_ident=it%}
-	{var:inventar_slot=in%}
-	{var:inventar_max=ix%}
-	{var:nimm_item=ni%}
-	{var:inventar_slottemp=tt%}	
-'supervar_player
-	{var:player_name=p$}
-	{var:player_hp=ph%}
-	{var:player_mp=pm%}
-	{var:player_atk=pa%}
-	{var:player_def=pd%}
-	{var:player_level=pl%}
-	{var:player_hp_max=p1%}
-	{var:player_mp_max=p2%}
-	{var:player_activ=p3%}
-	{var:player_tile=pd$}
-	{var:player_waffe=pw%}
-	{var:player_ruestung=pr%}
-	{var:player_relikt=pe%}
-	{var:player_exp=px%}
-	{var:player_speed=pb%}
-'supervar_monster
-	{var:monster_name=m$}
-	{var:monster_hp=mh%}
-	{var:monster_mp=mm%}
-	{var:monster_atk=ma%}
-	{var:monster_def=md%}
-	{var:monster_level=ml%}
-	{var:monster_tile=md$}
-	{var:monster_exp=mx%}
-	{var:monster_speed=mb%}
-'supervar_speicher
-	{var:bildschirmspeicher=qs}
-	{var:multifarbspeicher_1=qo}
-	{var:multifarbspeicher_2=qp}
-	{var:bildschirmfarbe=qq}
-	{var:rahmenfarbe=qr}
-	{var:start_map=sm}
-	{var:offset_map=ze}
-	{var:video_interface_chip=v}
-'supervar_sprite
-	{var:sprite0_x=h0}
-	{var:sprite0_y=h1}
-	{var:sprite1_x=h2}
-	{var:sprite1_y=h3}
-	{var:sprite2_x=h4}
-	{var:sprite2_y=h5}
-	{var:sprite3_x=h6}
-	{var:sprite3_y=h7}
-	{var:sprite4_x=h8}
-	{var:sprite4_y=h9}
-	{var:sprite5_x=i0}
-	{var:sprite5_y=i1}
-	{var:sprite6_x=i2}
-	{var:sprite6_y=i3}
-	{var:sprite7_x=i4}
-	{var:sprite7_y=i5}
-	{var:sprite_on_off=i6}
-	{var:sprite_multi_on_off=i7}
-	{var:sprite_multicolor_1=i8}
-	{var:sprite_multicolor_2=i9}
-	{var:sprite_hirescolor=j0}
-	{var:sprite_register=j1}
-	{var:sprite_x_highbit=j2}
-	{var:spritebank=j3}
-'supervar_color
-	{var:farbe_sw=q1%}
-	{var:farbe_ws=q2%}
-	{var:farbe_rd=q3%}
-	{var:farbe_tk=q4%}
-	{var:farbe_vi=q5%}
-	{var:farbe_gn=q6%}
-	{var:farbe_bl=q7%}
-	{var:farbe_ge=q8%}
-	{var:farbe_or=q9%}
-	{var:farbe_br=qa%}
-	{var:farbe_lrd=qb%}
-	{var:farbe_dgr=cb%}
-	{var:farbe_mgr=qc%}
-	{var:farbe_lgn=qd%}
-	{var:farbe_lbl=qe%}
-	{var:farbe_lgr=qf%}
-'supervar_multicolor
-	{var:farbe_multi_sw=qg%}
-	{var:farbe_multi_ws=qh%}
-	{var:farbe_multi_br=qi%}
-	{var:farbe_multi_tk=qj%}
-	{var:farbe_multi_vi=qk%}
-	{var:farbe_multi_gn=ql%}
-	{var:farbe_multi_bl=qm%}
-	{var:farbe_multi_ge=qn%}
-'supervar_fight
-	{var:fight_hp=fh%}
-	{var:fight_active=ft%}
-	{var:fight_rnd_level=fc%}
-	{var:fight_mp=fm%}
-	{var:fight_level=fl%}
-	{var:fight_posx=fx%}
-	{var:fight_posy=fy%}
-	{var:fight_atk=fa%}
-	{var:fight_def=fd%}
-	{var:fight_hp_max=f1%}
-	{var:fight_mp_max=f2%}
-	{var:fight_speed=f3%}
-	{var:fight_basis_speed=f4%}
-'supervar_seq
-	{var:seq_select=aa$}
-	{var:seq_buffer=b$}
-'supervar_other
-	{var:val_atk=t1%}
-	{var:val_def=t2%}
-'supervar_schalter
-	{var:schalter_raum=s0%}
-	{var:schalter_posx=s1%}
-	{var:schalter_posy=s2%}
-	{var:schalter_flag=s3%}
-'supervar_aktor
-	{var:aktor_raum=a0%}
-	{var:aktor_posx=a1%}
-	{var:aktor_posy=a2%}
-'supervar_npc
-	{var:npc_raum=n0%}
-	{var:npc_posx=pa}
-	{var:npc_posy=ma}
-	{var:npc_flag=n3%}
-'supervar_event
-	{var:event_raum=er%}
-	{var:event_posx=ex%}
-	{var:event_posy=ey%}
-	{var:event_item=et%}
-	{var:event_true=aa%}
-'supervar_joy
-	{var:joy_map_true=jm%}
-'
-if peek(2)=0  then poke 2,99 : load"asm.raster",8,1
-if peek(2)=99 then poke 2,98 : load"charset",8,1
-if peek(2)=98 then poke 2,97 : load"sprite",8,1
-if peek(2)=97 then poke 2,96 : load"map0",8,1
-'
+'super variabeln
+	'supervar_tile
+		{var:map_tile=t$}
+	'supervar_item
+		{var:item_name=i$}
+		{var:item_atk=ia%}
+		{var:item_def=id%}
+		{var:item_level=il%}
+		{var:item_speed=is%}
+		{var:item_mana=ie%}
+		{var:item_ident=it%}
+		{var:inventar_ident=in%}
+		{var:inventar_max=ix%}
+		{var:nimm_item=ni%}
+		{var:inventar_ident_temp=tt%}
+	'supervar_player
+		{var:player_name=p$}
+		{var:player_hp=ph%}
+		{var:player_mp=pm%}
+		{var:player_atk=pa%}
+		{var:player_def=pd%}
+		{var:player_level=pl%}
+		{var:player_hp_max=p1%}
+		{var:player_mp_max=p2%}
+		{var:player_activ=p3%}
+		{var:player_tile=pd$}
+		{var:player_waffe=pw%}
+		{var:player_ruestung=pr%}
+		{var:player_relikt=pe%}
+		{var:player_exp=px%}
+		{var:player_speed=pb%}
+	'supervar_monster
+		{var:monster_name=m$}
+		{var:monster_hp=mh%}
+		{var:monster_mp=mm%}
+		{var:monster_atk=ma%}
+		{var:monster_def=md%}
+		{var:monster_level=ml%}
+		{var:monster_tile=md$}
+		{var:monster_exp=mx%}
+		{var:monster_speed=mb%}
+	'supervar_speicher
+		{var:bildschirmspeicher=qs}
+		{var:multifarbspeicher_1=qo}
+		{var:multifarbspeicher_2=qp}
+		{var:bildschirmfarbe=qq}
+		{var:rahmenfarbe=qr}
+		{var:start_map=sm}
+		{var:offset_map=ze}
+		{var:video_interface_chip=v}
+	'supervar_sprite
+		{var:sprite0_x=h0}
+		{var:sprite0_y=h1}
+		{var:sprite1_x=h2}
+		{var:sprite1_y=h3}
+		{var:sprite2_x=h4}
+		{var:sprite2_y=h5}
+		{var:sprite3_x=h6}
+		{var:sprite3_y=h7}
+		{var:sprite4_x=h8}
+		{var:sprite4_y=h9}
+		{var:sprite5_x=i0}
+		{var:sprite5_y=i1}
+		{var:sprite6_x=i2}
+		{var:sprite6_y=i3}
+		{var:sprite7_x=i4}
+		{var:sprite7_y=i5}
+		{var:sprite_on_off=i6}
+		{var:sprite_multi_on_off=i7}
+		{var:sprite_multicolor_1=i8}
+		{var:sprite_multicolor_2=i9}
+		{var:sprite_hirescolor=j0}
+		{var:sprite_register=j1}
+		{var:sprite_x_highbit=j2}
+		{var:spritebank=j3}
+	'supervar_color
+		{var:farbe_sw=q1%}
+		{var:farbe_ws=q2%}
+		{var:farbe_rd=q3%}
+		{var:farbe_tk=q4%}
+		{var:farbe_vi=q5%}
+		{var:farbe_gn=q6%}
+		{var:farbe_bl=q7%}
+		{var:farbe_ge=q8%}
+		{var:farbe_or=q9%}
+		{var:farbe_br=qa%}
+		{var:farbe_lrd=qb%}
+		{var:farbe_dgr=cb%}
+		{var:farbe_mgr=qc%}
+		{var:farbe_lgn=qd%}
+		{var:farbe_lbl=qe%}
+		{var:farbe_lgr=qf%}
+	'supervar_multicolor
+		{var:farbe_multi_sw=qg%}
+		{var:farbe_multi_ws=qh%}
+		{var:farbe_multi_br=qi%}
+		{var:farbe_multi_tk=qj%}
+		{var:farbe_multi_vi=qk%}
+		{var:farbe_multi_gn=ql%}
+		{var:farbe_multi_bl=qm%}
+		{var:farbe_multi_ge=qn%}
+	'supervar_fight
+		{var:fight_hp=fh%}
+		{var:fight_active=ft%}
+		{var:fight_rnd_level=fc%}
+		{var:fight_mp=fm%}
+		{var:fight_level=fl%}
+		{var:fight_posx=fx%}
+		{var:fight_posy=fy%}
+		{var:fight_atk=fa%}
+		{var:fight_def=fd%}
+		{var:fight_hp_max=f1%}
+		{var:fight_mp_max=f2%}
+		{var:fight_speed=f3%}
+		{var:fight_basis_speed=f4%}
+	'supervar_seq
+		{var:seq_select=aa$}
+		{var:seq_buffer=b$}
+	'supervar_other
+		{var:val_atk=t1%}
+		{var:val_def=t2%}
+	'supervar_schalter
+		{var:schalter_raum=s0%}
+		{var:schalter_posx=s1%}
+		{var:schalter_posy=s2%}
+		{var:schalter_flag=s3%}
+	'supervar_aktor
+		{var:aktor_raum=a0%}
+		{var:aktor_posx=a1%}
+		{var:aktor_posy=a2%}
+	'supervar_npc
+		{var:npc_raum=n0%}
+		{var:npc_posx=pa}
+		{var:npc_posy=ma}
+		{var:npc_flag=n3%}
+	'supervar_event
+		{var:event_raum=er%}
+		{var:event_posx=ex%}
+		{var:event_posy=ey%}
+		{var:event_item=et%}
+		{var:event_true=aa%}
+	'supervar_joy
+		{var:joy_map_true=jm%}
+'load
+	if peek(2)=0  then poke 2,99 : load"asm.raster",8,1
+	if peek(2)=99 then poke 2,98 : load"charset",8,1
+	if peek(2)=98 then poke 2,97 : load"sprite",8,1
+	if peek(2)=97 then poke 2,96 : load"map0",8,1
 'dim
 	'monster
 		dim {var:monster_name}(13),{var:monster_tile}(13),{var:monster_hp}(13),{var:monster_mp}(13),{var:monster_atk}(13),{var:monster_def}(13),{var:monster_level}(13),{var:monster_speed}(13),{var:monster_exp}(13)
@@ -194,7 +193,7 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 	'event variable
 		dim {var:event_raum}(12),{var:event_posx}(12),{var:event_posy}(12),{var:event_item}(12)
 	'inventar
-		dim {var:inventar_slot}(99),{var:inventar_slottemp}(99)
+		dim {var:inventar_ident}(99),{var:inventar_ident_temp}(99)
 	'tile
 		dim {var:map_tile}(111)
 	'schlater aktor flag
@@ -202,76 +201,75 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 	'npc flag
 		dim {var:npc_raum}(10),{var:npc_posx}(10),{var:npc_posy}(10),{var:npc_flag}(10)
 	'txt
-		dim sb$(224),si$(5)
-'
-{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
-'
-'variabeln speicher
-	{var:multifarbspeicher_1}  =53282
-	{var:multifarbspeicher_2}  =53283
-	{var:bildschirmfarbe}      =53281
-	{var:rahmenfarbe}          =53280
-	{var:bildschirmspeicher}   ={$:c000}
-	{var:video_interface_chip} ={$:d000}
-	{var:start_map}            ={$:c400}
-'variabeln sprite
-	{var:sprite0_x}          ={var:video_interface_chip}+0
-	{var:sprite0_y}          ={var:video_interface_chip}+1
-	{var:sprite1_x}          ={var:video_interface_chip}+2
-	{var:sprite1_y}          ={var:video_interface_chip}+3
-	{var:sprite2_x}          ={var:video_interface_chip}+4
-	{var:sprite2_y}          ={var:video_interface_chip}+5
-	{var:sprite3_x}          ={var:video_interface_chip}+6
-	{var:sprite3_y}          ={var:video_interface_chip}+7
-	{var:sprite4_x}          ={var:video_interface_chip}+8
-	{var:sprite4_y}          ={var:video_interface_chip}+9
-	{var:sprite5_x}          ={var:video_interface_chip}+10
-	{var:sprite5_y}          ={var:video_interface_chip}+11
-	{var:sprite6_x}          ={var:video_interface_chip}+12
-	{var:sprite6_y}          ={var:video_interface_chip}+13
-	{var:sprite7_x}          ={var:video_interface_chip}+14
-	{var:sprite7_y}          ={var:video_interface_chip}+15
-	{var:sprite_x_highbit}   ={var:video_interface_chip}+16 '{%:00000000}
+		dim sb$(50),si$(5)
+'load game seq
+	{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
+'set variablen
+	'variabeln speicher
+		{var:multifarbspeicher_1}  =53282
+		{var:multifarbspeicher_2}  =53283
+		{var:bildschirmfarbe}      =53281
+		{var:rahmenfarbe}          =53280
+		{var:bildschirmspeicher}   ={$:c000}
+		{var:video_interface_chip} ={$:d000}
+		{var:start_map}            ={$:c400}
+	'variabeln sprite
+		{var:sprite0_x}          ={var:video_interface_chip}+0
+		{var:sprite0_y}          ={var:video_interface_chip}+1
+		{var:sprite1_x}          ={var:video_interface_chip}+2
+		{var:sprite1_y}          ={var:video_interface_chip}+3
+		{var:sprite2_x}          ={var:video_interface_chip}+4
+		{var:sprite2_y}          ={var:video_interface_chip}+5
+		{var:sprite3_x}          ={var:video_interface_chip}+6
+		{var:sprite3_y}          ={var:video_interface_chip}+7
+		{var:sprite4_x}          ={var:video_interface_chip}+8
+		{var:sprite4_y}          ={var:video_interface_chip}+9
+		{var:sprite5_x}          ={var:video_interface_chip}+10
+		{var:sprite5_y}          ={var:video_interface_chip}+11
+		{var:sprite6_x}          ={var:video_interface_chip}+12
+		{var:sprite6_y}          ={var:video_interface_chip}+13
+		{var:sprite7_x}          ={var:video_interface_chip}+14
+		{var:sprite7_y}          ={var:video_interface_chip}+15
+		{var:sprite_x_highbit}   ={var:video_interface_chip}+16 '{%:00000000}
 
-	{var:sprite_on_off}      ={var:video_interface_chip}+21 '{%:00000000}
-	{var:sprite_multi_on_off}={var:video_interface_chip}+28 '{%:00000000}
-	{var:sprite_multicolor_1}={var:video_interface_chip}+37
-	{var:sprite_multicolor_2}={var:video_interface_chip}+38
-	{var:sprite_hirescolor}  ={var:video_interface_chip}+39
-	{var:sprite_register}    =50168                         'ende bidschirmspeicher c3f8 sprite 0
-'variabeln farben
-	{var:farbe_sw}          =0
-	'{var:farbe_ws}         =1
-	'{var:farbe_rd}         =2
-	'{var:farbe_tk}         =3
-	'{var:farbe_vi}         =4
-	'{var:farbe_gn}         =5
-	{var:farbe_bl}          =6
-	'{var:farbe_ge}         =7
-	{var:farbe_or}          =8
-	{var:farbe_br}          =9
-	'{var:farbe_lrd}        =10
-	{var:farbe_dgr}         =11
-	'{var:farbe_mgr}        =12
-	'{var:farbe_lgn}        =13
-	'{var:farbe_lbl}        =14
-	'{var:farbe_lgr}        =15
-'variabeln farben multi
-	'{var:farbe_multi_sw}   =8
-	'{var:farbe_multi_ws}   =9
-	'{var:farbe_multi_br}   =10
-	'{var:farbe_multi_tk}   =11
-	'{var:farbe_multi_vi}   =12
-	'{var:farbe_multi_gn}   =13
-	'{var:farbe_multi_bl}   =14
-	'{var:farbe_multi_ge}   =15
-'variabel integer
-	rs=160: 'pro raum 160 data
-'konstante Variabel string
-	dd$="{home}{down:20}{white}"
-	cd$="{down:25}"
-'
-'sprite speicherbank zeichensatz color
+		{var:sprite_on_off}      ={var:video_interface_chip}+21 '{%:00000000}
+		{var:sprite_multi_on_off}={var:video_interface_chip}+28 '{%:00000000}
+		{var:sprite_multicolor_1}={var:video_interface_chip}+37
+		{var:sprite_multicolor_2}={var:video_interface_chip}+38
+		{var:sprite_hirescolor}  ={var:video_interface_chip}+39
+		{var:sprite_register}    =50168                         'ende bidschirmspeicher c3f8 sprite 0
+	'variabeln farben
+		{var:farbe_sw}          =0
+		'{var:farbe_ws}         =1
+		'{var:farbe_rd}         =2
+		'{var:farbe_tk}         =3
+		'{var:farbe_vi}         =4
+		'{var:farbe_gn}         =5
+		{var:farbe_bl}          =6
+		'{var:farbe_ge}         =7
+		{var:farbe_or}          =8
+		{var:farbe_br}          =9
+		'{var:farbe_lrd}        =10
+		{var:farbe_dgr}         =11
+		'{var:farbe_mgr}        =12
+		'{var:farbe_lgn}        =13
+		'{var:farbe_lbl}        =14
+		'{var:farbe_lgr}        =15
+	'variabeln farben multi
+		'{var:farbe_multi_sw}   =8
+		'{var:farbe_multi_ws}   =9
+		'{var:farbe_multi_br}   =10
+		'{var:farbe_multi_tk}   =11
+		'{var:farbe_multi_vi}   =12
+		'{var:farbe_multi_gn}   =13
+		'{var:farbe_multi_bl}   =14
+		'{var:farbe_multi_ge}   =15
+	'variabel integer
+		rs=160: 'pro raum 160 data
+	'konstante Variabel string
+		dd$="{home}{down:20}{white}"
+		cd$="{down:25}"
+'set color / speicher
 	{var:spritebank}={$:a0}'                                spritebank $10=$400 versatz von $c000
 	poke {var:video_interface_chip}+21,0'                   sprites aus
 	poke 648,{$:c0}'                                        bildschirspeicher ab ($c000) hibyte $c0
@@ -282,51 +280,49 @@ if peek(2)=97 then poke 2,96 : load"map0",8,1
 	poke {var:multifarbspeicher_2},{var:farbe_sw}'          multicolor 2 =0 (sw)
 	poke {var:rahmenfarbe},{var:farbe_sw}'                  rahmenfarbe
 	poke {var:bildschirmfarbe},{var:farbe_bl}'              bildschirmfarbe
-'
-print"{clear}"
-'
+	print"{clear}"
 'set raster
 	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
 	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
 	sys 820                  'start asm.raster
-'
-'read monster
-	for i=0 to 13
+'read data
+	'read monster
+		for i=0 to 13
 		read {var:monster_name}(i),{var:monster_hp}(i),{var:monster_mp}(i),{var:monster_level}(i)
 		read {var:monster_atk}(i),{var:monster_def}(i),{var:monster_speed}(i),{var:monster_exp}(i)
-	next
-'read player
-	for i=0 to 3
+		next
+	'read player
+		for i=0 to 3
 		read {var:player_name}(i),{var:player_hp}(i),{var:player_mp}(i),{var:player_level}(i)
 		read {var:player_atk}(i),{var:player_def}(i),{var:player_speed}(i),{var:player_waffe}(i),{var:player_ruestung}(i)
-	next
-'read item
-	for i=0 to 99
+		next
+	'read item
+		for i=0 to 99
 		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_level}(i),{var:item_speed}(i),{var:item_mana}(i),{var:item_ident}(i)
-	next
-'read tile
-	for i=0 to 111
+		next
+	'read tile
+		for i=0 to 111
 		read {var:map_tile}(i)
-	next
-'copy tile player
-	{var:player_tile}(0) = {var:map_tile}(48) 'kron
-	{var:player_tile}(1) = {var:map_tile}(50) 'lena
-	{var:player_tile}(2) = {var:map_tile}(52) 'dolm
-	{var:player_tile}(3) = {var:map_tile}(51) 'mira
-'copy tile monster
-	zz=64
-	for i=0 to 13
-	{var:monster_tile}(i) = {var:map_tile}(zz)
-	zz=zz+1
-	next i
-'
+		next
+	'copy tile player
+		{var:player_tile}(0) = {var:map_tile}(48) 'kron
+		{var:player_tile}(1) = {var:map_tile}(50) 'lena
+		{var:player_tile}(2) = {var:map_tile}(52) 'dolm
+		{var:player_tile}(3) = {var:map_tile}(51) 'mira
+	'copy tile monster
+		j=64
+		for i=0 to 13
+		{var:monster_tile}(i) = {var:map_tile}(j)
+		j=j+1
+		next i
 '
 {:start}
 gosub {:gosub_raumaktion_variabeln}
 goto{:goto_newgame}
-'"""""""""""""""""""""""""""""""""""""""""
+'
+'"""""""""""""""""""""""""""""""""""""""""""""""""
 'mainloop
-'"""""""""""""""""""""""""""""""""""""""""
+'"""""""""""""""""""""""""""""""""""""""""""""""""
 {:mainloop}
 	gosub{:gosub_print_rahmen_oben}
 	gosub{:gosub_clear_map}
@@ -336,7 +332,6 @@ goto{:goto_newgame}
 	gb$=""
 	gosub{:gosub_clear_top}
 	gosub{:gosub_clear_info_txt}
-'->mapedit
 {:mainloop_print_map}
 	'-> sprite off
 	poke {var:sprite_on_off},{%:00000000}
@@ -345,13 +340,13 @@ goto{:goto_newgame}
 	if cr=10 then poke 1020,{var:farbe_dgr} : gb$="schlafender wald"
 	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
 	if cr=8 or cr=5 or cr=2 then poke 1020,{var:farbe_dgr}  : gb$="im haus von lena"
-	'
+
 	gosub{:gosub_clear_top}
 	gosub{:gosub_print_map}
 	print"{home}{down}{right}{white}";gb$
 	'print"{home}{down}{right}{white}";fre(0)
 {:mainloop_print_playertile}
-	gosub{:gosub_sprite_player}	
+	gosub{:gosub_sprite_player}
 	'if int(ti/60) = 60*15 then gosub{:gosub_raumaktion_variabeln_nachwachsend}
 	if cr={var:event_raum}(0) then xe%={var:event_posx}(0) : ye%={var:event_posy}(0) : gosub{:gosub_sprite_apfel}
 	if cr={var:event_raum}(1) then xe%={var:event_posx}(1) : ye%={var:event_posy}(1) : gosub{:gosub_sprite_pilz}
@@ -360,20 +355,20 @@ goto{:goto_newgame}
 	zx=x:zy=y
 {:mainloop_joyauswertung}
 	{var:joy_map_true}=1
-	gosub{:gosub_joy}	
+	gosub{:gosub_joy}
 	if a$="w"  then zy=y-1:goto{:mainloop_if_newpos}
 	if a$="a"  then zx=x-1:goto{:mainloop_if_newpos}
 	if a$="d"  then zx=x+1:goto{:mainloop_if_newpos}
 	if a$="s"  then zy=y+1:goto{:mainloop_if_newpos}
 	if a$="fu" then {var:joy_map_true}=0 : goto {:goto_inventar}
-	if a$="fd" then {var:joy_map_true}=0 : goto {:goto_equipment}	
+	if a$="fd" then {var:joy_map_true}=0 : goto {:goto_equipment}
 
 	if a$=chr$(13) and ut$="gefunden" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_gefunden} :ut$="":goto{:mainloop_oldpos}
 	if a$=chr$(13) and ut$="schalter" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_schalter} :ut$="":goto{:mainloop_oldpos}
 	if a$=chr$(13) and ut$="schlafen" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_schlafen} :ut$="":goto{:mainloop_oldpos}
 
 	goto {:mainloop_joyauswertung}
-{:mainloop_if_newpos}	
+{:mainloop_if_newpos}
 	'delete ut$
 		ut$=""
 	'wenn event(x) = find item passt
@@ -389,8 +384,8 @@ goto{:goto_newgame}
 	'wenn nextpos
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 		
-		if c>=80 and c<=111 then {:mainloop_set_newpos}	'wenn c=80-100 begehbar
-		if c=7              then {:mainloop_set_newpos}	'wenn c=07 bruecke
+		if c>=80 and c<=111 then {:mainloop_set_newpos} 'wenn c=80-100 begehbar
+		if c=7              then {:mainloop_set_newpos} 'wenn c=07 bruecke
 
 		if c=09  then {:goto_raumaktion_durchgang}      'wenn c=09 leiter
 		if c=10  then {:goto_raumaktion_durchgang}      'wenn c=10 brunnen
@@ -408,7 +403,7 @@ goto{:goto_newgame}
 
 		if c>=48 and c<=79 then {:goto_raumaktion_npc}  'wenn 48-79 npc
 
-		goto {:mainloop_oldpos}                			'else
+		goto {:mainloop_oldpos}                	        'else
 {:mainloop_set_newpos}
 	'sprite 1 off
 		bi%={%:00000010}:gosub{:gosub_sprite_off}
@@ -475,8 +470,9 @@ goto{:goto_newgame}
 	'else
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 		goto{:mainloop_print_playertile}
-
-'->mapedit
+'--------------------->
+'-> raumaktion
+'--------------------->
 {:goto_raumaktion_durchgang}
 	'haus
 		if cr=3  and y=4 then cr=8:x=10 :y=6 :goto{:mainloop_print_map}
@@ -520,7 +516,7 @@ goto{:goto_newgame}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'
 	if c=50 then {var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
-	if c=50 then pt=1 :sb=5 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos} 
+	if c=50 then pt=1 :sb=11 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos} 
 	'
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
@@ -533,28 +529,28 @@ goto{:goto_newgame}
 	'	c=77 glado
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'
-	if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}                                                  'txt npc	
-	if c=67 then pt=2 : sb=65  :gosub{:gosub_print_txt_game}                                                  'txt player
-	if c=67 then pt=3 : sb=193 :sx=11 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose	
+	if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}                                                  'txt npc
+	if c=67 then pt=2 : sb=5   :gosub{:gosub_print_txt_game}                                                  'txt player
+	if c=67 then pt=3 : sb=9   :sx=11 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose
 	if c=67 and ch=0 then goto{:mainloop_oldpos}                                                              'oldpos
 	if c=67 and ch=1 then ff=4 :{var:npc_flag}(3)=1 :goto{:battel}                                            'battel
 	'
 {:gosub_raumaktion_gefunden}
-	bi%={%:00000010}:gosub{:gosub_sprite_off}	
+	bi%={%:00000010}:gosub{:gosub_sprite_off}
 	gosub {:gosub_clear_info_txt}
 	ei=0
 	{:gefunden_loop}
 	'item im raum und pos
 		if {var:event_raum}(ei)<>cr or {var:event_posx}(ei)<>ox or {var:event_posy}(ei)<>oy then {:gefunden_next}
 	'add item inventar
-		{var:nimm_item}={var:event_item}(ei) : gosub{:gosub_add_item_inventar}
+		{var:nimm_item}={var:event_item}(ei) : gosub{:gosub_inventar_add_item}
 	'inventar max
 		if is=49 then va$="du kannst nicht mehr tragen" : gosub{:gosub_print_info_txt} :return
 	'loesche event item
 		{var:event_raum}(ei)=-1
 	'inventar print
-		if {var:item_ident}({var:inventar_slot}(is))=2 then bi%={%:00000100}:gosub{:gosub_sprite_off}
-		va$="gefunden: "+{var:item_name}({var:inventar_slot}(is)): gosub{:gosub_print_info_txt} : return
+		if {var:item_ident}({var:inventar_ident}(is))=2 then bi%={%:00000100}:gosub{:gosub_sprite_off}
+		va$="gefunden: "+{var:item_name}({var:inventar_ident}(is)): gosub{:gosub_print_info_txt} : return
 	{:gefunden_next}
 		'wenn ei=max
 		ei=ei+1
@@ -628,6 +624,9 @@ goto{:goto_newgame}
 		'npc raum 10 (0) c=50 lena 
 		'poke {var:start_map}+0 +{var:npc_posx}(0)+{var:npc_posy}(0)*60,50-{var:npc_flag}(0)*50
 		return
+''--------------------->
+'-> inventar/equipmnent
+''--------------------->
 {:goto_inventar}
 	gosub{:gosub_clear_top}
 	gosub {:gosub_clear_info_txt}
@@ -637,20 +636,19 @@ goto{:goto_newgame}
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}inventar: waehle dein item           ";
-	mt=2:mx=2:my=4:mc=14:ee=2 
-	gosub{:gosub_menu_item}
-	if ee=4 then ee=0 : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	ee=0
-	if {var:inventar_slot}(m)=9 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if {var:inventar_slot}(m)=0 or {var:item_ident}({var:inventar_slot}(m))<>mt then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if {var:inventar_slot}(m)=3 then gosub{:inventar_auswahl_pilz} :{var:inventar_slot}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if {var:inventar_slot}(m)=8 then gosub{:inventar_auswahl_apfel}:{var:inventar_slot}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	mt=2:mx=2:my=4:mc=14:ee=2
+	gosub{:gosub_inventar_menu}
+	if a$="fu" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar_ident}(m)=9 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar_ident}(m)=0 or {var:item_ident}({var:inventar_ident}(m))<>mt then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar_ident}(m)=3 then gosub{:inventar_auswahl_pilz} :{var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar_ident}(m)=8 then gosub{:inventar_auswahl_apfel}:{var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 	{:inventar_auswahl_apfel}
-		for i=0 to 3:{var:player_hp}(i)={var:player_hp}(i)+{var:item_mana}({var:inventar_slot}(m)):if {var:player_hp}(i)>{var:player_hp_max}(i)then {var:player_hp}(i)={var:player_hp_max}(i)
+		for i=0 to 3:{var:player_hp}(i)={var:player_hp}(i)+{var:item_mana}({var:inventar_ident}(m)):if {var:player_hp}(i)>{var:player_hp_max}(i)then {var:player_hp}(i)={var:player_hp_max}(i)
 		{var:fight_hp}(i)={var:player_hp}(i):next:return
 	{:inventar_auswahl_pilz}
-		for i=0 to 3:{var:player_mp}(i)={var:player_mp}(i)+{var:item_mana}({var:inventar_slot}(m)):if {var:player_mp}(i)>{var:player_mp_max}(i)then {var:player_mp}(i)={var:player_mp_max}(i)
+		for i=0 to 3:{var:player_mp}(i)={var:player_mp}(i)+{var:item_mana}({var:inventar_ident}(m)):if {var:player_mp}(i)>{var:player_mp_max}(i)then {var:player_mp}(i)={var:player_mp_max}(i)
 		{var:fight_mp}(i)={var:player_mp}(i):next:return
 {:goto_equipment}
 	'start
@@ -725,20 +723,197 @@ goto{:goto_newgame}
 		print"{home}"left$(cd$,my-1)spc(mx-2);"{brown}{$c1}{$c2:18}{$c3}";
 		fori=0to13:print"{down}{left:20}{$c4}                  {$c5}";:next
 		print"{down}{left:20}{$c6}{$c7:18}{$c8}";
-		mt=sl:ee=1:gosub {:gosub_menu_item}
-		if ee=4 then ee=0 : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-		ee=0
+		mt=sl:ee=1:gosub {:gosub_inventar_menu}
+		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		'zurueck item ident 9=zurueck
-			if {var:item_ident}({var:inventar_slot}(m))=9 then gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if {var:item_ident}({var:inventar_ident}(m))=9 then gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'item ident <> sl=0 waffe sl=1 ruestung
-			if {var:inventar_slot}(m)<>0 and {var:item_ident}({var:inventar_slot}(m))<>sl then gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if {var:inventar_ident}(m)<>0 and {var:item_ident}({var:inventar_ident}(m))<>sl then gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'ausruesten sl=0 waffe
-			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_slot}(m)   :{var:inventar_slot}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_ident}(m)   :{var:inventar_ident}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'ausruesten sl=1 ruestung
-			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_slot}(m) :{var:inventar_slot}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_ident}(m) :{var:inventar_ident}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'ausruesten sl=4 element
-			if sl=4 then q={var:player_relikt}(p):{var:player_relikt}(p)={var:inventar_slot}(m) :{var:inventar_slot}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if sl=4 then q={var:player_relikt}(p):{var:player_relikt}(p)={var:inventar_ident}(m) :{var:inventar_ident}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+'--------------------->
+'-> gosub inventar
+'--------------------->
+{:gosub_inventar_menu}
+	gosub{:gosub_inventar_sort}
+	mi=-1:m=0:mo=0
+	{:inventar_menu_pos}
+		mi=mo-1:cy=my:mm=0
+		if mc=4  then gosub {:inventar_menu_clear}
+		if mc=14 then gosub {:inventar_menu_clear_big}
+	{:inventar_menu_print}
+		mi=mi+1
+		'print pos menue
+			print"{home}{white}"left$(cd$,cy)spc(mx)" ";
+		'wenn item_ident <> menu transition
+			if {var:item_ident}({var:inventar_ident}(mi))<>mt then print"{cyan}";
+		'wenn item_ident 9=zurueck -1=leer
+			if {var:item_ident}({var:inventar_ident}(mi))=9  then print"{white}";
+			if {var:item_ident}({var:inventar_ident}(mi))=-1 then print"{cyan}";
+		'print item
+			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+			'menu sort nach item_ident
+			'
+			'mt=0 waffe
+			'mt=1 ruestung
+			'mt=2 essbar
+			'mt=3 magie
+			'mt=4 relikt
+			'mt=9 zurueck
+			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+			'menu style
+			'
+			'ee=0 battle
+			'ee=1 equipment
+			'ee=2 inventar
+			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+			'
+			'ee=0 battel
+			if ee=0 then print {var:item_name}({var:inventar_ident}(mi));
+
+			'ee=1 mainloop equipment
+			if ee=1 and {var:item_ident}({var:inventar_ident}(mi))=9 then print {var:item_name}({var:inventar_ident}(mi));
+			if ee=1 and mt=0 and {var:item_ident}({var:inventar_ident}(mi))=0 then print {var:item_name}({var:inventar_ident}(mi)); " atk";{var:item_atk}({var:inventar_ident}(mi))
+			if ee=1 and mt=1 and {var:item_ident}({var:inventar_ident}(mi))=1 then print {var:item_name}({var:inventar_ident}(mi)); " def";{var:item_def}({var:inventar_ident}(mi))
+			if ee=1 and mt=4 and {var:item_ident}({var:inventar_ident}(mi))=4 then print {var:item_name}({var:inventar_ident}(mi)); " rel";{var:item_mana}({var:inventar_ident}(mi))
+			
+			'ee=2 mainloop inventar
+			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=9 then print {var:item_name}({var:inventar_ident}(mi));
+			if ee=2 and {var:item_name}({var:inventar_ident}(mi)) ="apfel   " and {var:item_ident}({var:inventar_ident}(mi))=2 then print {var:item_name}({var:inventar_ident}(mi)); "            hp ";{var:item_mana}({var:inventar_ident}(mi))
+			if ee=2 and {var:item_name}({var:inventar_ident}(mi)) ="pilz    " and {var:item_ident}({var:inventar_ident}(mi))=2 then print {var:item_name}({var:inventar_ident}(mi)); "            mp ";{var:item_mana}({var:inventar_ident}(mi))
+			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=0 then print {var:item_name}({var:inventar_ident}(mi)); "  waffe     atk";{var:item_atk}({var:inventar_ident}(mi));
+			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=1 then print {var:item_name}({var:inventar_ident}(mi)); "  ruestung  def";{var:item_def}({var:inventar_ident}(mi));
+			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=3 then print {var:item_name}({var:inventar_ident}(mi)); "  magie     mp ";{var:item_mana}({var:inventar_ident}(mi));
+			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=4 then print {var:item_name}({var:inventar_ident}(mi)); "  relikt    rel";{var:item_mana}({var:inventar_ident}(mi));
+
+		'current y
+			cy=cy+1
+		'mm=menu zaehler
+			mm=mm+1
+		'wenn menue zaehler = mc
+			if mm=mc then{:inventar_menu_auswertung}
+		'wenn menue zaehler < 13
+			if mi<=49 then{:inventar_menu_print}
+	{:inventar_menu_auswertung}
+		cp={var:bildschirmspeicher}+mx+my*40
+	{:inventar_menu_joyauswertung}
+		'print cursor
+			poke cp+(m-mo)*40,35
+		'gosub joy
+			gosub{:gosub_joy}
+		'print leerzeichen
+			poke cp+(m-mo)*40,32
+		'joy auf/ab return
+			if a$="w"then m=m-1:goto{:inventar_menu_auswertung_posmenu}
+			if a$="s"then m=m+1:goto{:inventar_menu_auswertung_posmenu}
+			if a$="fu" then return
+			if a$="fd" then return
+			if a$=chr$(13)then return
+		goto{:inventar_menu_joyauswertung}
+	return
+	{:inventar_menu_auswertung_posmenu}
+		if m=-1 then m=49-1:mo=49-mc:goto{:inventar_menu_pos}
+		if m=49 then m=0:mo=0:goto{:inventar_menu_pos}
+		m%=0
+	{:inventar_menu_auswertung_auf_ab}
+		if m<mo then mo=mo-mc:m%=1:goto{:inventar_menu_auswertung_auf_ab}
+		if m>=mo+mc then mo=mo+mc:m%=1
+		if mo<0 then mo=0:m%=1
+		if m%=1 then{:inventar_menu_pos}
+		goto{:inventar_menu_joyauswertung}
+	{:inventar_menu_clear}
+		for i=0 to 3
+			print"{home}{white}"left$(cd$,cy+i)spc(mx)" ";
+			print"        ";
+		next i
+		return
+	{:inventar_menu_clear_big}
+		for i=0 to 13
+			print"{home}{white}"left$(cd$,cy+i)spc(mx)" ";
+			if ee=1 then print"               ";
+			if ee=2 then print"                                    ";
+		next i
+		return
+{:gosub_inventar_sort}
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'menu sort nach item_ident
+	'
+	'mt=0 waffe
+	'mt=1 ruestung
+	'mt=2 essbar
+	'mt=3 magie
+	'mt=4 relikt
+	'mt=9 zurueck
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'menu style
+	'
+	'ee=0 battle
+	'ee=1 equipment
+	'ee=2 inventar
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'
+	'clear temp
+		a=0
+		for i=0 to 99 : {var:inventar_ident_temp}(i)=0 : next i
+	'copy inventar -> temp : del inventar
+		for i=0 to 99 : {var:inventar_ident_temp}(i)={var:inventar_ident}(i): {var:inventar_ident}(i)=0 : next i
+	'gosub mt
+		if mt=0 then gosub {:mt=9} : gosub {:mt=0} : a=50 :gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
+		if mt=1 then gosub {:mt=9} : gosub {:mt=1} : a=50 :gosub {:mt=0} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
+		if mt=3 then gosub {:mt=9} : gosub {:mt=3} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=4}
+		if mt=4 then gosub {:mt=9} : gosub {:mt=4} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3}
+
+		'ee=0 battel
+		if mt=2 and ee=0 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
+		'ee=1 mainloop equipment
+		if mt=2 and ee=1 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
+		'ee=2 mainloop inventar
+		if mt=2 and ee=2 then gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3}:a=50:gosub {:mt=9}
+
+	return
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	'gosub copy temp -> inventar
+	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	{:mt=9}
+		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=9 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'zurueck
+		next i
+		return
+	{:mt=0}
+		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=0 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'weapon
+		next i
+		return
+	{:mt=1}
+		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=1 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'ruestung
+		next i
+		return
+	{:mt=2}
+		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=2 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'essbar
+		next i
+		return
+	{:mt=3}
+		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=3 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'magic
+		next i
+		return
+	{:mt=4}
+		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=4 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'relikt
+		next i
+		return
+{:gosub_inventar_add_item}
+	'set is
+		is=0
+	{:inventar_next}
+	'wenn inventar leer
+		if {var:inventar_ident}(is)=0 then {var:inventar_ident}(is)={var:nimm_item}:{var:nimm_item}=-1:return
+	'next inventar
+		is=is+1
+	'wenn inventar max
+		if is=99 then return
+	goto{:inventar_next}
 '
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'battel
@@ -768,15 +943,15 @@ goto{:goto_newgame}
 	'	fight_level(ce)=fight_level(ce)/2
 	'	fight_level(ce) min 5
 	'""""""""""""""""""""""""""""""""""""""""""
-
+'
 {:battel}
 	'start
-		{var:joy_map_true}=0		
+		{var:joy_map_true}=0
 		gosub{:gosub_clear_top}
 		'-> player sprite off
 		poke {var:sprite_on_off},{%:00000000}
 		poke 1020,{var:farbe_bl}
-		gosub{:gosub_clear_map}				
+		gosub{:gosub_clear_map}
 	'set fight(xx)
 		gosub{:gosub_battel_set_fight(xx)_player}
 		gosub{:gosub_battel_set_fight(xx)_monster_aktive}
@@ -843,18 +1018,22 @@ goto{:goto_newgame}
 	if my>=m then my=0
 	if my<0 then my=m-1
 	goto {:battelmenu_print_cusor}
+'--------------------->
+'-> select attack item
+'--------------------->
 {:battelmenu_on_goto}
 	'clear player battelmenu
 		printdd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
 	'on goto
 		on my+1 goto {:battelmenu_select_attack},{:battelmenu_select_item}
-'else weiter magic
-		mt=3:mx=16:my=20:mc=4:gosub {:gosub_menu_item}
-		if {var:item_ident}({var:inventar_slot}(m))=9 then {:battelmenu}
+'->else select magic
+{:battelmenu_select_magic}
+		mt=3:mx=16:my=20:mc=4:ee=0:gosub {:gosub_inventar_menu}
+		if {var:item_ident}({var:inventar_ident}(m))=9 then {:battelmenu}
 	'clear menuitem
 		print dd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
-		if {var:inventar_slot}(m)=0 or {var:item_ident}({var:inventar_slot}(m))<>3then{:battelmenu}
-		m={var:inventar_slot}(m)
+		if {var:inventar_ident}(m)=0 or {var:item_ident}({var:inventar_ident}(m))<>3then{:battelmenu}
+		m={var:inventar_ident}(m)
 	'nicht genug mana
 		if {var:item_mana}(m)>{var:fight_mp}(c)then gosub{:gosub_clear_top}:gosub{:gosub_delay_fight}:print"{home}{down}{right}nicht genug mana                     ";:gosub{:gosub_delay_text}:goto{:battelmenu}
 	gosub{:gosub_battel_choose_target}
@@ -867,21 +1046,22 @@ goto{:goto_newgame}
 		if{var:fight_active}(c)=7  and {var:fight_mp}(c)>={var:item_mana}(9)then m=9:goto{:goto_heal_magic}
 		goto{:battle_magic_damage}
 {:battelmenu_select_item}
-	mt=2:mx=16:my=20:mc=4:gosub {:gosub_menu_item}
-	if {var:item_ident}({var:inventar_slot}(m))=9 then {:battelmenu}
+	mt=2:mx=16:my=20:mc=4:ee=0:gosub {:gosub_inventar_menu}
+	if {var:item_ident}({var:inventar_ident}(m))=9 then {:battelmenu}
 	printdd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
 	print"{down}{left:9}{$20:9}";
-	if {var:inventar_slot}(m)=0 or {var:item_ident}({var:inventar_slot}(m))<>mt then {:battelmenu}
-	if {var:inventar_slot}(m)=3 then gosub {:inventar_auswahl_pilz} :{var:inventar_slot}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_reanimation}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
-	if {var:inventar_slot}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar_slot}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar_ident}(m)=0 or {var:item_ident}({var:inventar_ident}(m))<>mt then {:battelmenu}
+	if {var:inventar_ident}(m)=3 then gosub {:inventar_auswahl_pilz} :{var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_reanimation}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar_ident}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
 	gosub{:gosub_battel_move_current_tile_oldpos}:goto {:battel_routine_ini}
 {:battelmenu_select_attack}
 	gosub {:gosub_battel_choose_target}
 	gosub{:gosub_clear_top}
 	'wenn ce < 4
 		if ce < 4 and m<>9 then gosub{:gosub_clear_top}:gosub{:gosub_delay_fight}: print"{home}{down}{right}ziel nich waehlbar                   ";:gosub{:gosub_delay_text}: goto{:battelmenu}
-
-'attack damage
+'--------------------->
+'-> attack damage
+'--------------------->
 {:battle_attack_damage}
 	'attack power
 		ap={var:fight_atk}(c)-{var:fight_def}(ce)
@@ -937,7 +1117,9 @@ goto{:goto_newgame}
 	gosub{:gosub_battel_print_all_monster_tile}
 	gosub{:gosub_battel_print_all_player_tile}
 	goto{:battel_routine_ini}
-'magic damage
+'--------------------->
+'-> magic damage
+'--------------------->
 {:battle_magic_damage}
 	'mana kosten = schaden
 	ap={var:item_mana}(m)+2-int(rnd(0)*5):{var:fight_mp}(c)={var:fight_mp}(c)-{var:item_mana}(m):{var:player_mp}(c)={var:fight_mp}(c):gosub{:gosub_print_player_hp}
@@ -993,7 +1175,9 @@ goto{:goto_newgame}
 	gosub{:gosub_battel_print_all_monster_tile}
 	gosub{:gosub_battel_print_all_player_tile}
 	goto{:battel_routine_ini}
-'other magic
+'--------------------->
+'-> other magic
+'--------------------->
 {:goto_heal_magic}
 	ap={var:item_mana}(m)*4+2-int(rnd(0)*5):{var:fight_mp}(c)={var:fight_mp}(c)-{var:item_mana}(m):ifc<4then{var:player_mp}(c)={var:fight_mp}(c):gosub{:gosub_print_player_hp}
 	ap=ap+{var:fight_level}(c)*3
@@ -1078,8 +1262,9 @@ goto{:goto_newgame}
 	gosub{:gosub_battel_print_all_monster_tile}
 	gosub{:gosub_battel_print_all_player_tile}
 	goto{:battel_routine_ini}
-
-'monster attack
+'--------------------->
+'-> monster attack
+'--------------------->
 {:battel_monster_attack}
 	'delay
 		gosub{:gosub_clear_top}
@@ -1096,8 +1281,9 @@ goto{:goto_newgame}
 		if{var:fight_active}(c)=11 thenif{var:fight_mp}(c)>={var:item_mana}(12)then m=12: gosub{:gosub_battel_find_rnd_player} :gosub{:gosub_delay_fight} :goto{:goto_blind_magic}     ' blind
 	'else weiter
 		gosub{:gosub_battel_find_rnd_player} :gosub{:gosub_delay_fight} :goto{:battle_attack_damage}
-
-'gosub battel
+'--------------------->
+'-> gosub battel
+'--------------------->
 {:gosub_battel_choose_target}
 	'                                                      123456789a123456789b123456789c12345678
 	ce=4:print"{home}{down}{right}{white}"{var:player_name}(c)": waehle dein ziel               "
@@ -1224,7 +1410,7 @@ goto{:goto_newgame}
 	{var:fight_mp_max}(i)       =       {var:player_mp_max}(i)
 	next
 	return
-
+'
 {:gosub_battel_reanimation}
 	pp=4
 	for i=0 to 3
@@ -1248,7 +1434,7 @@ goto{:goto_newgame}
 		cm=cm+1
 	next
 	return
-
+'
 {:gosub_battel_print_all_monster_tile}
 	for i=4 to 11:if {var:fight_active}(i)=-1 then {:monster_tile_next}
 	print"{home}"left$(cd$,{var:fight_posy}(i));spc({var:fight_posx}(i));{var:monster_tile}({var:fight_active}(i))
@@ -1289,8 +1475,7 @@ goto{:goto_newgame}
 	'print playertile right
 		if c < 4 then print"{home}"left$(cd$,5+c*3)spc(37){var:player_tile}(c);
 	return
-
-
+'
 {:goto_battel_gewonnen}
 	poke 1020,{var:farbe_sw} 'hintergrundfarbe map
 	'print rahmen ohne hp monster
@@ -1336,11 +1521,13 @@ goto{:goto_newgame}
 		if {var:player_mp_max}(i)>999then {var:player_mp_max}(i)=999
 		return
 	{:battel_gewonnen_joyauswertung}
+		fe=fre(0)
 		gosub{:gosub_joywait_fire}
 		goto{:mainloop}
 {:goto_battel_verloren}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}du hast verloren                     "
+	fe=fre(0)
 	gosub{:gosub_joywait_fire}
 	goto{:start}
 '
@@ -1365,164 +1552,6 @@ goto{:goto_newgame}
 		{:player_hp_next}
 		next
 	return
-{:gosub_menu_item}
-	gosub{:gosub_sort_inventar}
-	mi=-1:m=0:mo=0
-	{:menu_item_pos}
-		mi=mo-1:cy=my:mm=0
-		if mc=4  then gosub {:menu_item_clear}
-		if mc=14 then gosub {:menu_item_clear_big}
-	{:menu_item_print}
-		mi=mi+1
-		'print pos menue
-			print"{home}{white}"left$(cd$,cy)spc(mx)" ";
-		'wenn item_ident <> menu transition
-			if {var:item_ident}({var:inventar_slot}(mi))<>mt then print"{cyan}";
-		'wenn item_ident 9=zurueck -1=leer
-			if {var:item_ident}({var:inventar_slot}(mi))=9  then print"{white}";
-			if {var:item_ident}({var:inventar_slot}(mi))=-1 then print"{cyan}";
-		'print item
-
-			'mt=0 waffe
-			'mt=1 ruestung
-			'mt=2 essbar
-			'mt=3 magie
-			'mt=4 equipment
-			'mt=9 zurueck
-
-			'ee=0 battel item / magic
-			if ee=0 then print {var:item_name}({var:inventar_slot}(mi));
-
-			'ee=1 mainloop equipment
-			if ee=1 and {var:item_ident}({var:inventar_slot}(mi))=9 then print {var:item_name}({var:inventar_slot}(mi));
-			if ee=1 and mt=0 and {var:item_ident}({var:inventar_slot}(mi))=0 then print {var:item_name}({var:inventar_slot}(mi)); " atk";{var:item_atk}({var:inventar_slot}(mi))
-			if ee=1 and mt=1 and {var:item_ident}({var:inventar_slot}(mi))=1 then print {var:item_name}({var:inventar_slot}(mi)); " def";{var:item_def}({var:inventar_slot}(mi))
-			if ee=1 and mt=4 and {var:item_ident}({var:inventar_slot}(mi))=4 then print {var:item_name}({var:inventar_slot}(mi)); " rel";{var:item_mana}({var:inventar_slot}(mi))
-			
-			'ee=2 mainloop inventar
-			if ee=2 and {var:item_ident}({var:inventar_slot}(mi))=9 then print {var:item_name}({var:inventar_slot}(mi));
-			if ee=2 and {var:item_name}({var:inventar_slot}(mi)) ="apfel   " and {var:item_ident}({var:inventar_slot}(mi))=2 then print {var:item_name}({var:inventar_slot}(mi)); "            hp ";{var:item_mana}({var:inventar_slot}(mi))
-			if ee=2 and {var:item_name}({var:inventar_slot}(mi)) ="pilz    " and {var:item_ident}({var:inventar_slot}(mi))=2 then print {var:item_name}({var:inventar_slot}(mi)); "            mp ";{var:item_mana}({var:inventar_slot}(mi))
-			if ee=2 and {var:item_ident}({var:inventar_slot}(mi))=0 then print {var:item_name}({var:inventar_slot}(mi)); "  waffe     atk";{var:item_atk}({var:inventar_slot}(mi));
-			if ee=2 and {var:item_ident}({var:inventar_slot}(mi))=1 then print {var:item_name}({var:inventar_slot}(mi)); "  ruestung  def";{var:item_def}({var:inventar_slot}(mi));
-			if ee=2 and {var:item_ident}({var:inventar_slot}(mi))=3 then print {var:item_name}({var:inventar_slot}(mi)); "  magie     mp ";{var:item_mana}({var:inventar_slot}(mi));
-			if ee=2 and {var:item_ident}({var:inventar_slot}(mi))=4 then print {var:item_name}({var:inventar_slot}(mi)); "  relikt    rel";{var:item_mana}({var:inventar_slot}(mi));
-
-		'current y
-			cy=cy+1
-		'mm=menu zaehler
-			mm=mm+1
-		'wenn menue zaehler = mc
-			if mm=mc then{:menu_item_auswertung}
-		'wenn menue zaehler < 13
-			if mi<=49 then{:menu_item_print}
-	{:menu_item_auswertung}
-		cp={var:bildschirmspeicher}+mx+my*40
-	{:menu_item_joyauswertung}
-		'print cursor
-			poke cp+(m-mo)*40,35
-		'gosub joy
-			gosub{:gosub_joy}
-		'print leerzeichen
-			poke cp+(m-mo)*40,32
-		'joy auf/ab return
-			if a$="w"then m=m-1:goto{:menu_item_auswertung_posmenu}
-			if a$="s"then m=m+1:goto{:menu_item_auswertung_posmenu}
-			if a$="fu" and ee=2 then ee=4 : return
-			if a$="fd" and ee=1 then ee=4 : return
-			if a$=chr$(13)then return
-		goto{:menu_item_joyauswertung}
-	{:menu_item_auswertung_posmenu}
-		if m=-1 then m=49-1:mo=49-mc:goto{:menu_item_pos}
-		if m=49 then m=0:mo=0:goto{:menu_item_pos}
-		m%=0
-	{:menu_item_auswertung_auf_ab}
-		if m<mo then mo=mo-mc:m%=1:goto{:menu_item_auswertung_auf_ab}
-		if m>=mo+mc then mo=mo+mc:m%=1
-		if mo<0 then mo=0:m%=1
-		if m%=1 then{:menu_item_pos}
-		goto{:menu_item_joyauswertung}
-	{:menu_item_clear}
-		for i=0 to 3
-			print"{home}{white}"left$(cd$,cy+i)spc(mx)" ";
-			print"        ";
-		next i
-		return
-	{:menu_item_clear_big}
-		for i=0 to 13
-			print"{home}{white}"left$(cd$,cy+i)spc(mx)" ";
-			if ee=1 then print"               ";
-			if ee=2 then print"                                    ";
-		next i
-		return
-{:gosub_sort_inventar}
-
-	'mt=0 waffe
-	'mt=1 ruestung
-	'mt=2 essbar
-	'mt=3 magie
-	'mt=4 equipment
-	'mt=9 zurueck
-
-	'clear temp
-		a=0
-		for i=0 to 99 : {var:inventar_slottemp}(i)=0 : next i
-
-	'copy inventar -> temp : del inventar
-		for i=0 to 99 : {var:inventar_slottemp}(i)={var:inventar_slot}(i): {var:inventar_slot}(i)=0 : next i
-
-	'gosub mt
-		if mt=0 then gosub {:mt=9} : gosub {:mt=0} : a=50 :gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
-		if mt=1 then gosub {:mt=9} : gosub {:mt=1} : a=50 :gosub {:mt=0} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
-		if mt=3 then gosub {:mt=9} : gosub {:mt=3} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=4}
-		if mt=4 then gosub {:mt=9} : gosub {:mt=4} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3}
-
-		'ee=0 battel item / magic
-		if mt=2 and ee=0 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
-		'ee=1 mainloop equipment
-		if mt=2 and ee=1 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
-		'ee=2 mainloop inventar
-		if mt=2 and ee=2 then gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3}:a=50:gosub {:mt=9}
-
-	return
-
-	'copy temp -> inventar
-	{:mt=9}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=9 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'zurueck
-		next i
-		return
-	{:mt=0}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=0 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'weapon
-		next i
-		return
-	{:mt=1}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=1 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'ruestung
-		next i
-		return
-	{:mt=2}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=2 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'essbar
-		next i
-		return
-	{:mt=3}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=3 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'magic
-		next i
-		return
-	{:mt=4}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_slottemp}(i))=4 then {var:inventar_slot}(a)={var:inventar_slottemp}(i) : a=a+1 : 'relikt
-		next i
-		return
-{:gosub_add_item_inventar}
-	'set is
-		is=0
-	{:inventar_next}
-	'wenn inventar leer
-		if {var:inventar_slot}(is)=0 then {var:inventar_slot}(is)={var:nimm_item}:{var:nimm_item}=-1:return
-	'next inventar
-		is=is+1
-	'wenn inventar max
-		if is=99 then return
-	goto{:inventar_next}
-
 {:gosub_clear_map}
 	print"{home}{down:3}{brown}";
 	fori=0to15
@@ -1602,7 +1631,7 @@ goto{:goto_newgame}
 	if cr=17 then {var:offset_map}=960+20
 	if cr=18 then {var:offset_map}=960+40
 
-	sp={var:start_map}+{var:offset_map}	
+	sp={var:start_map}+{var:offset_map}
 	
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'print map
@@ -1624,8 +1653,8 @@ goto{:goto_newgame}
 		{var:player_atk}(0)=5:{var:player_def}(0)=2:{var:player_atk}(1)=4:{var:player_def}(1)=3:{var:player_atk}(2)=1:{var:player_def}(2)=1:{var:player_atk}(3)=1:{var:player_def}(3)=1
 		{var:player_speed}(0)=10:{var:player_speed}(1)=10:{var:player_speed}(2)=8:{var:player_speed}(3)=7
 	'item 0-99 = 0
-		for i=0 to 99:{var:inventar_slot}(i)=0:next
-		{var:inventar_slot}(0)=99
+		for i=0 to 99:{var:inventar_ident}(i)=0:next
+		{var:inventar_ident}(0)=99
 	'print rahmen
 		print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
 		fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
@@ -1650,35 +1679,35 @@ goto{:goto_newgame}
 		gosub {:gosub_print_txt_screen}
 
 		'magic
-		{var:inventar_slot}(1) =4   'feuer
-		{var:inventar_slot}(2) =5   'polar
-		{var:inventar_slot}(3) =6   'groll
-		{var:inventar_slot}(4) =7   'bombe
-		{var:inventar_slot}(5) =12  'blind
-		{var:inventar_slot}(6) =9   'heilen
+		{var:inventar_ident}(1) =4   'feuer
+		{var:inventar_ident}(2) =5   'polar
+		{var:inventar_ident}(3) =6   'groll
+		{var:inventar_ident}(4) =7   'bombe
+		{var:inventar_ident}(5) =12  'blind
+		{var:inventar_ident}(6) =9   'heilen
 
 		'relikt
-		{var:inventar_slot}(7)=18   'level1
-		{var:inventar_slot}(8)=21   'level2
-		{var:inventar_slot}(9)=24   'level3
-		{var:inventar_slot}(10)=19  'attack1
-		{var:inventar_slot}(11)=22  'attack2
-		{var:inventar_slot}(12)=25  'attack3
-		{var:inventar_slot}(13)=20  'defence1
-		{var:inventar_slot}(14)=23  'defence2
-		{var:inventar_slot}(15)=26  'defence3
-		{var:inventar_slot}(16)=27  'speed1
-		{var:inventar_slot}(17)=28  'speed2
-		{var:inventar_slot}(18)=29  'speed3
+		{var:inventar_ident}(7)=18   'level1
+		{var:inventar_ident}(8)=21   'level2
+		{var:inventar_ident}(9)=24   'level3
+		{var:inventar_ident}(10)=19  'attack1
+		{var:inventar_ident}(11)=22  'attack2
+		{var:inventar_ident}(12)=25  'attack3
+		{var:inventar_ident}(13)=20  'defence1
+		{var:inventar_ident}(14)=23  'defence2
+		{var:inventar_ident}(15)=26  'defence3
+		{var:inventar_ident}(16)=27  'speed1
+		{var:inventar_ident}(17)=28  'speed2
+		{var:inventar_ident}(18)=29  'speed3
 
 		'waffen ruestung
-		{var:inventar_slot}(19)=14  'rock
-		{var:inventar_slot}(20)=16  'weste
-		{var:inventar_slot}(21)=17  'schild
+		{var:inventar_ident}(19)=14  'rock
+		{var:inventar_ident}(20)=16  'weste
+		{var:inventar_ident}(21)=17  'schild
 
-		{var:inventar_slot}(22)=11  'flegel
-		{var:inventar_slot}(23)=13  'speer
-		{var:inventar_slot}(24)=15  'schwert
+		{var:inventar_ident}(22)=11  'flegel
+		{var:inventar_ident}(23)=13  'speer
+		{var:inventar_ident}(24)=15  'schwert
 
 		{var:player_activ}(0)=1		
 	goto{:mainloop}
@@ -1790,7 +1819,6 @@ goto{:goto_newgame}
 {:gosub_clear_info_txt}
 	printdd$;"{right}{white}{$20:24}";
 	return
-
 {:gosub_print_txt_screen}
 	'infotext blau
 		print"{home}{right:2}{down:2}{white}"  ;si$(0);
@@ -1801,7 +1829,7 @@ goto{:goto_newgame}
 		print"{home}{right:2}{down:12}{white}" ;si$(5);	
 		gosub{:gosub_joywait_fire}
 		return
-{:gosub_print_txt_game}	
+{:gosub_print_txt_game}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	' npc            (pt=1) (txt=cyan)  (rahmen=white) 
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1858,10 +1886,10 @@ goto{:goto_newgame}
 'load
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:gosub_load_map}
-	poke {var:sprite_on_off},{%:00000000} 
-	poke 1020,{var:farbe_bl}	
+	poke {var:sprite_on_off},{%:00000000}
+	poke 1020,{var:farbe_bl}
 	gosub{:gosub_clear_top}
-	gosub{:gosub_clear_map}	
+	gosub{:gosub_clear_map}
 	print"{home}{down:10}{right:16}{white}loading..."
 	print"{home}{right:2}{down:3}{blue}" 
 
@@ -1869,14 +1897,14 @@ goto{:goto_newgame}
 
 	if ml$="map0" then {var:seq_select}="nibelheim"
 	if ml$="map1" then {var:seq_select}="nibelheim"
-	gosub{:gosub_load_game_seq}	
+	gosub{:gosub_load_game_seq}
 	gosub{:gosub_clear_map} 
 	return
 {:gosub_load_game_seq}
 	poke 56322,224 : 'tastatur 224=aus 225=an
 	if {var:seq_select}="nibelheim" then open 1,8,4,"txt.nibelheim,s,r"
 	if {var:seq_select}=""          then return
-	for i= 0 to 224 : sb$(i)="":next i
+	for i= 0 to 13 : sb$(i)="":next i
 	i=0	
 	{:input_game_seq}
 		input#1,sb$(i)
@@ -1986,7 +2014,7 @@ goto{:goto_newgame}
 	poke 162,0: wait 162,32
 	poke 162,0: wait 162,32
 	return
-' 
+'
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'data
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2014,7 +2042,7 @@ goto{:goto_newgame}
 	data"lena",   17  ,7   ,1    ,3    ,3    ,10   ,0     ,0
 	data"dolm",   9   ,7   ,1    ,1    ,1    ,8    ,0     ,0
 	data"mira",   9   ,23  ,1    ,1    ,1    ,7    ,0     ,0
-
+'
 'items
 	'{var:item_ident}(0-18) 0 = weappon
 	'{var:item_ident}(0-18) 1 = ruestung

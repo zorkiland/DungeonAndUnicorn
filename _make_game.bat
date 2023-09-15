@@ -40,8 +40,8 @@ REM BACK BASIC
 c64list main.prg -txt -ovr
 
 REM BLITZ
-REM blitz main.prg -o blitz.prg
-node reblitz64.js main.prg blitz.prg i,j
+blitz main.prg -o blitz.prg
+REM node reblitz64.js main.prg blitz.prg i,j
 
 
 REM EXOMIZER
@@ -94,5 +94,6 @@ del sprite.prg
 del main.bas
 REM del main.txt
 
-rem C64Debugger.exe -clearsettings
-C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
+REM C64Debugger.exe -clearsettings
+REM C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
+C64Debugger.exe -clearsettings -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
