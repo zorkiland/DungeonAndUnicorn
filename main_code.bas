@@ -353,7 +353,7 @@ goto{:goto_newgame}
 
 	'color und name raum
 	if cr=10 then poke 1020,{var:farbe_dgr} : gb$="schlafender wald"
-	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim..."
+	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
 	if cr=8 or cr=5 or cr=2 then poke 1020,{var:farbe_dgr}  : gb$="im haus von lena"
 
 	gosub{:gosub_clear_top}
