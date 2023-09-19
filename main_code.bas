@@ -185,6 +185,7 @@
 		dim {var:monster_name}(13),{var:monster_tile}(13),{var:monster_hp}(13),{var:monster_mp}(13),{var:monster_atk}(13),{var:monster_def}(13),{var:monster_level}(13),{var:monster_speed}(13),{var:monster_exp}(13)
 	'player
 		dim {var:player_name}(3),{var:player_hp}(3),{var:player_mp}(3),{var:player_level}(3),{var:player_atk}(3),{var:player_def}(3),{var:player_speed}(3),{var:player_waffe}(3),{var:player_ruestung}(3)
+		dim {var:player_hp_max}(3),{var:player_mp_max}(3),{var:player_activ}(3),{var:player_tile}(3),{var:player_relikt}(3),{var:player_exp}(3)
 	'fight
 		dim {var:fight_hp}(11),{var:fight_active}(11),{var:fight_rnd_level}(11),{var:fight_speed}(11),{var:fight_basis_speed}(11),{var:fight_mp}(11),{var:fight_level}(11),{var:fight_posx}(11),{var:fight_posy}(11),{var:fight_atk}(11),{var:fight_def}(11),{var:fight_hp_max}(11),{var:fight_mp_max}(11)
 		for i=0 to 3:{var:fight_posx}(i)=37:{var:fight_posy}(i)=5+3*i:next
@@ -206,10 +207,10 @@
 	{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
 'set variablen
 	'variabeln speicher
-		{var:multifarbspeicher_1}  =53282
-		{var:multifarbspeicher_2}  =53283
-		{var:bildschirmfarbe}      =53281
-		{var:rahmenfarbe}          =53280
+		{var:rahmenfarbe}          ={$:d020}
+		{var:bildschirmfarbe}      ={$:d021}
+		{var:multifarbspeicher_1}  ={$:d022}
+		{var:multifarbspeicher_2}  ={$:d023}
 		{var:bildschirmspeicher}   ={$:c000}
 		{var:video_interface_chip} ={$:d000}
 		{var:start_map}            ={$:c400}
@@ -237,7 +238,7 @@
 		{var:sprite_multicolor_1}={var:video_interface_chip}+37
 		{var:sprite_multicolor_2}={var:video_interface_chip}+38
 		{var:sprite_hirescolor}  ={var:video_interface_chip}+39
-		{var:sprite_register}    =50168                         'ende bidschirmspeicher c3f8 sprite 0
+		{var:sprite_register}    ={$:c3f8}                      'ende bidschirmspeicher c3f8 sprite 0
 	'variabeln farben
 		{var:farbe_sw}          =0
 		'{var:farbe_ws}         =1
@@ -270,16 +271,30 @@
 		dd$="{home}{down:20}{white}"
 		cd$="{down:25}"
 'set color / speicher
-	{var:spritebank}={$:a0}'                                spritebank $10=$400 versatz von $c000
-	poke {var:video_interface_chip}+21,0'                   sprites aus
-	poke 648,{$:c0}'                                        bildschirspeicher ab ($c000) hibyte $c0
-	poke {$:dd00},0'                                        speicherbank 3    ab ($c000)
-	poke {$:d018},{%:00001000}'                             zeichensatz       ab ($e000)
-	poke 53270,peek(53270)or16'                             multicolor (ein=16 aus=239)
-	poke {var:multifarbspeicher_1},{var:farbe_or}'          multicolor 1 =8 (or)
-	poke {var:multifarbspeicher_2},{var:farbe_sw}'          multicolor 2 =0 (sw)
-	poke {var:rahmenfarbe},{var:farbe_sw}'                  rahmenfarbe
-	poke {var:bildschirmfarbe},{var:farbe_bl}'              bildschirmfarbe
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	'spritebank $e000 (verstatz von $c000)
+	'  $10=$400
+	'  $e000 - $c000 = $2800 / $400 = a
+	{var:spritebank}={$:a0}
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	poke {var:video_interface_chip}+21,0'                sprites aus
+	poke 648,{$:c0}'                                     bildschirspeicher ab ($c000) hibyte $c0
+	poke {$:dd00},0'                                     speicherbank 3    ab ($c000)
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	'zeichensatz $e000 (verstatz von $c000)
+	'  %xxxx 000x = 0
+	'  %xxxx 001x = 800
+	'  %xxxx 010x = 1000
+	'  %xxxx 011x = 1800
+	'  %xxxx 100x = 2000
+	'  $c000 + $2000 = $e000
+	poke {$:d018},{%:00001000}
+	'"""""""""""""""""""""""""""""""""""""""""""""""""
+	poke 53270,peek(53270)or16'                         multicolor (ein=16 aus=239)
+	poke {var:multifarbspeicher_1},{var:farbe_or}'      multicolor 1 =8 (or)
+	poke {var:multifarbspeicher_2},{var:farbe_sw}'      multicolor 2 =0 (sw)
+	poke {var:rahmenfarbe},{var:farbe_sw}'              rahmenfarbe
+	poke {var:bildschirmfarbe},{var:farbe_bl}'          bildschirmfarbe
 	print"{clear}"
 'set raster
 	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
@@ -338,7 +353,7 @@ goto{:goto_newgame}
 
 	'color und name raum
 	if cr=10 then poke 1020,{var:farbe_dgr} : gb$="schlafender wald"
-	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
+	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim..."
 	if cr=8 or cr=5 or cr=2 then poke 1020,{var:farbe_dgr}  : gb$="im haus von lena"
 
 	gosub{:gosub_clear_top}
@@ -740,16 +755,29 @@ goto{:goto_newgame}
 '-> gosub inventar
 '--------------------->
 {:gosub_inventar_menu}
+
+	'--------------------->
+	'mc  = menu count max (4 oder 16)
+	'mm% = zaehler print menu
+	'mo  = menu offset    ( +/-4 oder +/-16 )
+	'mi  = mo-1           ( inventar_ident(0-13) )
+	'--------------------->
+
 	gosub{:gosub_inventar_sort}
-	mi=-1:m=0:mo=0
+	m=0:mo=0
 	{:inventar_menu_pos}
-		mi=mo-1:cy=my:mm=0
+		mi=mo-1:mm%=0
 		if mc=4  then gosub {:inventar_menu_clear}
 		if mc=14 then gosub {:inventar_menu_clear_big}
+
+	'--------------------->
+	'->loop print
+	'--------------------->
+
 	{:inventar_menu_print}
-		mi=mi+1
-		'print pos menue
-			print"{home}{white}"left$(cd$,cy)spc(mx)" ";
+			mi=mi+1
+		'print pos menue + mm% down
+			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
 		'wenn item_ident <> menu transition
 			if {var:item_ident}({var:inventar_ident}(mi))<>mt then print"{cyan}";
 		'wenn item_ident 9=zurueck -1=leer
@@ -791,14 +819,21 @@ goto{:goto_newgame}
 			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=3 then print {var:item_name}({var:inventar_ident}(mi)); "  magie     mp ";{var:item_mana}({var:inventar_ident}(mi));
 			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=4 then print {var:item_name}({var:inventar_ident}(mi)); "  relikt    rel";{var:item_mana}({var:inventar_ident}(mi));
 
-		'current y
-			cy=cy+1
 		'mm=menu zaehler
-			mm=mm+1
-		'wenn menue zaehler = mc
-			if mm=mc then{:inventar_menu_auswertung}
-		'wenn menue zaehler < 13
+			mm%=mm%+1
+		'wenn menue zaehler = mc = 14
+			if mm%=mc then{:inventar_menu_auswertung}
+		'wenn menue zaehler <=49
 			if mi<=49 then{:inventar_menu_print}
+
+	'--------------------->
+	'->end loop print
+	'--------------------->
+
+	'--------------------->
+	'->joyauswertung
+	'--------------------->
+
 	{:inventar_menu_auswertung}
 		cp={var:bildschirmspeicher}+mx+my*40
 	{:inventar_menu_joyauswertung}
@@ -816,25 +851,39 @@ goto{:goto_newgame}
 			if a$=chr$(13)then return
 		goto{:inventar_menu_joyauswertung}
 	return
+
+	'--------------------->
+	'->auswertung auf / ab
+	'--------------------->
+
 	{:inventar_menu_auswertung_posmenu}
-		if m=-1 then m=49-1:mo=49-mc:goto{:inventar_menu_pos}
-		if m=49 then m=0:mo=0:goto{:inventar_menu_pos}
-		m%=0
+		if m=-1 then m=0 : goto {:inventar_menu_auswertung}
+		if m=50 then m=49: goto {:inventar_menu_auswertung}
+	
 	{:inventar_menu_auswertung_auf_ab}
-		if m<mo then mo=mo-mc:m%=1:goto{:inventar_menu_auswertung_auf_ab}
-		if m>=mo+mc then mo=mo+mc:m%=1
-		if mo<0 then mo=0:m%=1
-		if m%=1 then{:inventar_menu_pos}
+
+	'wenn menu=13 < mo=14 then mo=mo-14
+		if m<mo then mo=mo-mc:goto{:inventar_menu_pos}
+
+	'wenn menu=14 >= mo+14 then mo=mo+14
+		if m>=mo+mc then mo=mo+mc:goto {:inventar_menu_pos}
+
+	'wenn kein seitenwechsel dann inventar_menu_joyauswertung
 		goto{:inventar_menu_joyauswertung}
+
+	'--------------------->
+	'->clear menu
+	'--------------------->
+
 	{:inventar_menu_clear}
 		for i=0 to 3
-			print"{home}{white}"left$(cd$,cy+i)spc(mx)" ";
+			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
 			print"        ";
 		next i
 		return
 	{:inventar_menu_clear_big}
 		for i=0 to 13
-			print"{home}{white}"left$(cd$,cy+i)spc(mx)" ";
+			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
 			if ee=1 then print"               ";
 			if ee=2 then print"                                    ";
 		next i
@@ -1709,7 +1758,7 @@ goto{:goto_newgame}
 		{var:inventar_ident}(23)=13  'speer
 		{var:inventar_ident}(24)=15  'schwert
 
-		{var:player_activ}(0)=1		
+		{var:player_activ}(0)=1
 	goto{:mainloop}
 '
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2051,7 +2100,7 @@ goto{:goto_newgame}
 	'{var:item_ident}(0-18) 4 = relikt
 	'{var:item_ident}(0-18) 9 = zurueck
 	'{var:item_xxx}(x)
-	'     name      at de lv sp,ma id
+	'     name      at de lv sp,ma
 	data "        ",00,00,00,00,00,-1  :'item 0
 	data "dolch   ",03,00,00,00,00,00  :'item 1 kron
 	data "helm    ",00,02,-1,00,00,01  :'item 2 kron
