@@ -4,8 +4,8 @@
 '
 '$FFFF           """""""""""""""""""""""""""""""""
 '                " ------------- " ||||||||||||| "
-'                " ------------- " || KERNAL ||| "
-'$E800 = SPRITES " ------------- " ||||||||||||| "
+'$EC00 = SPRITES " ------------- " || KERNAL ||| " -> MAIN
+'$E800 = SPRITES " ------------- " ||||||||||||| " -> BATTEL
 '$E000 = CHAR    """""""""""""""""""""""""""""""""""""""""""""""""
 '                "               "               " +++++++++++++ "
 '                "               "     CHAR      " ++++ I/O ++++ "
@@ -274,8 +274,9 @@
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'spritebank $e000 (verstatz von $c000)
 	'  $10=$400
-	'  $e000 - $c000 = $2800 / $400 = a
-	{var:spritebank}={$:a0}
+	'  $e800 - $c000 = $2800 / $400 = a
+	'  $ec00 - $c000 = $2C00 / $400 = b
+	{var:spritebank}={$:b0}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	poke {var:video_interface_chip}+21,0'                sprites aus
 	poke 648,{$:c0}'                                     bildschirspeicher ab ($c000) hibyte $c0
@@ -339,6 +340,8 @@ goto{:goto_newgame}
 'mainloop
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:mainloop}
+	'spritebank mainloop
+	{var:spritebank}={$:b0}
 	gosub{:gosub_print_rahmen_oben}
 	gosub{:gosub_clear_map}
 	gosub{:gosub_print_rahmen_unten_map}
@@ -365,6 +368,8 @@ goto{:goto_newgame}
 	'if int(ti/60) = 60*15 then gosub{:gosub_raumaktion_variabeln_nachwachsend}
 	if cr={var:event_raum}(0) then xe%={var:event_posx}(0) : ye%={var:event_posy}(0) : gosub{:gosub_sprite_apfel}
 	if cr={var:event_raum}(1) then xe%={var:event_posx}(1) : ye%={var:event_posy}(1) : gosub{:gosub_sprite_pilz}
+	if cr=4 then xe%=2 : ye%=3 : gosub {:gosub_sprite_unicorn} : gosub {:gosub_sprite_unicorn_overlay}
+
 {:mainloop_oldpos}
 	ox=zx:oy=zy
 	zx=x:zy=y
@@ -393,6 +398,8 @@ goto{:goto_newgame}
 		next i
 	'wenn am rand der map
 		if zx=-1 or zx=20 or zy=-1 or zy=8 then{:mainloop_set_newpos}
+	'wenn sprite kollision raum 4
+		if cr=4 and zx=2 then {:mainloop_oldpos}
 	'read nextpos map
 		c=peek({var:start_map}+{var:offset_map}+zx+(zy*60))
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -995,6 +1002,8 @@ goto{:goto_newgame}
 	'""""""""""""""""""""""""""""""""""""""""""
 '
 {:battel}
+	'spritebank battle
+		{var:spritebank}={$:a0}
 	'start
 		{var:joy_map_true}=0
 		gosub{:gosub_clear_top}
@@ -1765,49 +1774,64 @@ goto{:goto_newgame}
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'sprite
 '"""""""""""""""""""""""""""""""""""""""""""""""""
-{:gosub_sprite_player}        'sprite 0
+{:gosub_sprite_player}          'sprite 0 multi
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor},2
-		poke {var:sprite_multi_on_off},{%:00000111}
-		poke {var:sprite0_x},((x*2)*8+24) and 255         'sprite 0 posx
-		poke {var:sprite0_y},(y*2)*8+50+24                'sprite 0 posy
+		poke {var:sprite_multi_on_off},{%:00010111}
+		poke {var:sprite0_x},((x*2)*8+24) and 255         'sprite 0 posx (24=sichtbar)
+		poke {var:sprite0_y},(y*2)*8+50+24                'sprite 0 posy (50=sichtbar +24=map ist drei zeilen weiter unten)
 		poke {var:sprite_x_highbit},-((x*2)>29)           'x highbit %00000011 sprite posx
-		poke {var:sprite_register},{var:spritebank}+11    'datenzeiger sprite 0=11
+		poke {var:sprite_register},{var:spritebank}+0     'datenzeiger sprite 0 auf 0
 		bi%={%:00000001}:gosub{:gosub_sprite_on}
 	return
-{:gosub_sprite_aurufezeichen} 'sprite 1
+{:gosub_sprite_aurufezeichen}   'sprite 1 multi
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+1,1
 		poke {var:sprite1_x},((x*2)*8+24) and 255        'sprite 1 posx
 		poke {var:sprite1_y},((y*2)*8+50+24)-16          'sprite 1 posy (+24=map ist drei zeilen weiter unten)
 		poke {var:sprite_x_highbit},-((x*2)>29)          'x highbit %00000000 sprite posx
-		poke {var:sprite_register}+1,{var:spritebank}+12 'datenzeiger sprite 1 auf 12
+		poke {var:sprite_register}+1,{var:spritebank}+1  'datenzeiger sprite 1 auf 1
 		bi%={%:00000010}:gosub{:gosub_sprite_on}
 	return
-{:gosub_sprite_fragezeichen}  'sprite 1
+{:gosub_sprite_fragezeichen}    'sprite 1 multi
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+1,1
 		poke {var:sprite1_x},((x*2)*8+24) and 255        'sprite 1 posx
 		poke {var:sprite1_y},((y*2)*8+50+24)-16          'sprite 1 posy (+24=map ist drei zeilen weiter unten)
 		poke {var:sprite_x_highbit},-((x*2)>29)          'x highbit %00000000 sprite posx
-		poke {var:sprite_register}+1,{var:spritebank}+13 'datenzeiger sprite 1 auf 13
+		poke {var:sprite_register}+1,{var:spritebank}+2 'datenzeiger sprite 1 auf 2
 		bi%={%:00000010}:gosub{:gosub_sprite_on}
 	return
-{:gosub_sprite_apfel}         'sprite 2
+{:gosub_sprite_apfel}           'sprite 2 multi
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+2,2
 		poke {var:sprite2_x},((xe%*2)*8+24) and 255      'sprite 2 posx
 		poke {var:sprite2_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_register}+2,{var:spritebank}+14 'datenzeiger sprite 2 auf 14
+		poke {var:sprite_register}+2,{var:spritebank}+3 'datenzeiger sprite 2 auf 3
 		bi%={%:00000100}:gosub{:gosub_sprite_on}
 	return
-{:gosub_sprite_pilz}          'sprite 2
+{:gosub_sprite_pilz}            'sprite 2 multi
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+2,2
 		poke {var:sprite2_x},((xe%*2)*8+24) and 255      'sprite 2 posx
 		poke {var:sprite2_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_register}+2,{var:spritebank}+15 'datenzeiger sprite 2 auf 15
+		poke {var:sprite_register}+2,{var:spritebank}+4 'datenzeiger sprite 2 auf 4
 		bi%={%:00000100}:gosub{:gosub_sprite_on}
+	return
+{:gosub_sprite_unicorn_overlay} 'sprite 3 hires
+	'sprite
+		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+3,0
+		poke {var:sprite3_x},((xe%*2)*8+24-3) and 255      'sprite 2 posx
+		poke {var:sprite3_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {var:sprite_register}+3,{var:spritebank}+9  'datenzeiger sprite 3 auf 8
+	return
+{:gosub_sprite_unicorn}         'sprite 4 multi
+	'sprite
+		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+4,1
+		poke {var:sprite4_x},((xe%*2)*8+24-3) and 255      'sprite 2 posx
+		poke {var:sprite4_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {var:sprite_register}+4,{var:spritebank}+8  'datenzeiger sprite 4 auf 9
+		bi%={%:00011000}:gosub{:gosub_sprite_on}
 	return
 {:gosub_sprite_on}
 	poke {var:sprite_on_off},peek({var:sprite_on_off}) or bi%
