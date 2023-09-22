@@ -368,7 +368,7 @@ goto{:goto_newgame}
 	'if int(ti/60) = 60*15 then gosub{:gosub_raumaktion_variabeln_nachwachsend}
 	if cr={var:event_raum}(0) then xe%={var:event_posx}(0) : ye%={var:event_posy}(0) : gosub{:gosub_sprite_apfel}
 	if cr={var:event_raum}(1) then xe%={var:event_posx}(1) : ye%={var:event_posy}(1) : gosub{:gosub_sprite_pilz}
-	if cr=4 then xe%=2 : ye%=3 : gosub {:gosub_sprite_unicorn} : gosub {:gosub_sprite_unicorn_overlay}
+	if cr=4 then xe%=14 : ye%=3 : gosub {:gosub_sprite_unicorn} : gosub {:gosub_sprite_unicorn_overlay}
 
 {:mainloop_oldpos}
 	ox=zx:oy=zy
@@ -399,7 +399,7 @@ goto{:goto_newgame}
 	'wenn am rand der map
 		if zx=-1 or zx=20 or zy=-1 or zy=8 then{:mainloop_set_newpos}
 	'wenn sprite kollision raum 4
-		if cr=4 and zx=2 then {:mainloop_oldpos}
+		if cr=4 and zx=14 and (zy=3 or zy=2) then {:mainloop_oldpos}
 	'read nextpos map
 		c=peek({var:start_map}+{var:offset_map}+zx+(zy*60))
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1822,14 +1822,14 @@ goto{:goto_newgame}
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+3,0
 		poke {var:sprite3_x},((xe%*2)*8+24-3) and 255      'sprite 2 posx
-		poke {var:sprite3_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {var:sprite3_y},((ye%*2)*8+50+24-5)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
 		poke {var:sprite_register}+3,{var:spritebank}+9  'datenzeiger sprite 3 auf 8
 	return
 {:gosub_sprite_unicorn}         'sprite 4 multi
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+4,1
 		poke {var:sprite4_x},((xe%*2)*8+24-3) and 255      'sprite 2 posx
-		poke {var:sprite4_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {var:sprite4_y},((ye%*2)*8+50+24-5)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
 		poke {var:sprite_register}+4,{var:spritebank}+8  'datenzeiger sprite 4 auf 9
 		bi%={%:00011000}:gosub{:gosub_sprite_on}
 	return
