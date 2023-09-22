@@ -979,19 +979,19 @@
 978 GOSUB1082
 979 RETURN
 980 IFPT=1THENGOSUB953
-981 IFPT=1THENPRINT"{home}{right:2}{down:19}{white}";SB$(SB-1);
+981 IFPT=1THENPRINT"{home}{right:2}{down:19}{white}";SB$(SB-1);":"
 982 IFPT=1THENPRINT"{home}{right:2}{down:20}{cyan}";SB$(SB+0);
 983 IFPT=1THENPRINT"{home}{right:2}{down:21}{cyan}";SB$(SB+1);
 984 IFPT=1THENPRINT"{home}{right:2}{down:22}{cyan}";SB$(SB+2);
 985 IFPT=1THENGOSUB1082:RETURN
 986 IFPT=2THENGOSUB958
-987 IFPT=2THENPRINT"{home}{right:2}{down:19}{cyan}";SB$(SB-1);
+987 IFPT=2THENPRINT"{home}{right:2}{down:19}{cyan}";SB$(SB-1);":"
 988 IFPT=2THENPRINT"{home}{right:2}{down:20}{white}";SB$(SB+0);
 989 IFPT=2THENPRINT"{home}{right:2}{down:21}{white}";SB$(SB+1);
 990 IFPT=2THENPRINT"{home}{right:2}{down:22}{white}";SB$(SB+2);
 991 IFPT=2THENGOSUB1082:RETURN
 992 IFPT=3THENGOSUB958
-993 IFPT=3THENPRINT"{home}{right:2}{down:19}{cyan}";SB$(SB-1);
+993 IFPT=3THENPRINT"{home}{right:2}{down:19}{cyan}";SB$(SB-1);":"
 994 IFPT=3THENPRINT"{home}{right:2}{down:20}{white}";SB$(SB+0);:SY=20
 995 IFPT=3THENGOSUB1002:RETURN
 996 RETURN
@@ -1266,7 +1266,7 @@
 1265 DATA"{lt. green}{rvrs on}{$d5}{rvrs on}{lt. green}{$d6}{down}{left:2}{rvrs on}{lt. green}{$d7}{rvrs on}{lt. green}{$d8}{rvrs off}"
 1266 DATA"{gray2}{rvrs on}{$d9}{rvrs on}{gray2}{$da}{down}{left:2}{rvrs on}{gray2}{$db}{rvrs on}{gray2}{$dc}{rvrs off}"
 1267 DATA"{gray1}{rvrs on}{$dd}{rvrs on}{gray1}{$de}{down}{left:2}{rvrs on}{gray1}{$df}{rvrs on}{gray1}{$e0}{rvrs off}"
-1268 DATA"{gray1}{rvrs on}{$e1}{rvrs on}{gray1}{$e2}{down}{left:2}{rvrs on}{gray1}{$e3}{rvrs on}{gray1}{$e4}{rvrs off}"
+1268 DATA"{brown}{rvrs on}{$e1}{rvrs on}{brown}{$e2}{down}{left:2}{rvrs on}{brown}{$e3}{rvrs on}{brown}{$e4}{rvrs off}"
 1269 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
 1270 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1271 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
@@ -1278,17 +1278,17 @@
 1277 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1278 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1279 DATA"{lt. green}{rvrs on}{$e5}{rvrs on}{lt. green}{$e6}{down}{left:2}{rvrs on}{lt. green}{$e7}{rvrs on}{lt. green}{$e8}{rvrs off}"
-1280 DATA"{gray3}{rvrs on}{$e9}{rvrs on}{gray3}{$ea}{down}{left:2}{rvrs on}{gray3}{$eb}{rvrs on}{gray3}{$ec}{rvrs off}"
+1280 DATA"{lt. green}{rvrs on}{$e9}{rvrs on}{lt. green}{$ea}{down}{left:2}{rvrs on}{lt. green}{$eb}{rvrs on}{lt. green}{$ec}{rvrs off}"
 1281 DATA"{gray1}{rvrs on}{$e9}{rvrs on}{gray1}{$ea}{down}{left:2}{rvrs on}{gray1}{$eb}{rvrs on}{gray1}{$ec}{rvrs off}"
 1282 DATA"{orange}{rvrs on}{$e5}{rvrs on}{orange}{$e6}{down}{left:2}{rvrs on}{orange}{$e7}{rvrs on}{orange}{$e8}{rvrs off}"
 1283 DATA"{gray1}{rvrs on}{$ed}{rvrs on}{gray1}{$ee}{down}{left:2}{rvrs on}{gray1}{$f0}{rvrs on}{gray1}{$ef}{rvrs off}"
 1284 DATA"{gray1}{rvrs on}{$ed}{rvrs on}{gray1}{$ee}{down}{left:2}{rvrs on}{gray1}{$f0}{rvrs on}{gray1}{$f1}{rvrs off}"
-1285 DATA"{brown}{rvrs on}{$f2}{rvrs on}{brown}{$f3}{down}{left:2}{rvrs on}{brown}{$f4}{rvrs on}{brown}{$f5}{rvrs off}"
+1285 DATA"{gray1}{rvrs on}{$f2}{rvrs on}{gray1}{$f3}{down}{left:2}{rvrs on}{gray1}{$f4}{rvrs on}{gray1}{$f5}{rvrs off}"
 1286 DATA"{gray1}{rvrs on}{$f6}{rvrs on}{gray1}{$f7}{down}{left:2}{rvrs on}{gray1}{$f8}{rvrs on}{gray1}{$f9}{rvrs off}"
-1287 DATA"{gray1}{rvrs on}{$fa}{rvrs on}{gray1}{$fb}{down}{left:2}{rvrs on}{gray1}{$fc}{rvrs on}{gray1}{$fd}{rvrs off}"
-1288 DATA"{lt. green}{rvrs on}{$f6}{rvrs on}{lt. green}{$f7}{down}{left:2}{rvrs on}{lt. green}{$f8}{rvrs on}{lt. green}{$f9}{rvrs off}"
-1289 DATA"{lt. red}{rvrs on}{$f2}{rvrs on}{lt. red}{$f3}{down}{left:2}{rvrs on}{lt. red}{$f4}{rvrs on}{lt. red}{$f5}{rvrs off}"
-1290 DATA"{lt. green}{rvrs on}{$f2}{rvrs on}{lt. green}{$f3}{down}{left:2}{rvrs on}{lt. green}{$f4}{rvrs on}{lt. green}{$f5}{rvrs off}"
+1287 DATA"{lt. green}{rvrs on}{$f6}{rvrs on}{lt. green}{$f7}{down}{left:2}{rvrs on}{lt. green}{$f8}{rvrs on}{lt. green}{$f9}{rvrs off}"
+1288 DATA"{orange}{rvrs on}{$f6}{rvrs on}{orange}{$f7}{down}{left:2}{rvrs on}{orange}{$f8}{rvrs on}{orange}{$f9}{rvrs off}"
+1289 DATA"{gray1}{rvrs on}{$f2}{rvrs on}{gray1}{$f3}{down}{left:2}{rvrs on}{gray1}{$f4}{rvrs on}{gray1}{$f5}{rvrs off}"
+1290 DATA"{gray1}{rvrs on}{$f2}{rvrs on}{gray1}{$f3}{down}{left:2}{rvrs on}{gray1}{$f4}{rvrs on}{gray1}{$f5}{rvrs off}"
 1291 DATA"{gray1}{rvrs on}{$f2}{rvrs on}{gray1}{$f3}{down}{left:2}{rvrs on}{gray1}{$f4}{rvrs on}{gray1}{$f5}{rvrs off}"
 1292 DATA"{lt. green}{rvrs on}{$fa}{rvrs on}{lt. green}{$fb}{down}{left:2}{rvrs on}{lt. green}{$fc}{rvrs on}{lt. green}{$fd}{rvrs off}"
 1293 DATA"{brown}{rvrs off}{$c0}{rvrs off}{brown}{$c0}{down}{left:2}{rvrs off}{brown}{$c0}{rvrs off}{brown}{$c0}{rvrs off}"

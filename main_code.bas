@@ -528,6 +528,7 @@ goto{:goto_newgame}
 	'	c=50 lena
 	'	c=52 dolm
 	'	c=51 mira
+	'	c=53 unic
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'
 	if c=50 then {var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
@@ -1875,7 +1876,7 @@ goto{:goto_newgame}
 		print"{home}{right:2}{down:6}{white}"  ;si$(2);
 		print"{home}{right:2}{down:8}{white}"  ;si$(3);
 		print"{home}{right:2}{down:10}{white}" ;si$(4);
-		print"{home}{right:2}{down:12}{white}" ;si$(5);	
+		print"{home}{right:2}{down:12}{white}" ;si$(5);
 		gosub{:gosub_joywait_fire}
 		return
 {:gosub_print_txt_game}
@@ -1883,7 +1884,7 @@ goto{:goto_newgame}
 	' npc            (pt=1) (txt=cyan)  (rahmen=white) 
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 		if pt=1 then gosub{:gosub_print_rahmen_unten_white}
-		if pt=1 then print"{home}{right:2}{down:19}{white}"  ;sb$(sb-1);
+		if pt=1 then print"{home}{right:2}{down:19}{white}"  ;sb$(sb-1);":"
 		if pt=1 then print"{home}{right:2}{down:20}{cyan}"   ;sb$(sb+0);
 		if pt=1 then print"{home}{right:2}{down:21}{cyan}"   ;sb$(sb+1);
 		if pt=1 then print"{home}{right:2}{down:22}{cyan}"   ;sb$(sb+2);
@@ -1892,22 +1893,21 @@ goto{:goto_newgame}
 	' player / info  (pt=2) (txt=white) (rahmen=cyan) 
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 		if pt=2 then gosub{:gosub_print_rahmen_unten_cyan}
-		if pt=2 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);
+		if pt=2 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);":"
 		if pt=2 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);
 		if pt=2 then print"{home}{right:2}{down:21}{white}"  ;sb$(sb+1);
 		if pt=2 then print"{home}{right:2}{down:22}{white}"  ;sb$(sb+2);
-		if pt=2 then gosub{:gosub_joywait_fire} :return	
+		if pt=2 then gosub{:gosub_joywait_fire} :return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	' choose         (pt=3) (txt=white) (rahmen=cyan)
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 		if pt=3 then gosub{:gosub_print_rahmen_unten_cyan}
-		if pt=3 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);
+		if pt=3 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);":"
 		if pt=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);:sy=20
 		if pt=3 then gosub{:gosub_print_txt_screen_choose} :return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	' < = anfuerungszeichen unten
 	' > = anfuehrungszeichen oben
-	' % = doppelpunkt
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	return
 {:gosub_print_txt_game_clear}
@@ -2100,7 +2100,7 @@ goto{:goto_newgame}
 	'{var:item_ident}(0-18) 4 = relikt
 	'{var:item_ident}(0-18) 9 = zurueck
 	'{var:item_xxx}(x)
-	'     name      at de lv sp,ma
+	'     name      at de lv sp,ma id
 	data "        ",00,00,00,00,00,-1  :'item 0
 	data "dolch   ",03,00,00,00,00,00  :'item 1 kron
 	data "helm    ",00,02,-1,00,00,01  :'item 2 kron
