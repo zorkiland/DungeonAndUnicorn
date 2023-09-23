@@ -368,7 +368,6 @@ goto{:goto_newgame}
 	'if int(ti/60) = 60*15 then gosub{:gosub_raumaktion_variabeln_nachwachsend}
 	if cr={var:event_raum}(0) then xe%={var:event_posx}(0) : ye%={var:event_posy}(0) : gosub{:gosub_sprite_apfel}
 	if cr={var:event_raum}(1) then xe%={var:event_posx}(1) : ye%={var:event_posy}(1) : gosub{:gosub_sprite_pilz}
-	if cr=4 then xe%=14 : ye%=3 : gosub {:gosub_sprite_unicorn} : gosub {:gosub_sprite_unicorn_overlay}
 
 {:mainloop_oldpos}
 	ox=zx:oy=zy
@@ -398,8 +397,6 @@ goto{:goto_newgame}
 		next i
 	'wenn am rand der map
 		if zx=-1 or zx=20 or zy=-1 or zy=8 then{:mainloop_set_newpos}
-	'wenn sprite kollision raum 4
-		if cr=4 and zx=14 and (zy=3 or zy=2) then {:mainloop_oldpos}
 	'read nextpos map
 		c=peek({var:start_map}+{var:offset_map}+zx+(zy*60))
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
