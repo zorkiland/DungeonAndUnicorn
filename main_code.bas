@@ -524,6 +524,7 @@ goto{:goto_newgame}
 	'else
 		goto{:mainloop_oldpos}
 {:goto_raumaktion_npc}
+	if c=53 then goto{:mainloop_oldpos}
 	'
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
@@ -536,7 +537,7 @@ goto{:goto_newgame}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'
 	if c=50 then {var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
-	if c=50 then pt=1 :sb=11 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos} 
+	if c=50 then pt=1 :sb=11 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos}
 	'
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
