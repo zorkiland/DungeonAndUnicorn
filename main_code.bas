@@ -1774,7 +1774,7 @@ goto{:goto_newgame}
 {:gosub_sprite_player}          'sprite 0 multi
 	'sprite
 		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor},2
-		poke {var:sprite_multi_on_off},{%:00010111}
+		poke {var:sprite_multi_on_off},{%:00010111}       'set colormod sprite 0-7
 		poke {var:sprite0_x},((x*2)*8+24) and 255         'sprite 0 posx (24=sichtbar)
 		poke {var:sprite0_y},(y*2)*8+50+24                'sprite 0 posy (50=sichtbar +24=map ist drei zeilen weiter unten)
 		poke {var:sprite_x_highbit},-((x*2)>29)           'x highbit %00000011 sprite posx
