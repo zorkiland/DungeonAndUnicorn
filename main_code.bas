@@ -524,7 +524,6 @@ goto{:goto_newgame}
 	'else
 		goto{:mainloop_oldpos}
 {:goto_raumaktion_npc}
-	if c=53 then goto{:mainloop_oldpos}
 	'
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
@@ -537,7 +536,9 @@ goto{:goto_newgame}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'
 	if c=50 then {var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
-	if c=50 then pt=1 :sb=11 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} : gosub{:gosub_print_map} :goto{:mainloop_oldpos}
+	if c=50 then pt=1 :sb=11 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} :gosub{:gosub_print_map} :goto{:mainloop_oldpos}
+	'
+	if c=53 then pt=1 :sb=15 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} :goto{:mainloop_oldpos}
 	'
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
@@ -1417,7 +1418,7 @@ goto{:goto_newgame}
 		if ff=3  then a=0: lc=int(rnd(0))*2+2 : for i=0 to lc : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
 		if ff=1  then a=1:                      for i=0 to 2  : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
 		if ff=2  then a=1:                      for i=0 to 1  : gosub{:gosub_battel_set_fight(xx)_monster} :next: a=2:fori=0to1:gosub{:gosub_battel_set_fight(xx)_monster}:next:return
-		if ff=4  then a=3:                                      gosub{:gosub_battel_set_fight(xx)_monster} :a=1: gosub{:gosub_battel_set_fight(xx)_monster} :gosub{:gosub_battel_set_fight(xx)_monster}:return
+		if ff=4  then a=3:                                      gosub{:gosub_battel_set_fight(xx)_monster} :a=1: gosub{:gosub_battel_set_fight(xx)_monster} :a=0: gosub{:gosub_battel_set_fight(xx)_monster}:return
 		if ff=5  then a=4: lc=int(rnd(0)*3)+1 : for i=0 to lc : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
 		if ff=6  then on int(rnd(1)*2)+1                        goto {:goto_moss},{:goto_spark}
 		if ff=7  then lc=int(rnd(0)*3)+1:a=6  : for i=0 to lc : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
@@ -1975,8 +1976,8 @@ goto{:goto_newgame}
 	poke 56322,224 : 'tastatur 224=aus 225=an
 	if {var:seq_select}="nibelheim" then open 1,8,4,"txt.nibelheim,s,r"
 	if {var:seq_select}=""          then return
-	for i= 0 to 13 : sb$(i)="":next i
-	i=0	
+	for i= 0 to 50 : sb$(i)="":next i
+	i=0
 	{:input_game_seq}
 		input#1,sb$(i)
 		'st=0 status floppy lesen
