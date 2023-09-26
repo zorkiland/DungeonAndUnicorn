@@ -1418,7 +1418,7 @@ goto{:goto_newgame}
 		if ff=3  then a=0: lc=int(rnd(0))*2+2 : for i=0 to lc : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
 		if ff=1  then a=1:                      for i=0 to 2  : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
 		if ff=2  then a=1:                      for i=0 to 1  : gosub{:gosub_battel_set_fight(xx)_monster} :next: a=2:fori=0to1:gosub{:gosub_battel_set_fight(xx)_monster}:next:return
-		if ff=4  then a=3:                                      gosub{:gosub_battel_set_fight(xx)_monster} :a=1: gosub{:gosub_battel_set_fight(xx)_monster} :a=0: gosub{:gosub_battel_set_fight(xx)_monster}:return
+		if ff=4  then a=3:                                      gosub{:gosub_battel_set_fight(xx)_monster} :a=1: gosub{:gosub_battel_set_fight(xx)_monster} : gosub{:gosub_battel_set_fight(xx)_monster} :a=0: gosub{:gosub_battel_set_fight(xx)_monster}:return
 		if ff=5  then a=4: lc=int(rnd(0)*3)+1 : for i=0 to lc : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
 		if ff=6  then on int(rnd(1)*2)+1                        goto {:goto_moss},{:goto_spark}
 		if ff=7  then lc=int(rnd(0)*3)+1:a=6  : for i=0 to lc : gosub{:gosub_battel_set_fight(xx)_monster} :next: return
