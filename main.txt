@@ -1280,7 +1280,7 @@
 1279 DATA"{lt. green}{rvrs on}{$d5}{rvrs on}{lt. green}{$d6}{down}{left:2}{rvrs on}{lt. green}{$d7}{rvrs on}{lt. green}{$d8}{rvrs off}"
 1280 DATA"{gray2}{rvrs on}{$d9}{rvrs on}{gray2}{$da}{down}{left:2}{rvrs on}{gray2}{$db}{rvrs on}{gray2}{$dc}{rvrs off}"
 1281 DATA"{gray1}{rvrs on}{$dd}{rvrs on}{gray1}{$de}{down}{left:2}{rvrs on}{gray1}{$df}{rvrs on}{gray1}{$e0}{rvrs off}"
-1282 DATA"{gray1}{rvrs on}{$fa}{rvrs on}{gray1}{$fb}{down}{left:2}{rvrs on}{gray1}{$fc}{rvrs on}{gray1}{$fd}{rvrs off}"
+1282 DATA"{brown}{rvrs on}{$fa}{rvrs on}{brown}{$fb}{down}{left:2}{rvrs on}{brown}{$fc}{rvrs on}{brown}{$fd}{rvrs off}"
 1283 DATA"{lt. red}{rvrs off}{$c0}{rvrs off}{lt. red}{$c0}{down}{left:2}{rvrs off}{lt. red}{$c0}{rvrs off}{lt. red}{$c0}{rvrs off}"
 1284 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
 1285 DATA"{gray1}{rvrs off}{$c0}{rvrs off}{gray1}{$c0}{down}{left:2}{rvrs off}{gray1}{$c0}{rvrs off}{gray1}{$c0}{rvrs off}"
