@@ -309,7 +309,7 @@
 		next
 	'read player
 		for i=0 to 3
-		read {var:player_name}(i),{var:player_hp}(i),{var:player_mp}(i),{var:player_level}(i)
+		read {var:player_name}(i),{var:player_hp_max}(i),{var:player_mp_max}(i),{var:player_level}(i)
 		read {var:player_atk}(i),{var:player_def}(i),{var:player_speed}(i),{var:player_waffe}(i),{var:player_ruestung}(i)
 		next
 	'read item
@@ -331,11 +331,44 @@
 		{var:monster_tile}(i) = {var:map_tile}(j)
 		j=j+1
 		next i
-'
-{:start}
+'set inventar magic
+	{var:inventar_ident}(1) =4   'feuer
+	{var:inventar_ident}(2) =5   'polar
+	{var:inventar_ident}(3) =6   'groll
+	{var:inventar_ident}(4) =7   'bombe
+	{var:inventar_ident}(5) =12  'blind
+	{var:inventar_ident}(6) =9   'heilen
+'set inventar relikt
+	{var:inventar_ident}(7)=18   'level1
+	{var:inventar_ident}(8)=21   'level2
+	{var:inventar_ident}(9)=24   'level3
+	{var:inventar_ident}(10)=19  'attack1
+	{var:inventar_ident}(11)=22  'attack2
+	{var:inventar_ident}(12)=25  'attack3
+	{var:inventar_ident}(13)=20  'defence1
+	{var:inventar_ident}(14)=23  'defence2
+	{var:inventar_ident}(15)=26  'defence3
+	{var:inventar_ident}(16)=27  'speed1
+	{var:inventar_ident}(17)=28  'speed2
+	{var:inventar_ident}(18)=29  'speed3
+'set inventar waffen ruestung
+	{var:inventar_ident}(19)=14  'rock
+	{var:inventar_ident}(20)=16  'weste
+	{var:inventar_ident}(21)=17  'schild
+	
+	{var:inventar_ident}(22)=11  'flegel
+	{var:inventar_ident}(23)=13  'speer
+	{var:inventar_ident}(24)=15  'schwert
+
+{var:player_activ}(0)=1
 gosub {:gosub_raumaktion_variabeln}
-goto{:goto_newgame}
-'
+gosub {:gosub_raumaktion_poke_mapspeicher}
+
+{:start}
+gosub{:gosub_print_intro}
+for i=0 to 3: {var:player_hp}(i)={var:player_hp_max}(i) : {var:player_mp}(i)={var:player_mp_max}(i) : next
+x=10:y=5:cr=3
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'mainloop
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -970,7 +1003,7 @@ goto{:goto_newgame}
 	'wenn inventar max
 		if is=99 then return
 	goto{:inventar_next}
-'
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'battel
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -999,7 +1032,7 @@ goto{:goto_newgame}
 	'	fight_level(ce)=fight_level(ce)/2
 	'	fight_level(ce) min 5
 	'""""""""""""""""""""""""""""""""""""""""""
-'
+
 {:battel}
 	'spritebank battle
 		{var:spritebank}={$:a0}
@@ -1468,7 +1501,7 @@ goto{:goto_newgame}
 	{var:fight_mp_max}(i)       =       {var:player_mp_max}(i)
 	next
 	return
-'
+
 {:gosub_battel_reanimation}
 	pp=4
 	for i=0 to 3
@@ -1492,7 +1525,7 @@ goto{:goto_newgame}
 		cm=cm+1
 	next
 	return
-'
+
 {:gosub_battel_print_all_monster_tile}
 	for i=4 to 11:if {var:fight_active}(i)=-1 then {:monster_tile_next}
 	print"{home}"left$(cd$,{var:fight_posy}(i));spc({var:fight_posx}(i));{var:monster_tile}({var:fight_active}(i))
@@ -1533,7 +1566,7 @@ goto{:goto_newgame}
 	'print playertile right
 		if c < 4 then print"{home}"left$(cd$,5+c*3)spc(37){var:player_tile}(c);
 	return
-'
+
 {:goto_battel_gewonnen}
 	poke 1020,{var:farbe_sw} 'hintergrundfarbe map
 	'print rahmen ohne hp monster
@@ -1588,7 +1621,7 @@ goto{:goto_newgame}
 	fe=fre(0)
 	gosub{:gosub_joywait_fire}
 	goto{:start}
-'
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'gosub
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1705,71 +1738,7 @@ goto{:goto_newgame}
 	sp=sp+40
 	next i
 	return
-{:goto_newgame}
-	'part 1 start variabeln
-		for i=0 to 3:{var:player_exp}(i)=0:next
-		{var:player_atk}(0)=5:{var:player_def}(0)=2:{var:player_atk}(1)=4:{var:player_def}(1)=3:{var:player_atk}(2)=1:{var:player_def}(2)=1:{var:player_atk}(3)=1:{var:player_def}(3)=1
-		{var:player_speed}(0)=10:{var:player_speed}(1)=10:{var:player_speed}(2)=8:{var:player_speed}(3)=7
-	'item 0-99 = 0
-		for i=0 to 99:{var:inventar_ident}(i)=0:next
-		{var:inventar_ident}(0)=99
-	'print rahmen
-		print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
-		fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
-		print"{$c6}{$c7:38}{up:3}";
-		poke 50151,72:poke 56295,9 '50151 = letzte pos bidschirmspeicher 56295= letzte pos farbspeicher
-	'raum und posx/y
-		x=10:y=5:cr=3
-	'player aktiv
-		{var:player_activ}(0)=1:{var:player_activ}(1)=0:{var:player_activ}(2)=0:{var:player_activ}(3)=0
-	'set player hp mp max
-		{var:player_hp_max}(0)=15:{var:player_hp_max}(1)=17:{var:player_hp_max}(2)=9:{var:player_hp_max}(3)=9:{var:player_mp_max}(0)=7:{var:player_mp_max}(1)=7:{var:player_mp_max}(2)=7:{var:player_mp_max}(3)=23
-	'set player hp mp usw
-		fori=0to3:{var:player_hp}(i)={var:player_hp_max}(i):{var:player_mp}(i)={var:player_mp_max}(i):{var:player_exp}(i)=0:{var:player_waffe}(i)=0:{var:player_ruestung}(i)=0:{var:player_relikt}(i)=0:next
-	'player weappon = item 1 ruestung= item 2
-		'{var:player_waffe}(0)=1:{var:player_ruestung}(0)=2
-	'poke mapspeicher
-		gosub {:gosub_raumaktion_poke_mapspeicher}
-	'print text
-		{var:seq_select}="intro"
-		poke 1020,{var:farbe_bl}
-		gosub {:gosub_load_screen_seq}
-		gosub {:gosub_print_txt_screen}
 
-		'magic
-		{var:inventar_ident}(1) =4   'feuer
-		{var:inventar_ident}(2) =5   'polar
-		{var:inventar_ident}(3) =6   'groll
-		{var:inventar_ident}(4) =7   'bombe
-		{var:inventar_ident}(5) =12  'blind
-		{var:inventar_ident}(6) =9   'heilen
-
-		'relikt
-		{var:inventar_ident}(7)=18   'level1
-		{var:inventar_ident}(8)=21   'level2
-		{var:inventar_ident}(9)=24   'level3
-		{var:inventar_ident}(10)=19  'attack1
-		{var:inventar_ident}(11)=22  'attack2
-		{var:inventar_ident}(12)=25  'attack3
-		{var:inventar_ident}(13)=20  'defence1
-		{var:inventar_ident}(14)=23  'defence2
-		{var:inventar_ident}(15)=26  'defence3
-		{var:inventar_ident}(16)=27  'speed1
-		{var:inventar_ident}(17)=28  'speed2
-		{var:inventar_ident}(18)=29  'speed3
-
-		'waffen ruestung
-		{var:inventar_ident}(19)=14  'rock
-		{var:inventar_ident}(20)=16  'weste
-		{var:inventar_ident}(21)=17  'schild
-
-		{var:inventar_ident}(22)=11  'flegel
-		{var:inventar_ident}(23)=13  'speer
-		{var:inventar_ident}(24)=15  'schwert
-
-		{var:player_activ}(0)=1
-	goto{:mainloop}
-'
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'sprite
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1840,7 +1809,7 @@ goto{:goto_newgame}
 	poke {var:sprite_on_off},peek({var:sprite_on_off}) and {%:11111111}-bi%
 	'-> player sprite off direkt poke {%:00000000}
 	return
-'
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'rahmen
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1881,10 +1850,22 @@ goto{:goto_newgame}
 	fori=0to13
 	print"{$c4}                                      {$c5}";:next
 	print"{$c6}{$c7:38}{$c8}";:return
-'
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'txt
 '"""""""""""""""""""""""""""""""""""""""""""""""""
+{:gosub_print_intro}
+	'print rahmen
+		print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
+		fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
+		print"{$c6}{$c7:38}{up:3}";
+		poke 50151,72:poke 56295,9 '50151 = letzte pos bidschirmspeicher 56295= letzte pos farbspeicher
+	'print text
+		{var:seq_select}="intro"
+		poke 1020,{var:farbe_bl}
+		gosub {:gosub_load_screen_seq}
+		gosub {:gosub_print_txt_screen}
+	return
 {:gosub_print_info_txt}
 	gosub {:gosub_clear_info_txt}
 	print dd$;"{right}";va$
@@ -1996,7 +1977,7 @@ goto{:goto_newgame}
 		if st=0 then i=i+1: goto{:input_screen_seq}
 		close 1:poke 56322,255
 	return
-'
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'validate
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2015,7 +1996,7 @@ goto{:goto_newgame}
 	if b > 9999 then b=9999
 	t$=str$(b)
 	e$=right$("0000"+right$(t$,len(t$)-1),4):return
-' 
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'joy
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2070,7 +2051,7 @@ goto{:goto_newgame}
 	'fire
 		if j=111 then a$=chr$(13)
 	goto {:joywait_fire}
-' 
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'delay
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2086,7 +2067,7 @@ goto{:goto_newgame}
 	poke 162,0: wait 162,32
 	poke 162,0: wait 162,32
 	return
-'
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'data
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2109,12 +2090,11 @@ goto{:goto_newgame}
 	data"glado",  500 ,70  ,60   ,80   ,30   ,60    ,1000
 'player
 	'{var:player_xxx}(x)
-	'    name     hp   mp   lv    atk   def  spe   waffe  ruestung
+	'    name     hpm  mpm  lv    atk   def  spe   waffe  ruestung
 	data"kron",   15  ,7   ,1    ,4    ,3    ,10   ,0     ,0
 	data"lena",   17  ,7   ,1    ,3    ,3    ,10   ,0     ,0
 	data"dolm",   9   ,7   ,1    ,1    ,1    ,8    ,0     ,0
 	data"mira",   9   ,23  ,1    ,1    ,1    ,7    ,0     ,0
-'
 'items
 	'{var:item_ident}(0-18) 0 = weappon
 	'{var:item_ident}(0-18) 1 = ruestung
@@ -2224,7 +2204,7 @@ goto{:goto_newgame}
 	data "        ",00,00,00,00,00,-1  :'item 97
 	data "        ",00,00,00,00,00,-1  :'item 98
 	data "zurueck ",00,00,00,00,00,09  :'item 99
-'
+
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'tile
 '"""""""""""""""""""""""""""""""""""""""""""""""""
