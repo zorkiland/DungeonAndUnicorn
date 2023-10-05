@@ -240,18 +240,18 @@
 		{var:sprite_hirescolor}  ={var:video_interface_chip}+39
 		{var:sprite_register}    ={$:c3f8}                      'ende bidschirmspeicher c3f8 sprite 0
 	'variabeln farben
-		{var:farbe_sw}          =0
+		'{var:farbe_sw..}       =0
 		'{var:farbe_ws}         =1
 		'{var:farbe_rd}         =2
 		'{var:farbe_tk}         =3
 		'{var:farbe_vi}         =4
 		'{var:farbe_gn}         =5
-		{var:farbe_bl}          =6
+		'{var:farbe_bl..}       =6
 		'{var:farbe_ge}         =7
-		{var:farbe_or}          =8
-		{var:farbe_br}          =9
+		'{var:farbe_or}         =8
+		'{var:farbe_br}         =9
 		'{var:farbe_lrd}        =10
-		{var:farbe_dgr}         =11
+		'{var:farbe_dgr}        =11
 		'{var:farbe_mgr}        =12
 		'{var:farbe_lgn}        =13
 		'{var:farbe_lbl}        =14
@@ -291,16 +291,16 @@
 	'  $c000 + $2000 = $e000
 	poke {$:d018},{%:00001000}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
-	poke 53270,peek(53270)or16'                         multicolor (ein=16 aus=239)
-	poke {var:multifarbspeicher_1},{var:farbe_or}'      multicolor 1 =8 (or)
-	poke {var:multifarbspeicher_2},{var:farbe_sw}'      multicolor 2 =0 (sw)
-	poke {var:rahmenfarbe},{var:farbe_sw}'              rahmenfarbe
-	poke {var:bildschirmfarbe},{var:farbe_bl}'          bildschirmfarbe
+	poke 53270,peek(53270)or16'            multicolor (ein=16 aus=239)
+	poke {var:multifarbspeicher_1},8'      multicolor 1 =8 (or)
+	poke {var:multifarbspeicher_2},0'      multicolor 2 =0 (sw)
+	poke {var:rahmenfarbe},0'              rahmenfarbe (sw)
+	poke {var:bildschirmfarbe},6'          bildschirmfarbe (bl)
 	print"{clear}"
 'set raster
-	poke 1020,{var:farbe_bl} 'hintergrundfarbe map
-	poke 1021,{var:farbe_bl} 'hintergrundfarbe schrift
-	sys 820                  'start asm.raster
+	poke 1020,6    'hintergrundfarbe map
+	poke 1021,6    'hintergrundfarbe schrift
+	sys 820        'start asm.raster
 'read data
 	'read monster
 		for i=0 to 13
@@ -365,7 +365,7 @@ gosub {:gosub_raumaktion_variabeln}
 gosub {:gosub_raumaktion_poke_mapspeicher}
 
 {:start}
-gosub{:gosub_print_intro}
+gosub{:gosub_print_rahmen_aussen} : poke 1020,6 : {var:seq_select}="intro" : gosub {:gosub_load_screen_seq} : gosub {:gosub_print_txt_screen}
 for i=0 to 3: {var:player_hp}(i)={var:player_hp_max}(i) : {var:player_mp}(i)={var:player_mp_max}(i) : next
 x=10:y=5:cr=3
 
@@ -388,9 +388,9 @@ x=10:y=5:cr=3
 	poke {var:sprite_on_off},{%:00000000}
 
 	'color und name raum
-	if cr=10 then poke 1020,{var:farbe_dgr} : gb$="schlafender wald"
-	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,{var:farbe_dgr}  : gb$="nibelheim"
-	if cr=8 or cr=5 or cr=2 then poke 1020,{var:farbe_dgr}  : gb$="im haus von lena"
+	if cr=10 then poke 1020,11 : gb$="schlafender wald"
+	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,11 : gb$="nibelheim"
+	if cr=8 or cr=5 or cr=2 then poke 1020,11  : gb$="im haus von lena"
 
 	gosub{:gosub_clear_top}
 	gosub{:gosub_print_map}
@@ -623,9 +623,9 @@ x=10:y=5:cr=3
 	bi%={%:00000010}:gosub{:gosub_sprite_off}
 	bi%={%:00000001}:gosub{:gosub_sprite_off}
 	va$="zzzzz!" : gosub{:gosub_print_info_txt}
-	'poke 1020,{var:farbe_sw}
+	'poke 1020,0
 	gosub{:gosub_delay_text}
-	'poke 1020,{var:farbe_dgr}
+	'poke 1020,11
 	gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_clear_info_txt}
 	bi%={%:00000001}:gosub{:gosub_sprite_on}
 	return
@@ -687,7 +687,7 @@ x=10:y=5:cr=3
 	gosub {:gosub_clear_info_txt}
 	'-> sprite all off
 	poke {var:sprite_on_off},{%:00000000}
-	poke 1020,{var:farbe_sw} 'hintergrundfarbe map
+	poke 1020,0 'hintergrundfarbe map
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}inventar: waehle dein item           ";
@@ -711,7 +711,7 @@ x=10:y=5:cr=3
 		gosub {:gosub_clear_info_txt}
 		'-> all sprite off
 		poke {var:sprite_on_off},{%:00000000}
-		poke 1020,{var:farbe_sw} 'hintergrundfarbe map
+		poke 1020,0 'hintergrundfarbe map
 		pj=0
 	{:equipment_ini}
 		gosub {:gosub_clear_top}
@@ -1041,7 +1041,7 @@ x=10:y=5:cr=3
 		gosub{:gosub_clear_top}
 		'-> player sprite off
 		poke {var:sprite_on_off},{%:00000000}
-		poke 1020,{var:farbe_bl}
+		poke 1020,6
 		gosub{:gosub_clear_map}
 	'set fight(xx)
 		gosub{:gosub_battel_set_fight(xx)_player}
@@ -1568,7 +1568,7 @@ x=10:y=5:cr=3
 	return
 
 {:goto_battel_gewonnen}
-	poke 1020,{var:farbe_sw} 'hintergrundfarbe map
+	poke 1020,0 'hintergrundfarbe map
 	'print rahmen ohne hp monster
 	printdd$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}{white}";
 	'                        123456789a123456789b123456789c12345678
@@ -1698,29 +1698,17 @@ x=10:y=5:cr=3
 	'raum 6     raum 7      raum 8
 	'960........980.........1000........
 	
-	if cr=0 then {var:offset_map}=0
-	if cr=1 then {var:offset_map}=20
-	if cr=2 then {var:offset_map}=40
+	if cr=0 or cr=10 then {var:offset_map}=0
+	if cr=1 or cr=11 then {var:offset_map}=20
+	if cr=2 or cr=12 then {var:offset_map}=40
 
-	if cr=3 then {var:offset_map}=480
-	if cr=4 then {var:offset_map}=480+20
-	if cr=5 then {var:offset_map}=480+40
+	if cr=3 or cr=13 then {var:offset_map}=480
+	if cr=4 or cr=14 then {var:offset_map}=480+20
+	if cr=5 or cr=15 then {var:offset_map}=480+40
 
-	if cr=6 then {var:offset_map}=960
-	if cr=7 then {var:offset_map}=960+20
-	if cr=8 then {var:offset_map}=960+40
-
-	if cr=10 then {var:offset_map}=0
-	if cr=11 then {var:offset_map}=20
-	if cr=12 then {var:offset_map}=40
-
-	if cr=13 then {var:offset_map}=480
-	if cr=14 then {var:offset_map}=480+20
-	if cr=15 then {var:offset_map}=480+40
-
-	if cr=16 then {var:offset_map}=960
-	if cr=17 then {var:offset_map}=960+20
-	if cr=18 then {var:offset_map}=960+40
+	if cr=6 or cr=16 then {var:offset_map}=960
+	if cr=7 or cr=17 then {var:offset_map}=960+20
+	if cr=8 or cr=18 then {var:offset_map}=960+40
 
 	sp={var:start_map}+{var:offset_map}
 	
@@ -1850,22 +1838,16 @@ x=10:y=5:cr=3
 	fori=0to13
 	print"{$c4}                                      {$c5}";:next
 	print"{$c6}{$c7:38}{$c8}";:return
+{:gosub_print_rahmen_aussen}
+	print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
+	fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
+	print"{$c6}{$c7:38}{up:3}";
+	poke 50151,72:poke 56295,9 '50151 = letzte pos bidschirmspeicher 56295= letzte pos farbspeicher
+	return
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'txt
 '"""""""""""""""""""""""""""""""""""""""""""""""""
-{:gosub_print_intro}
-	'print rahmen
-		print"{white}{clear}{brown}{$c1}{$c2:38}{$c3}";
-		fori=1to23:print"{$c4}"spc(38)"{$c5}";:next
-		print"{$c6}{$c7:38}{up:3}";
-		poke 50151,72:poke 56295,9 '50151 = letzte pos bidschirmspeicher 56295= letzte pos farbspeicher
-	'print text
-		{var:seq_select}="intro"
-		poke 1020,{var:farbe_bl}
-		gosub {:gosub_load_screen_seq}
-		gosub {:gosub_print_txt_screen}
-	return
 {:gosub_print_info_txt}
 	gosub {:gosub_clear_info_txt}
 	print dd$;"{right}";va$
@@ -1908,7 +1890,7 @@ x=10:y=5:cr=3
 		if pt=3 then gosub{:gosub_print_rahmen_unten_cyan}
 		if pt=3 then print"{home}{right:2}{down:19}{cyan}"   ;sb$(sb-1);":"
 		if pt=3 then print"{home}{right:2}{down:20}{white}"  ;sb$(sb+0);:sy=20
-		if pt=3 then gosub{:gosub_print_txt_screen_choose} :return
+		if pt=3 then gosub{:gosub_print_txt_game_choose} :return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	' < = anfuerungszeichen unten
 	' > = anfuehrungszeichen oben
@@ -1921,7 +1903,7 @@ x=10:y=5:cr=3
 		gosub{:gosub_print_player_hp}
 		pt=0:pa=0:ma=0
 	return
-{:gosub_print_txt_screen_choose}
+{:gosub_print_txt_game_choose}
 	ch=1:a$=""
 	va$=""
 	'bildschirmspeicher (pro zeile 40 zeichen 0-39)
@@ -1940,7 +1922,7 @@ x=10:y=5:cr=3
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:gosub_load_map}
 	poke {var:sprite_on_off},{%:00000000}
-	poke 1020,{var:farbe_bl}
+	poke 1020,6
 	gosub{:gosub_clear_top}
 	gosub{:gosub_clear_map}
 	print"{home}{down:10}{right:16}{white}loading..."
