@@ -42,11 +42,13 @@
 		{var:item_level=il%}
 		{var:item_speed=is%}
 		{var:item_mana=ie%}
-		{var:item_ident=it%}
-		{var:inventar_ident=in%}
+		{var:item_cat=it%}
+		{var:inventar=in%}
 		{var:inventar_max=ix%}
 		{var:nimm_item=ni%}
-		{var:inventar_ident_temp=tt%}
+		{var:shop=si%}
+		{var:temp=st%}
+		{var:sort=tt%}
 	'supervar_player
 		{var:player_name=p$}
 		{var:player_hp=ph%}
@@ -190,11 +192,11 @@
 		dim {var:fight_hp}(11),{var:fight_active}(11),{var:fight_rnd_level}(11),{var:fight_speed}(11),{var:fight_basis_speed}(11),{var:fight_mp}(11),{var:fight_level}(11),{var:fight_posx}(11),{var:fight_posy}(11),{var:fight_atk}(11),{var:fight_def}(11),{var:fight_hp_max}(11),{var:fight_mp_max}(11)
 		for i=0 to 3:{var:fight_posx}(i)=37:{var:fight_posy}(i)=5+3*i:next
 	'items
-		dim {var:item_name}(99),{var:item_atk}(99),{var:item_def}(99),{var:item_level}(99),{var:item_speed}(99),{var:item_mana}(99),{var:item_ident}(99)
+		dim {var:item_name}(99),{var:item_atk}(99),{var:item_def}(99),{var:item_level}(99),{var:item_speed}(99),{var:item_mana}(99),{var:item_cat}(99)
 	'event variable
 		dim {var:event_raum}(12),{var:event_posx}(12),{var:event_posy}(12),{var:event_item}(12)
-	'inventar
-		dim {var:inventar_ident}(99),{var:inventar_ident_temp}(99)
+	'item nummer
+		dim {var:inventar}(99),{var:sort}(99)
 	'tile
 		dim {var:map_tile}(111)
 	'schlater aktor flag
@@ -203,6 +205,8 @@
 		dim {var:npc_raum}(10),{var:npc_posx}(10),{var:npc_posy}(10),{var:npc_flag}(10)
 	'txt
 		dim sb$(50),si$(5)
+	'shop
+		dim {var:shop}(99),{var:temp}(99)
 'load game seq
 	{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
 'set variablen
@@ -314,7 +318,7 @@
 		next
 	'read item
 		for i=0 to 99
-		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_level}(i),{var:item_speed}(i),{var:item_mana}(i),{var:item_ident}(i)
+		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_level}(i),{var:item_speed}(i),{var:item_mana}(i),{var:item_cat}(i)
 		next
 	'read tile
 		for i=0 to 111
@@ -332,34 +336,35 @@
 		j=j+1
 		next i
 'set inventar magic
-	{var:inventar_ident}(1) =4   'feuer
-	{var:inventar_ident}(2) =5   'polar
-	{var:inventar_ident}(3) =6   'groll
-	{var:inventar_ident}(4) =7   'bombe
-	{var:inventar_ident}(5) =12  'blind
-	{var:inventar_ident}(6) =9   'heilen
+	{var:shop}(0) =99  'zurueck
+	{var:shop}(1) =4   'feuer
+	{var:shop}(2) =5   'polar
+	{var:shop}(3) =6   'groll
+	{var:shop}(4) =7   'bombe
+	{var:shop}(5) =12  'blind
+	{var:shop}(6) =9   'heilen
 'set inventar relikt
-	{var:inventar_ident}(7)=18   'level1
-	{var:inventar_ident}(8)=21   'level2
-	{var:inventar_ident}(9)=24   'level3
-	{var:inventar_ident}(10)=19  'attack1
-	{var:inventar_ident}(11)=22  'attack2
-	{var:inventar_ident}(12)=25  'attack3
-	{var:inventar_ident}(13)=20  'defence1
-	{var:inventar_ident}(14)=23  'defence2
-	{var:inventar_ident}(15)=26  'defence3
-	{var:inventar_ident}(16)=27  'speed1
-	{var:inventar_ident}(17)=28  'speed2
-	{var:inventar_ident}(18)=29  'speed3
+	{var:shop}(7)=18   'level1
+	{var:shop}(8)=21   'level2
+	{var:shop}(9)=24   'level3
+	{var:shop}(10)=19  'attack1
+	{var:shop}(11)=22  'attack2
+	{var:shop}(12)=25  'attack3
+	{var:shop}(13)=20  'defence1
+	{var:shop}(14)=23  'defence2
+	{var:shop}(15)=26  'defence3
+	{var:shop}(16)=27  'speed1
+	{var:shop}(17)=28  'speed2
+	{var:shop}(18)=29  'speed3
 'set inventar waffen ruestung
-	{var:inventar_ident}(19)=14  'rock
-	{var:inventar_ident}(20)=16  'weste
-	{var:inventar_ident}(21)=17  'schild
+	{var:shop}(19)=14  'rock
+	{var:shop}(20)=16  'weste
+	{var:shop}(21)=17  'schild
 	
-	{var:inventar_ident}(22)=11  'flegel
-	{var:inventar_ident}(23)=13  'speer
-	{var:inventar_ident}(24)=15  'schwert
-
+	{var:shop}(22)=11  'flegel
+	{var:shop}(23)=13  'speer
+	{var:shop}(24)=15  'schwert
+{var:inventar}(0)=99
 {var:player_activ}(0)=1
 gosub {:gosub_raumaktion_variabeln}
 gosub {:gosub_raumaktion_poke_mapspeicher}
@@ -414,6 +419,8 @@ x=10:y=5:cr=3
 	if a$="s"  then zy=y+1:goto{:mainloop_if_newpos}
 	if a$="fu" then {var:joy_map_true}=0 : goto {:goto_inventar}
 	if a$="fd" then {var:joy_map_true}=0 : goto {:goto_equipment}
+	if a$="fl" then {var:joy_map_true}=0 : goto {:goto_shop}
+
 
 	if a$=chr$(13) and ut$="gefunden" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_gefunden} :ut$="":goto{:mainloop_oldpos}
 	if a$=chr$(13) and ut$="schalter" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_schalter} :ut$="":goto{:mainloop_oldpos}
@@ -599,13 +606,13 @@ x=10:y=5:cr=3
 		if {var:event_raum}(ei)<>cr or {var:event_posx}(ei)<>ox or {var:event_posy}(ei)<>oy then {:gefunden_next}
 	'add item inventar
 		{var:nimm_item}={var:event_item}(ei) : gosub{:gosub_inventar_add_item}
-	'inventar max
+	'item nummer max
 		if is=49 then va$="du kannst nicht mehr tragen" : gosub{:gosub_print_info_txt} :return
 	'loesche event item
 		{var:event_raum}(ei)=-1
-	'inventar print
-		if {var:item_ident}({var:inventar_ident}(is))=2 then bi%={%:00000100}:gosub{:gosub_sprite_off}
-		va$="gefunden: "+{var:item_name}({var:inventar_ident}(is)): gosub{:gosub_print_info_txt} : return
+	'item nummer print
+		if {var:item_cat}({var:inventar}(is))=2 then bi%={%:00000100}:gosub{:gosub_sprite_off}
+		va$="gefunden: "+{var:item_name}({var:inventar}(is)): gosub{:gosub_print_info_txt} : return
 	{:gefunden_next}
 		'wenn ei=max
 		ei=ei+1
@@ -694,16 +701,16 @@ x=10:y=5:cr=3
 	mt=2:mx=2:my=4:mc=14:ee=2
 	gosub{:gosub_inventar_menu}
 	if a$="fu" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if {var:inventar_ident}(m)=9 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if {var:inventar_ident}(m)=0 or {var:item_ident}({var:inventar_ident}(m))<>mt then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if {var:inventar_ident}(m)=3 then gosub{:inventar_auswahl_pilz} :{var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if {var:inventar_ident}(m)=8 then gosub{:inventar_auswahl_apfel}:{var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar}(m)=99 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar}(m)=3 then gosub{:inventar_auswahl_pilz} :{var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar}(m)=8 then gosub{:inventar_auswahl_apfel}:{var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 	{:inventar_auswahl_apfel}
-		for i=0 to 3:{var:player_hp}(i)={var:player_hp}(i)+{var:item_mana}({var:inventar_ident}(m)):if {var:player_hp}(i)>{var:player_hp_max}(i)then {var:player_hp}(i)={var:player_hp_max}(i)
+		for i=0 to 3:{var:player_hp}(i)={var:player_hp}(i)+{var:item_mana}({var:inventar}(m)):if {var:player_hp}(i)>{var:player_hp_max}(i)then {var:player_hp}(i)={var:player_hp_max}(i)
 		{var:fight_hp}(i)={var:player_hp}(i):next:return
 	{:inventar_auswahl_pilz}
-		for i=0 to 3:{var:player_mp}(i)={var:player_mp}(i)+{var:item_mana}({var:inventar_ident}(m)):if {var:player_mp}(i)>{var:player_mp_max}(i)then {var:player_mp}(i)={var:player_mp_max}(i)
+		for i=0 to 3:{var:player_mp}(i)={var:player_mp}(i)+{var:item_mana}({var:inventar}(m)):if {var:player_mp}(i)>{var:player_mp_max}(i)then {var:player_mp}(i)={var:player_mp_max}(i)
 		{var:fight_mp}(i)={var:player_mp}(i):next:return
 {:goto_equipment}
 	'start
@@ -782,15 +789,63 @@ x=10:y=5:cr=3
 		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		'zurueck item ident 9=zurueck
-			if {var:item_ident}({var:inventar_ident}(m))=9 then gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if {var:item_cat}({var:inventar}(m))=9 then gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'item ident <> sl=0 waffe sl=1 ruestung
-			if {var:inventar_ident}(m)<>0 and {var:item_ident}({var:inventar_ident}(m))<>sl then gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if {var:inventar}(m)<>0 and {var:item_cat}({var:inventar}(m))<>sl then gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'ausruesten sl=0 waffe
-			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar_ident}(m)   :{var:inventar_ident}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if sl=0 then q={var:player_waffe}(p)   :{var:player_waffe}(p)={var:inventar}(m)   :{var:inventar}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'ausruesten sl=1 ruestung
-			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar_ident}(m) :{var:inventar_ident}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar}(m) :{var:inventar}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'ausruesten sl=4 element
-			if sl=4 then q={var:player_relikt}(p):{var:player_relikt}(p)={var:inventar_ident}(m) :{var:inventar_ident}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+			if sl=4 then q={var:player_relikt}(p):{var:player_relikt}(p)={var:inventar}(m) :{var:inventar}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
+{:goto_shop}
+	gosub{:gosub_clear_top}
+	gosub {:gosub_clear_info_txt}
+	'-> sprite all off
+	poke {var:sprite_on_off},{%:00000000}
+	poke 1020,0 'hintergrundfarbe map
+	gosub{:gosub_print_rahmen_mitte}
+	'                               123456789a123456789b123456789c12345678
+	print"{home}{down}{right}{white}shop: waehle dein item           ";
+	mt=2:mx=2:my=4:mc=14:ee=2
+
+	'--------------------->
+	' -> copy inventar
+	'--------------------->
+	'clear temp
+		for i=0 to 99 : {var:temp}(i)=0 : next i
+	'copy inventar -> temp : del inventar
+		for i=0 to 99 : {var:temp}(i)={var:inventar}(i): {var:inventar}(i)=0 : next i
+	'copy shop -> inventar
+		for i=0 to 99 : {var:inventar}(i)={var:shop}(i) : next i
+
+	gosub{:gosub_inventar_menu}
+	if a$="fl" or {var:inventar}(m)=99 then gosub {:shop_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+
+	'--------------------->
+	' -> nimm inventar
+	'--------------------->
+	'nimm item
+		{var:nimm_item}={var:inventar}(m)
+	'loesche invntar
+		{var:inventar}(m)=0
+	'copy invnetar -> shop
+		for i=0 to 99 : {var:shop}(i)={var:inventar}(i):next i
+
+	gosub{:shop_reset_inventar}
+	gosub{:gosub_inventar_add_item}
+	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+
+	{:shop_reset_inventar}
+	'----------------------->
+	' -> shop reset inventar
+	'----------------------->
+	'del inventar
+		for i=0 to 99 : {var:inventar}(i)=0 : next i
+	'copy shop temp -> inventar : del shop temp
+		for i=0 to 99 : {var:inventar}(i)={var:temp}(i): {var:temp}(i)=0 : next i
+	return
+
 '--------------------->
 '-> gosub inventar
 '--------------------->
@@ -800,7 +855,7 @@ x=10:y=5:cr=3
 	'mc  = menu count max (4 oder 16)
 	'mm% = zaehler print menu
 	'mo  = menu offset    ( +/-4 oder +/-16 )
-	'mi  = mo-1           ( inventar_ident(0-13) )
+	'mi  = mo-1           ( inventar_itemnr(0-13) )
 	'--------------------->
 
 	gosub{:gosub_inventar_sort}
@@ -818,14 +873,14 @@ x=10:y=5:cr=3
 			mi=mi+1
 		'print pos menue + mm% down
 			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
-		'wenn item_ident <> menu transition
-			if {var:item_ident}({var:inventar_ident}(mi))<>mt then print"{cyan}";
-		'wenn item_ident 9=zurueck -1=leer
-			if {var:item_ident}({var:inventar_ident}(mi))=9  then print"{white}";
-			if {var:item_ident}({var:inventar_ident}(mi))=-1 then print"{cyan}";
+		'wenn item_cat <> menu transition
+			if {var:item_cat}({var:inventar}(mi))<>mt then print"{cyan}";
+		'wenn item_cat 9=zurueck -1=leer
+			if {var:item_cat}({var:inventar}(mi))=9  then print"{white}";
+			if {var:item_cat}({var:inventar}(mi))=-1 then print"{cyan}";
 		'print item
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-			'menu sort nach item_ident
+			'menu sort nach item_cat
 			'
 			'mt=0 waffe
 			'mt=1 ruestung
@@ -842,22 +897,22 @@ x=10:y=5:cr=3
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'
 			'ee=0 battel
-			if ee=0 then print {var:item_name}({var:inventar_ident}(mi));
+			if ee=0 then print {var:item_name}({var:inventar}(mi));
 
 			'ee=1 mainloop equipment
-			if ee=1 and {var:item_ident}({var:inventar_ident}(mi))=9 then print {var:item_name}({var:inventar_ident}(mi));
-			if ee=1 and mt=0 and {var:item_ident}({var:inventar_ident}(mi))=0 then print {var:item_name}({var:inventar_ident}(mi)); " atk";{var:item_atk}({var:inventar_ident}(mi))
-			if ee=1 and mt=1 and {var:item_ident}({var:inventar_ident}(mi))=1 then print {var:item_name}({var:inventar_ident}(mi)); " def";{var:item_def}({var:inventar_ident}(mi))
-			if ee=1 and mt=4 and {var:item_ident}({var:inventar_ident}(mi))=4 then print {var:item_name}({var:inventar_ident}(mi)); " rel";{var:item_mana}({var:inventar_ident}(mi))
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=9 then print {var:item_name}({var:inventar}(mi));
+			if ee=1 and mt=0 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); " atk";{var:item_atk}({var:inventar}(mi))
+			if ee=1 and mt=1 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); " def";{var:item_def}({var:inventar}(mi))
+			if ee=1 and mt=4 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); " rel";{var:item_mana}({var:inventar}(mi))
 			
 			'ee=2 mainloop inventar
-			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=9 then print {var:item_name}({var:inventar_ident}(mi));
-			if ee=2 and {var:item_name}({var:inventar_ident}(mi)) ="apfel   " and {var:item_ident}({var:inventar_ident}(mi))=2 then print {var:item_name}({var:inventar_ident}(mi)); "            hp ";{var:item_mana}({var:inventar_ident}(mi))
-			if ee=2 and {var:item_name}({var:inventar_ident}(mi)) ="pilz    " and {var:item_ident}({var:inventar_ident}(mi))=2 then print {var:item_name}({var:inventar_ident}(mi)); "            mp ";{var:item_mana}({var:inventar_ident}(mi))
-			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=0 then print {var:item_name}({var:inventar_ident}(mi)); "  waffe     atk";{var:item_atk}({var:inventar_ident}(mi));
-			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=1 then print {var:item_name}({var:inventar_ident}(mi)); "  ruestung  def";{var:item_def}({var:inventar_ident}(mi));
-			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=3 then print {var:item_name}({var:inventar_ident}(mi)); "  magie     mp ";{var:item_mana}({var:inventar_ident}(mi));
-			if ee=2 and {var:item_ident}({var:inventar_ident}(mi))=4 then print {var:item_name}({var:inventar_ident}(mi)); "  relikt    rel";{var:item_mana}({var:inventar_ident}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=9 then print {var:item_name}({var:inventar}(mi));
+			if ee=2 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "            hp ";{var:item_mana}({var:inventar}(mi))
+			if ee=2 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "            mp ";{var:item_mana}({var:inventar}(mi))
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
 
 		'mm=menu zaehler
 			mm%=mm%+1
@@ -888,6 +943,8 @@ x=10:y=5:cr=3
 			if a$="s"then m=m+1:goto{:inventar_menu_auswertung_posmenu}
 			if a$="fu" then return
 			if a$="fd" then return
+			if a$="fl" then return
+			if a$="fr" then return
 			if a$=chr$(13)then return
 		goto{:inventar_menu_joyauswertung}
 	return
@@ -930,7 +987,7 @@ x=10:y=5:cr=3
 		return
 {:gosub_inventar_sort}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	'menu sort nach item_ident
+	'menu sort nach item_cat
 	'
 	'mt=0 waffe
 	'mt=1 ruestung
@@ -946,11 +1003,11 @@ x=10:y=5:cr=3
 	'ee=2 inventar
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'
-	'clear temp
+	'clear sort
 		a=0
-		for i=0 to 99 : {var:inventar_ident_temp}(i)=0 : next i
-	'copy inventar -> temp : del inventar
-		for i=0 to 99 : {var:inventar_ident_temp}(i)={var:inventar_ident}(i): {var:inventar_ident}(i)=0 : next i
+		for i=0 to 99 : {var:sort}(i)=0 : next i
+	'copy inventar -> sort : del inventar
+		for i=0 to 99 : {var:sort}(i)={var:inventar}(i): {var:inventar}(i)=0 : next i
 	'gosub mt
 		if mt=0 then gosub {:mt=9} : gosub {:mt=0} : a=50 :gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
 		if mt=1 then gosub {:mt=9} : gosub {:mt=1} : a=50 :gosub {:mt=0} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
@@ -962,34 +1019,34 @@ x=10:y=5:cr=3
 		'ee=1 mainloop equipment
 		if mt=2 and ee=1 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
 		'ee=2 mainloop inventar
-		if mt=2 and ee=2 then gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3}:a=50:gosub {:mt=9}
+		if mt=2 and ee=2 then gosub {:mt=9} : gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3}
 
 	return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	'gosub copy temp -> inventar
+	'gosub copy sort -> inventar
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	{:mt=9}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=9 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'zurueck
+		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=9 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'zurueck
 		next i
 		return
 	{:mt=0}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=0 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'weapon
+		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=0 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'weapon
 		next i
 		return
 	{:mt=1}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=1 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'ruestung
+		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=1 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'ruestung
 		next i
 		return
 	{:mt=2}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=2 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'essbar
+		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=2 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'essbar
 		next i
 		return
 	{:mt=3}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=3 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'magic
+		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=3 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'magic
 		next i
 		return
 	{:mt=4}
-		for i=0 to 99 : if {var:item_ident}({var:inventar_ident_temp}(i))=4 then {var:inventar_ident}(a)={var:inventar_ident_temp}(i) : a=a+1 : 'relikt
+		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=4 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'relikt
 		next i
 		return
 {:gosub_inventar_add_item}
@@ -997,7 +1054,7 @@ x=10:y=5:cr=3
 		is=0
 	{:inventar_next}
 	'wenn inventar leer
-		if {var:inventar_ident}(is)=0 then {var:inventar_ident}(is)={var:nimm_item}:{var:nimm_item}=-1:return
+		if {var:inventar}(is)=0 then {var:inventar}(is)={var:nimm_item}:{var:nimm_item}=-1:return
 	'next inventar
 		is=is+1
 	'wenn inventar max
@@ -1120,11 +1177,11 @@ x=10:y=5:cr=3
 '->else select magic
 {:battelmenu_select_magic}
 		mt=3:mx=16:my=20:mc=4:ee=0:gosub {:gosub_inventar_menu}
-		if {var:item_ident}({var:inventar_ident}(m))=9 then {:battelmenu}
+		if {var:item_cat}({var:inventar}(m))=9 then {:battelmenu}
 	'clear menuitem
 		print dd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
-		if {var:inventar_ident}(m)=0 or {var:item_ident}({var:inventar_ident}(m))<>3then{:battelmenu}
-		m={var:inventar_ident}(m)
+		if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>3then{:battelmenu}
+		m={var:inventar}(m)
 	'nicht genug mana
 		if {var:item_mana}(m)>{var:fight_mp}(c)then gosub{:gosub_clear_top}:gosub{:gosub_delay_fight}:print"{home}{down}{right}nicht genug mana                     ";:gosub{:gosub_delay_text}:goto{:battelmenu}
 	gosub{:gosub_battel_choose_target}
@@ -1138,12 +1195,12 @@ x=10:y=5:cr=3
 		goto{:battle_magic_damage}
 {:battelmenu_select_item}
 	mt=2:mx=16:my=20:mc=4:ee=0:gosub {:gosub_inventar_menu}
-	if {var:item_ident}({var:inventar_ident}(m))=9 then {:battelmenu}
+	if {var:item_cat}({var:inventar}(m))=9 then {:battelmenu}
 	printdd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
 	print"{down}{left:9}{$20:9}";
-	if {var:inventar_ident}(m)=0 or {var:item_ident}({var:inventar_ident}(m))<>mt then {:battelmenu}
-	if {var:inventar_ident}(m)=3 then gosub {:inventar_auswahl_pilz} :{var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_reanimation}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
-	if {var:inventar_ident}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar_ident}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then {:battelmenu}
+	if {var:inventar}(m)=3 then gosub {:inventar_auswahl_pilz} :{var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_reanimation}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
 	gosub{:gosub_battel_move_current_tile_oldpos}:goto {:battel_routine_ini}
 {:battelmenu_select_attack}
 	gosub {:gosub_battel_choose_target}
@@ -2078,114 +2135,113 @@ x=10:y=5:cr=3
 	data"dolm",   9   ,7   ,1    ,1    ,1    ,8    ,0     ,0
 	data"mira",   9   ,23  ,1    ,1    ,1    ,7    ,0     ,0
 'items
-	'{var:item_ident}(0-18) 0 = weappon
-	'{var:item_ident}(0-18) 1 = ruestung
-	'{var:item_ident}(0-18) 2 = essbar
-	'{var:item_ident}(0-18) 3 = magie
-	'{var:item_ident}(0-18) 4 = relikt
-	'{var:item_ident}(0-18) 9 = zurueck
-	'{var:item_xxx}(x)
-	'     name      at de lv sp,ma id
-	data "        ",00,00,00,00,00,-1  :'item 0
-	data "dolch   ",03,00,00,00,00,00  :'item 1 kron
-	data "helm    ",00,02,-1,00,00,01  :'item 2 kron
-	data "pilz    ",00,00,-1,00,10,02  :'item 3 {var:event_item}(x)
-	data "feuer   ",00,00,00,00,05,03  :'item 4 {var:event_item}(x)
-	data "polar   ",00,00,00,00,08,03  :'item 5 {var:event_item}(x)
-	data "groll   ",00,00,00,00,23,03  :'item 6 
-	data "bombe   ",00,00,00,00,50,03  :'item 7 {var:event_item}(x)
-	data "apfel   ",00,00,-1,00,15,02  :'item 8 {var:event_item}(x)
-	data "heilen  ",00,00,00,00,04,03  :'item 9 {var:event_item}(x)
-	data "scull   ",00,00,00,00,00,04  :'item 10
-	data "flegel  ",07,00,-1,00,00,00  :'item 11 {var:event_item}(x)
-	data "blind   ",00,00,00,00,04,03  :'item 12
-	data "speer   ",12,00,00,00,00,00  :'item 13 {var:event_item}(x)
-	data "rock    ",00,10,00,00,00,01  :'item 14
-	data "schwert ",23,00,00,00,00,00  :'item 15 {var:event_item}(x)
-	data "weste   ",00,14,00,00,00,01  :'item 16 {var:event_item}(x)
-	data "schild  ",00,24,00,00,00,01  :'item 17 {var:event_item}(x)
-	data "level   ",00,00,05,00,05,04  :'item 18
-	data "attack  ",05,00,00,00,05,04  :'item 19
-	data "defence ",00,05,00,00,05,04  :'item 20
-	data "level   ",00,00,10,00,10,04  :'item 21
-	data "attack  ",10,00,00,00,10,04  :'item 22
-	data "defence ",00,10,00,00,10,04  :'item 23
-	data "level   ",00,00,15,00,15,04  :'item 24
-	data "attack  ",15,00,00,00,15,04  :'item 25
-	data "defence ",00,15,00,00,15,04  :'item 26
-	data "schnell ",00,00,00,05,05,04  :'item 27
-	data "schnell ",00,00,00,10,10,04  :'item 28
-	data "schnell ",00,00,00,15,15,04  :'item 29
-	data "        ",00,00,00,00,00,-1  :'item 30
-	data "        ",00,00,00,00,00,-1  :'item 31
-	data "        ",00,00,00,00,00,-1  :'item 32
-	data "        ",00,00,00,00,00,-1  :'item 33
-	data "        ",00,00,00,00,00,-1  :'item 34
-	data "        ",00,00,00,00,00,-1  :'item 35
-	data "        ",00,00,00,00,00,-1  :'item 36
-	data "        ",00,00,00,00,00,-1  :'item 37
-	data "        ",00,00,00,00,00,-1  :'item 38
-	data "        ",00,00,00,00,00,-1  :'item 39
-	data "        ",00,00,00,00,00,-1  :'item 40
-	data "        ",00,00,00,00,00,-1  :'item 41
-	data "        ",00,00,00,00,00,-1  :'item 42
-	data "        ",00,00,00,00,00,-1  :'item 43
-	data "        ",00,00,00,00,00,-1  :'item 44
-	data "        ",00,00,00,00,00,-1  :'item 45
-	data "        ",00,00,00,00,00,-1  :'item 46
-	data "        ",00,00,00,00,00,-1  :'item 47
-	data "        ",00,00,00,00,00,-1  :'item 48
-	data "        ",00,00,00,00,00,-1  :'item 49
-	data "        ",00,00,00,00,00,-1  :'item 50
-	data "        ",00,00,00,00,00,-1  :'item 51
-	data "        ",00,00,00,00,00,-1  :'item 52
-	data "        ",00,00,00,00,00,-1  :'item 53
-	data "        ",00,00,00,00,00,-1  :'item 54
-	data "        ",00,00,00,00,00,-1  :'item 55
-	data "        ",00,00,00,00,00,-1  :'item 56
-	data "        ",00,00,00,00,00,-1  :'item 57
-	data "        ",00,00,00,00,00,-1  :'item 58
-	data "        ",00,00,00,00,00,-1  :'item 59
-	data "        ",00,00,00,00,00,-1  :'item 60
-	data "        ",00,00,00,00,00,-1  :'item 61
-	data "        ",00,00,00,00,00,-1  :'item 62
-	data "        ",00,00,00,00,00,-1  :'item 63
-	data "        ",00,00,00,00,00,-1  :'item 64
-	data "        ",00,00,00,00,00,-1  :'item 65
-	data "        ",00,00,00,00,00,-1  :'item 66
-	data "        ",00,00,00,00,00,-1  :'item 67
-	data "        ",00,00,00,00,00,-1  :'item 68
-	data "        ",00,00,00,00,00,-1  :'item 69
-	data "        ",00,00,00,00,00,-1  :'item 70
-	data "        ",00,00,00,00,00,-1  :'item 71
-	data "        ",00,00,00,00,00,-1  :'item 72
-	data "        ",00,00,00,00,00,-1  :'item 73
-	data "        ",00,00,00,00,00,-1  :'item 74
-	data "        ",00,00,00,00,00,-1  :'item 75
-	data "        ",00,00,00,00,00,-1  :'item 76
-	data "        ",00,00,00,00,00,-1  :'item 77
-	data "        ",00,00,00,00,00,-1  :'item 78
-	data "        ",00,00,00,00,00,-1  :'item 79
-	data "        ",00,00,00,00,00,-1  :'item 80
-	data "        ",00,00,00,00,00,-1  :'item 81
-	data "        ",00,00,00,00,00,-1  :'item 82
-	data "        ",00,00,00,00,00,-1  :'item 83
-	data "        ",00,00,00,00,00,-1  :'item 84
-	data "        ",00,00,00,00,00,-1  :'item 85
-	data "        ",00,00,00,00,00,-1  :'item 86
-	data "        ",00,00,00,00,00,-1  :'item 87
-	data "        ",00,00,00,00,00,-1  :'item 88
-	data "        ",00,00,00,00,00,-1  :'item 89
-	data "        ",00,00,00,00,00,-1  :'item 90
-	data "        ",00,00,00,00,00,-1  :'item 91
-	data "        ",00,00,00,00,00,-1  :'item 92
-	data "        ",00,00,00,00,00,-1  :'item 93
-	data "        ",00,00,00,00,00,-1  :'item 94
-	data "        ",00,00,00,00,00,-1  :'item 95
-	data "        ",00,00,00,00,00,-1  :'item 96
-	data "        ",00,00,00,00,00,-1  :'item 97
-	data "        ",00,00,00,00,00,-1  :'item 98
-	data "zurueck ",00,00,00,00,00,09  :'item 99
+	'{var:item_cat}(0-18) 0 = weappon
+	'{var:item_cat}(0-18) 1 = ruestung
+	'{var:item_cat}(0-18) 2 = essbar
+	'{var:item_cat}(0-18) 3 = magie
+	'{var:item_cat}(0-18) 4 = relikt
+	'{var:item_cat}(0-18) 9 = zurueck
+	'     name      at de lv sp ma ca
+	data "        ",00,00,00,00,00,-1  :'item nummer = 0
+	data "dolch   ",03,00,00,00,00,00  :'item nummer = 1 kron
+	data "helm    ",00,02,-1,00,00,01  :'item nummer = 2 kron
+	data "pilz    ",00,00,-1,00,10,02  :'item nummer = 3 {var:event_item}(x)
+	data "feuer   ",00,00,00,00,05,03  :'item nummer = 4 {var:event_item}(x)
+	data "polar   ",00,00,00,00,08,03  :'item nummer = 5 {var:event_item}(x)
+	data "groll   ",00,00,00,00,23,03  :'item nummer = 6 
+	data "bombe   ",00,00,00,00,50,03  :'item nummer = 7 {var:event_item}(x)
+	data "apfel   ",00,00,-1,00,15,02  :'item nummer = 8 {var:event_item}(x)
+	data "heilen  ",00,00,00,00,04,03  :'item nummer = 9 {var:event_item}(x)
+	data "scull   ",00,00,00,00,00,04  :'item nummer = 10
+	data "flegel  ",07,00,-1,00,00,00  :'item nummer = 11 {var:event_item}(x)
+	data "blind   ",00,00,00,00,04,03  :'item nummer = 12
+	data "speer   ",12,00,00,00,00,00  :'item nummer = 13 {var:event_item}(x)
+	data "rock    ",00,10,00,00,00,01  :'item nummer = 14
+	data "schwert ",23,00,00,00,00,00  :'item nummer = 15 {var:event_item}(x)
+	data "weste   ",00,14,00,00,00,01  :'item nummer = 16 {var:event_item}(x)
+	data "schild  ",00,24,00,00,00,01  :'item nummer = 17 {var:event_item}(x)
+	data "level   ",00,00,05,00,05,04  :'item nummer = 18
+	data "attack  ",05,00,00,00,05,04  :'item nummer = 19
+	data "defence ",00,05,00,00,05,04  :'item nummer = 20
+	data "level   ",00,00,10,00,10,04  :'item nummer = 21
+	data "attack  ",10,00,00,00,10,04  :'item nummer = 22
+	data "defence ",00,10,00,00,10,04  :'item nummer = 23
+	data "level   ",00,00,15,00,15,04  :'item nummer = 24
+	data "attack  ",15,00,00,00,15,04  :'item nummer = 25
+	data "defence ",00,15,00,00,15,04  :'item nummer = 26
+	data "schnell ",00,00,00,05,05,04  :'item nummer = 27
+	data "schnell ",00,00,00,10,10,04  :'item nummer = 28
+	data "schnell ",00,00,00,15,15,04  :'item nummer = 29
+	data "        ",00,00,00,00,00,-1  :'item nummer = 30
+	data "        ",00,00,00,00,00,-1  :'item nummer = 31
+	data "        ",00,00,00,00,00,-1  :'item nummer = 32
+	data "        ",00,00,00,00,00,-1  :'item nummer = 33
+	data "        ",00,00,00,00,00,-1  :'item nummer = 34
+	data "        ",00,00,00,00,00,-1  :'item nummer = 35
+	data "        ",00,00,00,00,00,-1  :'item nummer = 36
+	data "        ",00,00,00,00,00,-1  :'item nummer = 37
+	data "        ",00,00,00,00,00,-1  :'item nummer = 38
+	data "        ",00,00,00,00,00,-1  :'item nummer = 39
+	data "        ",00,00,00,00,00,-1  :'item nummer = 40
+	data "        ",00,00,00,00,00,-1  :'item nummer = 41
+	data "        ",00,00,00,00,00,-1  :'item nummer = 42
+	data "        ",00,00,00,00,00,-1  :'item nummer = 43
+	data "        ",00,00,00,00,00,-1  :'item nummer = 44
+	data "        ",00,00,00,00,00,-1  :'item nummer = 45
+	data "        ",00,00,00,00,00,-1  :'item nummer = 46
+	data "        ",00,00,00,00,00,-1  :'item nummer = 47
+	data "        ",00,00,00,00,00,-1  :'item nummer = 48
+	data "        ",00,00,00,00,00,-1  :'item nummer = 49
+	data "        ",00,00,00,00,00,-1  :'item nummer = 50
+	data "        ",00,00,00,00,00,-1  :'item nummer = 51
+	data "        ",00,00,00,00,00,-1  :'item nummer = 52
+	data "        ",00,00,00,00,00,-1  :'item nummer = 53
+	data "        ",00,00,00,00,00,-1  :'item nummer = 54
+	data "        ",00,00,00,00,00,-1  :'item nummer = 55
+	data "        ",00,00,00,00,00,-1  :'item nummer = 56
+	data "        ",00,00,00,00,00,-1  :'item nummer = 57
+	data "        ",00,00,00,00,00,-1  :'item nummer = 58
+	data "        ",00,00,00,00,00,-1  :'item nummer = 59
+	data "        ",00,00,00,00,00,-1  :'item nummer = 60
+	data "        ",00,00,00,00,00,-1  :'item nummer = 61
+	data "        ",00,00,00,00,00,-1  :'item nummer = 62
+	data "        ",00,00,00,00,00,-1  :'item nummer = 63
+	data "        ",00,00,00,00,00,-1  :'item nummer = 64
+	data "        ",00,00,00,00,00,-1  :'item nummer = 65
+	data "        ",00,00,00,00,00,-1  :'item nummer = 66
+	data "        ",00,00,00,00,00,-1  :'item nummer = 67
+	data "        ",00,00,00,00,00,-1  :'item nummer = 68
+	data "        ",00,00,00,00,00,-1  :'item nummer = 69
+	data "        ",00,00,00,00,00,-1  :'item nummer = 70
+	data "        ",00,00,00,00,00,-1  :'item nummer = 71
+	data "        ",00,00,00,00,00,-1  :'item nummer = 72
+	data "        ",00,00,00,00,00,-1  :'item nummer = 73
+	data "        ",00,00,00,00,00,-1  :'item nummer = 74
+	data "        ",00,00,00,00,00,-1  :'item nummer = 75
+	data "        ",00,00,00,00,00,-1  :'item nummer = 76
+	data "        ",00,00,00,00,00,-1  :'item nummer = 77
+	data "        ",00,00,00,00,00,-1  :'item nummer = 78
+	data "        ",00,00,00,00,00,-1  :'item nummer = 79
+	data "        ",00,00,00,00,00,-1  :'item nummer = 80
+	data "        ",00,00,00,00,00,-1  :'item nummer = 81
+	data "        ",00,00,00,00,00,-1  :'item nummer = 82
+	data "        ",00,00,00,00,00,-1  :'item nummer = 83
+	data "        ",00,00,00,00,00,-1  :'item nummer = 84
+	data "        ",00,00,00,00,00,-1  :'item nummer = 85
+	data "        ",00,00,00,00,00,-1  :'item nummer = 86
+	data "        ",00,00,00,00,00,-1  :'item nummer = 87
+	data "        ",00,00,00,00,00,-1  :'item nummer = 88
+	data "        ",00,00,00,00,00,-1  :'item nummer = 89
+	data "        ",00,00,00,00,00,-1  :'item nummer = 90
+	data "        ",00,00,00,00,00,-1  :'item nummer = 91
+	data "        ",00,00,00,00,00,-1  :'item nummer = 92
+	data "        ",00,00,00,00,00,-1  :'item nummer = 93
+	data "        ",00,00,00,00,00,-1  :'item nummer = 94
+	data "        ",00,00,00,00,00,-1  :'item nummer = 95
+	data "        ",00,00,00,00,00,-1  :'item nummer = 96
+	data "        ",00,00,00,00,00,-1  :'item nummer = 97
+	data "        ",00,00,00,00,00,-1  :'item nummer = 98
+	data "zurueck ",00,00,00,00,00,09  :'item nummer = 99
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'tile
