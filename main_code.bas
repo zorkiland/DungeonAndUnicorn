@@ -23,7 +23,9 @@
 '                " +++++++++++++ "
 '                " +++++++++++++ "
 '$0800 = BASIC   " +++++++++++++ "
-'$0400 = FREE    " +++++++++++++ "  -> BIS $0800 = $0400 FREE
+'$04c8 = RAM3    " +++++++++++++ " RAM 1224 (0-99)
+'$0464 = RAM2    " +++++++++++++ " RAM 1124 (0-99)
+'$0400 = RAM1    " +++++++++++++ " RAM 1024 (0-99)
 '$0000 = ZERO    """""""""""""""""
 
 '<|||> = wird z.B. bei PEEK gelesen
@@ -46,9 +48,9 @@
 		{var:inventar=in%}
 		{var:inventar_max=ix%}
 		{var:nimm_item=ni%}
-		{var:shop=si%}
-		{var:temp=st%}
-		{var:sort=tt%}
+		{var:RAM1=r1%}
+		{var:RAM2=r2%}
+		{var:RAM3=r3%}
 	'supervar_player
 		{var:player_name=p$}
 		{var:player_hp=ph%}
@@ -196,7 +198,7 @@
 	'event variable
 		dim {var:event_raum}(12),{var:event_posx}(12),{var:event_posy}(12),{var:event_item}(12)
 	'item nummer
-		dim {var:inventar}(99),{var:sort}(99)
+		dim {var:inventar}(99)
 	'tile
 		dim {var:map_tile}(111)
 	'schlater aktor flag
@@ -205,8 +207,6 @@
 		dim {var:npc_raum}(10),{var:npc_posx}(10),{var:npc_posy}(10),{var:npc_flag}(10)
 	'txt
 		dim sb$(50),si$(5)
-	'shop
-		dim {var:shop}(99),{var:temp}(99)
 'load game seq
 	{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
 'set variablen
@@ -274,6 +274,13 @@
 	'konstante Variabel string
 		dd$="{home}{down:20}{white}"
 		cd$="{down:25}"
+	'ram
+		for i=0 to 999
+		poke 1024+i,0
+		next i
+		{var:RAM1}=1024
+		{var:RAM2}=1124
+		{var:RAM3}=1224
 'set color / speicher
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'spritebank $e000 (verstatz von $c000)
@@ -318,6 +325,7 @@
 		next
 	'read item
 		for i=0 to 99
+		poke {var:RAM3}+i,i
 		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_level}(i),{var:item_speed}(i),{var:item_mana}(i),{var:item_cat}(i)
 		next
 	'read tile
@@ -335,35 +343,7 @@
 		{var:monster_tile}(i) = {var:map_tile}(j)
 		j=j+1
 		next i
-'set inventar magic
-	{var:shop}(0) =99  'zurueck
-	{var:shop}(1) =4   'feuer
-	{var:shop}(2) =5   'polar
-	{var:shop}(3) =6   'groll
-	{var:shop}(4) =7   'bombe
-	{var:shop}(5) =12  'blind
-	{var:shop}(6) =9   'heilen
-'set inventar relikt
-	{var:shop}(7)=18   'level1
-	{var:shop}(8)=21   'level2
-	{var:shop}(9)=24   'level3
-	{var:shop}(10)=19  'attack1
-	{var:shop}(11)=22  'attack2
-	{var:shop}(12)=25  'attack3
-	{var:shop}(13)=20  'defence1
-	{var:shop}(14)=23  'defence2
-	{var:shop}(15)=26  'defence3
-	{var:shop}(16)=27  'speed1
-	{var:shop}(17)=28  'speed2
-	{var:shop}(18)=29  'speed3
-'set inventar waffen ruestung
-	{var:shop}(19)=14  'rock
-	{var:shop}(20)=16  'weste
-	{var:shop}(21)=17  'schild
-	
-	{var:shop}(22)=11  'flegel
-	{var:shop}(23)=13  'speer
-	{var:shop}(24)=15  'schwert
+
 {var:inventar}(0)=99
 {var:player_activ}(0)=1
 gosub {:gosub_raumaktion_variabeln}
@@ -583,7 +563,7 @@ x=10:y=5:cr=3
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
 	'	sb = zeile text nacho=1 in seq
-	'	sx = (z.B.: ..kaempfen?.X) ss = (z.B.: .jaX)
+	'	sx = (z.B.: ..kaempfen;X) ss = (z.B.: .jaX)
 
 	'	c=67 nacho
 	'	c=72 troll
@@ -593,7 +573,7 @@ x=10:y=5:cr=3
 
 	if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}                                                  'txt npc
 	if c=67 then pt=2 : sb=5   :gosub{:gosub_print_txt_game}                                                  'txt player
-	if c=67 then pt=3 : sb=9   :sx=12 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose
+	if c=67 then pt=3 : sb=9   :sx=11 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose
 	if c=67 and ch=0 then goto{:mainloop_oldpos}                                                              'oldpos
 	if c=67 and ch=1 then ff=4 :{var:npc_flag}(3)=1 :goto{:battel}                                            'battel
 
@@ -725,12 +705,12 @@ x=10:y=5:cr=3
 		gosub {:gosub_equipment_rahmen}
 
 		'                               123456789a123456789b123456789c12345678
-		print"{home}{down}{right}{white}ausruesten?  ja nein";
+		print"{home}{down}{right}{white}ausruesten: ja nein";
 		ch=1:a$=""
 		va$=""
 		'bildschirmspeicher (pro zeile 40 zeichen 0-39)
 		py=(1*40)
-		px=13
+		px=12
 		ss=3
 		poke {var:bildschirmspeicher}+py+px,35 : 'print cursor
 	{:íni_joy}
@@ -829,14 +809,16 @@ x=10:y=5:cr=3
 	'--------------------->
 	' -> copy inventar
 	'--------------------->
+	'copy inventar -> RAM2
 		for i=0 to 99
-		{var:temp}(i)=0
-		{var:temp}(i)={var:inventar}(i)
-		{var:inventar}(i)=0
+		poke {var:RAM2}+i,{var:inventar}(i) : {var:inventar}(i)=0
 		next i
-	'copy shop -> inventar
-		for i=0 to 99 : {var:inventar}(i)={var:shop}(i) : next i
+	'copy RAM3 -> inventar
+		for i=0 to 99 : {var:inventar}(i)=peek({var:RAM3}+i) : next i
 
+	'--------------------->
+	' -> inventar menu
+	'--------------------->
 	gosub{:gosub_inventar_menu}
 	if {var:inventar}(m)=99 then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
@@ -845,10 +827,12 @@ x=10:y=5:cr=3
 	'--------------------->
 	'nimm item
 		{var:nimm_item}={var:inventar}(m)
-	'loesche invntar
+	'loesche inventar
 		{var:inventar}(m)=0
-	'copy invnetar -> shop
-		for i=0 to 99 : {var:shop}(i)={var:inventar}(i):next i
+	'copy inventar -> RAM3
+		for i=0 to 99 
+		poke {var:RAM3}+i,{var:inventar}(i)
+		next i
 
 	gosub{:gosub_reset_inventar}
 	gosub{:gosub_inventar_add_item}
@@ -858,10 +842,9 @@ x=10:y=5:cr=3
 	'----------------------->
 	' -> shop reset inventar
 	'----------------------->
+	'copy RAM2 -> inventar
 		for i=0 to 99
-		{var:inventar}(i)=0
-		{var:inventar}(i)={var:temp}(i)
-		{var:temp}(i)=0
+		{var:inventar}(i)=peek({var:RAM2}+i)
 		next i
 	return
 
@@ -1019,12 +1002,13 @@ x=10:y=5:cr=3
 	'ee=1 equipment
 	'ee=2 inventar
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	'
-	'clear sort
-		a=0
-		for i=0 to 99 : {var:sort}(i)=0 : next i
-	'copy inventar -> sort : del inventar
-		for i=0 to 99 : {var:sort}(i)={var:inventar}(i): {var:inventar}(i)=0 : next i
+
+	a=0
+
+	'copy inventar -> RAM1 : del inventar
+		for i=0 to 99
+		poke {var:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
+		next i
 	'gosub mt
 		if mt=0 then gosub {:mt=9} : gosub {:mt=0} : a=50 :gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
 		if mt=1 then gosub {:mt=9} : gosub {:mt=1} : a=50 :gosub {:mt=0} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
@@ -1040,30 +1024,30 @@ x=10:y=5:cr=3
 
 	return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	'gosub copy sort -> inventar
+	'gosub copy RAM1 -> inventar
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	{:mt=9}
-		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=9 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'zurueck
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=9 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'zurueck
 		next i
 		return
 	{:mt=0}
-		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=0 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'weapon
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=0 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'weapon
 		next i
 		return
 	{:mt=1}
-		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=1 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'ruestung
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=1 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'ruestung
 		next i
 		return
 	{:mt=2}
-		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=2 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'essbar
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=2 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'essbar
 		next i
 		return
 	{:mt=3}
-		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=3 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'magic
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=3 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'magic
 		next i
 		return
 	{:mt=4}
-		for i=0 to 99 : if {var:item_cat}({var:sort}(i))=4 then {var:inventar}(a)={var:sort}(i) : a=a+1 : 'relikt
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=4 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'relikt
 		next i
 		return
 {:gosub_inventar_add_item}
@@ -1789,7 +1773,7 @@ x=10:y=5:cr=3
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'print map
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
-	for i=0 to 7	
+	for i=0 to 7
 	print"{home}{down:3}"left$(cd$,i*2);
 
 	for j=0 to 19
@@ -1968,6 +1952,7 @@ x=10:y=5:cr=3
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	' < = anfuerungszeichen unten
 	' > = anfuehrungszeichen oben
+	' ; = doppelpunkt
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	return
 {:gosub_print_txt_game_clear}
@@ -2059,7 +2044,7 @@ x=10:y=5:cr=3
 {:gosub_joy}
 	a$="" : b$=""
 	{:joy_wait}
-		j=peek(56320)			
+		j=peek(56320)
 		'jump wenn joy_map_true=1 und kein fire (1=auf der map)
 		if {var:joy_map_true}=1 and j<>111 and j<>107 and j<>103 and j<>110 and j<>109 then {:joy}
 		'jump wenn keine bewegung
@@ -2068,7 +2053,7 @@ x=10:y=5:cr=3
 		if j=107 or j=103 or j=110 or j=109 then {:joy}
 		goto {:joy_wait}
 	{:joy}
-		j=peek(56320)		
+		j=peek(56320)
 		'tastatur
 			get b$
 			if b$=chr$(133) then a$="fu"  : return 'fire+up      (f1)

@@ -40,8 +40,8 @@ REM BACK BASIC
 c64list main.prg -txt -ovr
 
 REM BLITZ
-REM blitz main.prg -o blitz.prg
-node reblitz64.js main.prg blitz.prg i,j
+blitz main.prg -o blitz.prg
+REM node reblitz64.js main.prg blitz.prg i,j
 
 
 REM EXOMIZER
