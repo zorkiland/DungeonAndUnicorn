@@ -274,10 +274,7 @@
 	'konstante Variabel string
 		dd$="{home}{down:20}{white}"
 		cd$="{down:25}"
-	'ram
-		for i=0 to 999
-		poke 1024+i,0
-		next i
+	'RAM
 		{var:RAM1}=1024
 		{var:RAM2}=1124
 		{var:RAM3}=1224
@@ -325,7 +322,6 @@
 		next
 	'read item
 		for i=0 to 99
-		poke {var:RAM3}+i,i
 		read {var:item_name}(i),{var:item_atk}(i),{var:item_def}(i),{var:item_level}(i),{var:item_speed}(i),{var:item_mana}(i),{var:item_cat}(i)
 		next
 	'read tile
@@ -344,14 +340,27 @@
 		j=j+1
 		next i
 
+
+'clear RAM
+for i=0 to 999
+poke 1024+i,0
+next i
+
+'RAM3 item 0-99
+for i=0 to 99
+poke {var:RAM3}+i,i
+next i
+
 {var:inventar}(0)=99
 {var:player_activ}(0)=1
+
 gosub {:gosub_raumaktion_variabeln}
 gosub {:gosub_raumaktion_poke_mapspeicher}
 
 {:start}
 gosub{:gosub_print_rahmen_aussen} : poke 1020,6 : {var:seq_select}="intro" : gosub {:gosub_load_screen_seq} : gosub {:gosub_print_txt_screen}
 for i=0 to 3: {var:player_hp}(i)={var:player_hp_max}(i) : {var:player_mp}(i)={var:player_mp_max}(i) : next
+
 x=10:y=5:cr=3
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -680,7 +689,9 @@ x=10:y=5:cr=3
 	print"{home}{down}{right}{white}inventar                             ";
 	mt=2:mx=2:my=4:mc=14:ee=2
 	gosub{:gosub_inventar_menu}
+
 	if a$="fu" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+
 	if {var:inventar}(m)=99 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 	if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 	if {var:inventar}(m)=3 then gosub{:inventar_auswahl_pilz} :{var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
@@ -704,23 +715,6 @@ x=10:y=5:cr=3
 		gosub {:gosub_clear_top}
 		gosub {:gosub_equipment_rahmen}
 
-		'                               123456789a123456789b123456789c12345678
-		print"{home}{down}{right}{white}ausruesten: ja nein";
-		ch=1:a$=""
-		va$=""
-		'bildschirmspeicher (pro zeile 40 zeichen 0-39)
-		py=(1*40)
-		px=12
-		ss=3
-		poke {var:bildschirmspeicher}+py+px,35 : 'print cursor
-	{:íni_joy}
-		{var:joy_map_true}=0:gosub{:gosub_joy}
-		if a$="a" then ch=1 : poke {var:bildschirmspeicher}+py+px+ss,32 :poke {var:bildschirmspeicher}+py+px,35
-		if a$="d" then ch=0 : poke {var:bildschirmspeicher}+py+px,32    :poke {var:bildschirmspeicher}+py+px+ss,35
-		if a$=chr$(13) and ch=1 then {:equipment_player}
-		if a$=chr$(13) and ch=0 then gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-		goto{:íni_joy}
-
 	{:equipment_player}
 		'                               123456789a123456789b123456789c12345678
 		print"{home}{down}{right}{white}waehle deinen spieler                ";
@@ -732,6 +726,8 @@ x=10:y=5:cr=3
 		poke cp,35 : 'print cursor
 		gosub{:gosub_joy}
 		poke cp,32 : 'print leerzeichen
+
+		if a$="fd" then  gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		if p=0 and a$="d" and {var:player_activ}(1)=1 then p=1 : pj=1 : goto{:player_joy}
 		if p=0 and a$="s" and {var:player_activ}(2)=1 then p=2 : pj=2 : goto{:player_joy}
@@ -765,7 +761,7 @@ x=10:y=5:cr=3
 		poke cp+em*40,32
 		if a$="s" and em<2 then em=em+1
 		if a$="w" and em>0 then em=em-1
-		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+		if a$="fd" then gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 		'if a$="fr" then goto{:equipment_ini}
 		if a$=chr$(13) then {:equipment_item}
 		goto{:attribut_joy}
@@ -783,7 +779,7 @@ x=10:y=5:cr=3
 		fori=0to13:print"{down}{left:20}{$c4}                  {$c5}";:next
 		print"{down}{left:20}{$c6}{$c7:18}{$c8}";
 		mt=sl:ee=1:gosub {:gosub_inventar_menu}
-		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+		if a$="fd" then gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		'zurueck item ident 9=zurueck
 			if {var:item_cat}({var:inventar}(m))=9 then gosub {:gosub_clear_top}:goto{:equipment_ini}
@@ -820,7 +816,8 @@ x=10:y=5:cr=3
 	' -> inventar menu
 	'--------------------->
 	gosub{:gosub_inventar_menu}
-	if {var:inventar}(m)=99 then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	'if {var:inventar}(m)=99 then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if a$="q" then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 	'--------------------->
 	' -> nimm inventar
@@ -946,6 +943,9 @@ x=10:y=5:cr=3
 			if a$="w"then m=m-1:goto{:inventar_menu_auswertung_posmenu}
 			if a$="s"then m=m+1:goto{:inventar_menu_auswertung_posmenu}
 			if a$=chr$(13)then return
+			if a$="fu" then return
+			if a$="fd" then return
+			if a$="q"  then return
 		goto{:inventar_menu_joyauswertung}
 	return
 
@@ -1020,7 +1020,7 @@ x=10:y=5:cr=3
 		'ee=1 mainloop equipment
 		if mt=2 and ee=1 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
 		'ee=2 mainloop inventar
-		if mt=2 and ee=2 then gosub {:mt=9} : gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3}
+		if mt=2 and ee=2 then  gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3} : a=50 : gosub {:mt=9}
 
 	return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
