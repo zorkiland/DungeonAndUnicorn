@@ -419,7 +419,7 @@ x=10:y=5:cr=3
 	if a$="s"  then zy=y+1:goto{:mainloop_if_newpos}
 	if a$="fu" then {var:joy_map_true}=0 : goto {:goto_inventar}
 	if a$="fd" then {var:joy_map_true}=0 : goto {:goto_equipment}
-	if a$="fl" then {var:joy_map_true}=0 : goto {:goto_shop}
+	if a$="q"  then {var:joy_map_true}=0 : goto {:goto_shop}
 
 
 	if a$=chr$(13) and ut$="gefunden" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_gefunden} :ut$="":goto{:mainloop_oldpos}
@@ -564,7 +564,7 @@ x=10:y=5:cr=3
 	'else
 		goto{:mainloop_oldpos}
 {:goto_raumaktion_npc}
-	'
+
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
 	'	sb = zeile text lena=5 in seq
@@ -574,29 +574,29 @@ x=10:y=5:cr=3
 	'	c=51 mira
 	'	c=53 unic
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	'
+
 	if c=50 then {var:npc_flag}(0)=1 :gosub{:gosub_raumaktion_poke_mapspeicher} :{var:player_activ}(1)=1 
 	if c=50 then pt=1 :sb=11 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} :gosub{:gosub_print_map} :goto{:mainloop_oldpos}
 	'
 	if c=53 then pt=1 :sb=15 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} :goto{:mainloop_oldpos}
-	'
+
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'	pt = txt game -> 1=npc 2=player 3=choose
 	'	sb = zeile text nacho=1 in seq
-	'	sx = (z.B.: ..kaempfen.X) ss = (z.B.: .jaX)
-	'	
+	'	sx = (z.B.: ..kaempfen?.X) ss = (z.B.: .jaX)
+
 	'	c=67 nacho
 	'	c=72 troll
 	'	c=76 dracu
 	'	c=77 glado
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	'
+
 	if c=67 then pt=1 : sb=1   :gosub{:gosub_print_txt_game}                                                  'txt npc
 	if c=67 then pt=2 : sb=5   :gosub{:gosub_print_txt_game}                                                  'txt player
-	if c=67 then pt=3 : sb=9   :sx=11 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose
+	if c=67 then pt=3 : sb=9   :sx=12 :ss=3 :gosub{:gosub_print_txt_game} :gosub{:gosub_print_txt_game_clear} 'txt choose
 	if c=67 and ch=0 then goto{:mainloop_oldpos}                                                              'oldpos
 	if c=67 and ch=1 then ff=4 :{var:npc_flag}(3)=1 :goto{:battel}                                            'battel
-	'
+
 {:gosub_raumaktion_gefunden}
 	bi%={%:00000010}:gosub{:gosub_sprite_off}
 	gosub {:gosub_clear_info_txt}
@@ -697,7 +697,7 @@ x=10:y=5:cr=3
 	poke 1020,0 'hintergrundfarbe map
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
-	print"{home}{down}{right}{white}inventar: waehle dein item           ";
+	print"{home}{down}{right}{white}inventar                             ";
 	mt=2:mx=2:my=4:mc=14:ee=2
 	gosub{:gosub_inventar_menu}
 	if a$="fu" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
@@ -723,45 +723,62 @@ x=10:y=5:cr=3
 	{:equipment_ini}
 		gosub {:gosub_clear_top}
 		gosub {:gosub_equipment_rahmen}
+
 		'                               123456789a123456789b123456789c12345678
-		print"{home}{down}{right}{white}equipment: waehle deinen spieler     ";
+		print"{home}{down}{right}{white}ausruesten?  ja nein";
+		ch=1:a$=""
+		va$=""
+		'bildschirmspeicher (pro zeile 40 zeichen 0-39)
+		py=(1*40)
+		px=13
+		ss=3
+		poke {var:bildschirmspeicher}+py+px,35 : 'print cursor
+	{:íni_joy}
+		{var:joy_map_true}=0:gosub{:gosub_joy}
+		if a$="a" then ch=1 : poke {var:bildschirmspeicher}+py+px+ss,32 :poke {var:bildschirmspeicher}+py+px,35
+		if a$="d" then ch=0 : poke {var:bildschirmspeicher}+py+px,32    :poke {var:bildschirmspeicher}+py+px+ss,35
+		if a$=chr$(13) and ch=1 then {:equipment_player}
+		if a$=chr$(13) and ch=0 then gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+		goto{:íni_joy}
+
+	{:equipment_player}
+		'                               123456789a123456789b123456789c12345678
+		print"{home}{down}{right}{white}waehle deinen spieler                ";
 		a=1:a$=""
 		va$=""
 		p=pj
-	{:equipment_joy}
+	{:player_joy}
 		cp={var:bildschirmspeicher}+2+(4-8*(p>1))*40:if p=1 or p=3 then cp=cp+20
 		poke cp,35 : 'print cursor
 		gosub{:gosub_joy}
 		poke cp,32 : 'print leerzeichen
 
-		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-
-		if p=0 and a$="d" and {var:player_activ}(1)=1 then p=1 : pj=1 : goto{:equipment_joy}
-		if p=0 and a$="s" and {var:player_activ}(2)=1 then p=2 : pj=2 : goto{:equipment_joy}
+		if p=0 and a$="d" and {var:player_activ}(1)=1 then p=1 : pj=1 : goto{:player_joy}
+		if p=0 and a$="s" and {var:player_activ}(2)=1 then p=2 : pj=2 : goto{:player_joy}
 		'sonderfall
-		if p=0 and a$="d" and {var:player_activ}(1)=o and {var:player_activ}(2)=0 and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:equipment_joy}
-		if p=0 and a$="s" and {var:player_activ}(1)=o and {var:player_activ}(2)=0 and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:equipment_joy}
+		if p=0 and a$="d" and {var:player_activ}(1)=0 and {var:player_activ}(2)=0 and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:player_joy}
+		if p=0 and a$="s" and {var:player_activ}(1)=0 and {var:player_activ}(2)=0 and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:player_joy}
 
-		if p=1 and a$="a" and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:equipment_joy}
-		if p=1 and a$="s" and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:equipment_joy}
+		if p=1 and a$="a" and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:player_joy}
+		if p=1 and a$="s" and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:player_joy}
 
-		if p=2 and a$="d" and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:equipment_joy}
-		if p=2 and a$="w" and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:equipment_joy}
+		if p=2 and a$="d" and {var:player_activ}(3)=1 then p=3 : pj=3 : goto{:player_joy}
+		if p=2 and a$="w" and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:player_joy}
 
-		if p=3 and a$="a" and {var:player_activ}(2)=1 then p=2 : pj=2 : goto{:equipment_joy}
-		if p=3 and a$="w" and {var:player_activ}(1)=1 then p=1 : pj=1 : goto{:equipment_joy}
+		if p=3 and a$="a" and {var:player_activ}(2)=1 then p=2 : pj=2 : goto{:player_joy}
+		if p=3 and a$="w" and {var:player_activ}(1)=1 then p=1 : pj=1 : goto{:player_joy}
 		'sonderfall
-		if p=3 and a$="a" and {var:player_activ}(2)=o and {var:player_activ}(1)=0 and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:equipment_joy}
-		if p=3 and a$="w" and {var:player_activ}(2)=o and {var:player_activ}(1)=0 and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:equipment_joy}
+		if p=3 and a$="a" and {var:player_activ}(2)=0 and {var:player_activ}(1)=0 and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:player_joy}
+		if p=3 and a$="w" and {var:player_activ}(2)=0 and {var:player_activ}(1)=0 and {var:player_activ}(0)=1 then p=0 : pj=0 : goto{:player_joy}
 
 		if a$=chr$(13)then {:equipment_attribut}
 
-		goto{:equipment_joy}
+		goto{:player_joy}
 
 	{:equipment_attribut}
 		em=0:cp=cp+81
 		'                               123456789a123456789b123456789c12345678
-		print"{home}{down}{right}{white}equipment: waehle dein attribut      ";
+		print"{home}{down}{right}{white}waehle dein attribut                 ";
 	{:attribut_joy}
 		poke cp+em*40,35
 		gosub{:gosub_joy}
@@ -779,9 +796,9 @@ x=10:y=5:cr=3
 		if em=2 then sl=4
 		my=4:mx=22:mc=14:ifp=1orp=3thenmx=2
 		'                                            123456789a123456789b123456789c12345678
-		if sl=0 then print"{home}{down}{right}{white}equipment: waehle deine waffe        ";
-		if sl=1 then print"{home}{down}{right}{white}equipment: waehle deine ruestung     ";
-		if sl=4 then print"{home}{down}{right}{white}equipment: waehle dein relikt        ";
+		if sl=0 then print"{home}{down}{right}{white}waehle deine waffe                   ";
+		if sl=1 then print"{home}{down}{right}{white}waehle deine ruestung                ";
+		if sl=4 then print"{home}{down}{right}{white}waehle dein relikt                   ";
 		print"{home}"left$(cd$,my-1)spc(mx-2);"{brown}{$c1}{$c2:18}{$c3}";
 		fori=0to13:print"{down}{left:20}{$c4}                  {$c5}";:next
 		print"{down}{left:20}{$c6}{$c7:18}{$c8}";
@@ -806,21 +823,22 @@ x=10:y=5:cr=3
 	poke 1020,0 'hintergrundfarbe map
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
-	print"{home}{down}{right}{white}shop: waehle dein item           ";
+	print"{home}{down}{right}{white}shop                                 ";
 	mt=2:mx=2:my=4:mc=14:ee=2
 
 	'--------------------->
 	' -> copy inventar
 	'--------------------->
-	'clear temp
-		for i=0 to 99 : {var:temp}(i)=0 : next i
-	'copy inventar -> temp : del inventar
-		for i=0 to 99 : {var:temp}(i)={var:inventar}(i): {var:inventar}(i)=0 : next i
+		for i=0 to 99
+		{var:temp}(i)=0
+		{var:temp}(i)={var:inventar}(i)
+		{var:inventar}(i)=0
+		next i
 	'copy shop -> inventar
 		for i=0 to 99 : {var:inventar}(i)={var:shop}(i) : next i
 
 	gosub{:gosub_inventar_menu}
-	if a$="fl" or {var:inventar}(m)=99 then gosub {:shop_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar}(m)=99 then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 	'--------------------->
 	' -> nimm inventar
@@ -832,18 +850,19 @@ x=10:y=5:cr=3
 	'copy invnetar -> shop
 		for i=0 to 99 : {var:shop}(i)={var:inventar}(i):next i
 
-	gosub{:shop_reset_inventar}
+	gosub{:gosub_reset_inventar}
 	gosub{:gosub_inventar_add_item}
-	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	goto{:goto_shop}
 
-	{:shop_reset_inventar}
+	{:gosub_reset_inventar}
 	'----------------------->
 	' -> shop reset inventar
 	'----------------------->
-	'del inventar
-		for i=0 to 99 : {var:inventar}(i)=0 : next i
-	'copy shop temp -> inventar : del shop temp
-		for i=0 to 99 : {var:inventar}(i)={var:temp}(i): {var:temp}(i)=0 : next i
+		for i=0 to 99
+		{var:inventar}(i)=0
+		{var:inventar}(i)={var:temp}(i)
+		{var:temp}(i)=0
+		next i
 	return
 
 '--------------------->
@@ -878,6 +897,7 @@ x=10:y=5:cr=3
 		'wenn item_cat 9=zurueck -1=leer
 			if {var:item_cat}({var:inventar}(mi))=9  then print"{white}";
 			if {var:item_cat}({var:inventar}(mi))=-1 then print"{cyan}";
+
 		'print item
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu sort nach item_cat
@@ -887,6 +907,7 @@ x=10:y=5:cr=3
 			'mt=2 essbar
 			'mt=3 magie
 			'mt=4 relikt
+			'mt=5 alle anzeigen
 			'mt=9 zurueck
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu style
@@ -941,10 +962,6 @@ x=10:y=5:cr=3
 		'joy auf/ab return
 			if a$="w"then m=m-1:goto{:inventar_menu_auswertung_posmenu}
 			if a$="s"then m=m+1:goto{:inventar_menu_auswertung_posmenu}
-			if a$="fu" then return
-			if a$="fd" then return
-			if a$="fl" then return
-			if a$="fr" then return
 			if a$=chr$(13)then return
 		goto{:inventar_menu_joyauswertung}
 	return
@@ -2062,6 +2079,7 @@ x=10:y=5:cr=3
 			if b$="d" then a$="d"  : return
 			if b$="w" then a$="w"  : return
 			if b$="s" then a$="s"  : return
+			if b$="q" then a$="q"  : return
 			if b$=chr$(13) then a$=chr$(13) :return
 		'warten fire und keine bewegung return
 			if j=127 and a$=chr$(13) then return
