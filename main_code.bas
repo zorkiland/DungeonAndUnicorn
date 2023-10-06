@@ -727,7 +727,7 @@ x=10:y=5:cr=3
 		gosub{:gosub_joy}
 		poke cp,32 : 'print leerzeichen
 
-		if a$="fd" then  gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		if p=0 and a$="d" and {var:player_activ}(1)=1 then p=1 : pj=1 : goto{:player_joy}
 		if p=0 and a$="s" and {var:player_activ}(2)=1 then p=2 : pj=2 : goto{:player_joy}
@@ -761,7 +761,7 @@ x=10:y=5:cr=3
 		poke cp+em*40,32
 		if a$="s" and em<2 then em=em+1
 		if a$="w" and em>0 then em=em-1
-		if a$="fd" then gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 		'if a$="fr" then goto{:equipment_ini}
 		if a$=chr$(13) then {:equipment_item}
 		goto{:attribut_joy}
@@ -779,7 +779,7 @@ x=10:y=5:cr=3
 		fori=0to13:print"{down}{left:20}{$c4}                  {$c5}";:next
 		print"{down}{left:20}{$c6}{$c7:18}{$c8}";
 		mt=sl:ee=1:gosub {:gosub_inventar_menu}
-		if a$="fd" then gosub{:gosub_clear_top}:gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		'zurueck item ident 9=zurueck
 			if {var:item_cat}({var:inventar}(m))=9 then gosub {:gosub_clear_top}:goto{:equipment_ini}
@@ -800,7 +800,8 @@ x=10:y=5:cr=3
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}shop                                 ";
-	mt=2:mx=2:my=4:mc=14:ee=2
+	mt=-1:mx=2:my=4:mc=14:ee=3
+
 
 	'--------------------->
 	' -> copy inventar
@@ -816,8 +817,7 @@ x=10:y=5:cr=3
 	' -> inventar menu
 	'--------------------->
 	gosub{:gosub_inventar_menu}
-	'if {var:inventar}(m)=99 then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-	if a$="q" then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar}(m)=99 then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 	'--------------------->
 	' -> nimm inventar
@@ -877,24 +877,26 @@ x=10:y=5:cr=3
 		'wenn item_cat 9=zurueck -1=leer
 			if {var:item_cat}({var:inventar}(mi))=9  then print"{white}";
 			if {var:item_cat}({var:inventar}(mi))=-1 then print"{cyan}";
+		'wenn ee=3 mainloop shop
+			if ee=3  then print"{white}";
 
 		'print item
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu sort nach item_cat
-			'
-			'mt=0 waffe
-			'mt=1 ruestung
-			'mt=2 essbar
-			'mt=3 magie
-			'mt=4 relikt
-			'mt=5 alle anzeigen
-			'mt=9 zurueck
+			'mt=-1 alle
+			'mt=0  waffe
+			'mt=1  ruestung
+			'mt=2  essbar
+			'mt=3  magie
+			'mt=4  relikt
+			'mt=9  zurueck
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu style
 			'
 			'ee=0 battle
 			'ee=1 equipment
 			'ee=2 inventar
+			'ee=3 shop
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'
 			'ee=0 battel
@@ -908,12 +910,21 @@ x=10:y=5:cr=3
 			
 			'ee=2 mainloop inventar
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=9 then print {var:item_name}({var:inventar}(mi));
-			if ee=2 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "            hp ";{var:item_mana}({var:inventar}(mi))
-			if ee=2 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "            mp ";{var:item_mana}({var:inventar}(mi))
+			if ee=2 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    hp ";{var:item_mana}({var:inventar}(mi))
+			if ee=2 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    mp ";{var:item_mana}({var:inventar}(mi))
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
+
+			'ee=3 mainloop shop
+			if ee=3 and {var:item_cat}({var:inventar}(mi))=9 then print {var:item_name}({var:inventar}(mi));
+			if ee=3 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    hp ";{var:item_mana}({var:inventar}(mi))
+			if ee=3 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    mp ";{var:item_mana}({var:inventar}(mi))
+			if ee=3 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
+			if ee=3 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
+			if ee=3 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
+			if ee=3 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
 
 		'mm=menu zaehler
 			mm%=mm%+1
@@ -945,7 +956,6 @@ x=10:y=5:cr=3
 			if a$=chr$(13)then return
 			if a$="fu" then return
 			if a$="fd" then return
-			if a$="q"  then return
 		goto{:inventar_menu_joyauswertung}
 	return
 
@@ -988,19 +998,20 @@ x=10:y=5:cr=3
 {:gosub_inventar_sort}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'menu sort nach item_cat
-	'
-	'mt=0 waffe
-	'mt=1 ruestung
-	'mt=2 essbar
-	'mt=3 magie
-	'mt=4 relikt
-	'mt=9 zurueck
+	'mt=-1 alle
+	'mt=0  waffe
+	'mt=1  ruestung
+	'mt=2  essbar
+	'mt=3  magie
+	'mt=4  relikt
+	'mt=9  zurueck
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'menu style
 	'
 	'ee=0 battle
 	'ee=1 equipment
 	'ee=2 inventar
+	'ee=3 shop
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 	a=0
@@ -1020,7 +1031,9 @@ x=10:y=5:cr=3
 		'ee=1 mainloop equipment
 		if mt=2 and ee=1 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
 		'ee=2 mainloop inventar
-		if mt=2 and ee=2 then  gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3} : a=50 : gosub {:mt=9}
+		if mt=2 and ee=2 then gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3} : a=50 : gosub {:mt=9}
+		'ee=3 mainloop shop
+		if mt=-1 and ee=3 then gosub {:mt=9} : gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3}
 
 	return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
