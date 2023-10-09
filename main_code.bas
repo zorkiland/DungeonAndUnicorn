@@ -24,8 +24,8 @@
 '                " +++++++++++++ "
 '$0800 = BASIC   " +++++++++++++ "
 '$04c8 = RAM3    " +++++++++++++ " RAM 1224 (0-99)
-'$0464 = RAM2    " +++++++++++++ " RAM 1124 (0-99)
-'$0400 = RAM1    " +++++++++++++ " RAM 1024 (0-99)
+'$0464 = RAM2    " +++++++++++++ " RAM 1124 (0-99) SHOP
+'$0400 = RAM1    " +++++++++++++ " RAM 1024 (0-99) TEMP
 '$0000 = ZERO    """""""""""""""""
 
 '<|||> = wird z.B. bei PEEK gelesen
@@ -346,9 +346,9 @@ for i=0 to 999
 poke 1024+i,0
 next i
 
-'RAM3 item 0-99
+'RAM2 item 0-99
 for i=0 to 99
-poke {var:RAM3}+i,i
+poke {var:RAM2}+i,i
 next i
 
 {var:inventar}(0)=99
@@ -800,50 +800,27 @@ x=10:y=5:cr=3
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}shop                                 ";
-	mt=-1:mx=2:my=4:mc=14:ee=3
+	mx=2:my=4:mc=14
 
 	{:shop_copy_inventar}
-	'--------------------->
-	' -> copy inventar
-	'--------------------->
-	'copy inventar -> RAM2
-		for i=0 to 99
-		poke {var:RAM2}+i,{var:inventar}(i) : {var:inventar}(i)=0
-		next i
-	'copy RAM3 -> inventar
-		for i=0 to 99 : {var:inventar}(i)=peek({var:RAM3}+i) : next i
 
 	'--------------------->
 	' -> inventar menu
 	'--------------------->
-	gosub{:gosub_inventar_menu}
-	if {var:inventar}(m)=99 then gosub {:gosub_reset_inventar} : gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	gosub{:gosub_shop_menu}
+	'if {var:inventar}(m)=99 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 	'--------------------->
 	' -> nimm inventar
 	'--------------------->
 	'nimm item
-		{var:nimm_item}={var:inventar}(m)
+		{var:nimm_item}=peek({var:RAM2}+m)
 	'loesche inventar
-		{var:inventar}(m)=0
-	'copy inventar -> RAM3
-		for i=0 to 99 
-		poke {var:RAM3}+i,{var:inventar}(i)
-		next i
+		poke {var:RAM2}+m,0
 
-	gosub{:gosub_reset_inventar}
 	gosub{:gosub_inventar_add_item}
-	goto{:shop_copy_inventar}
-
-	{:gosub_reset_inventar}
-	'----------------------->
-	' -> shop reset inventar
-	'----------------------->
-	'copy RAM2 -> inventar
-		for i=0 to 99
-		{var:inventar}(i)=peek({var:RAM2}+i)
-		next i
-	return
+	'goto{:shop_copy_inventar}
+	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 '--------------------->
 '-> gosub inventar
@@ -877,13 +854,10 @@ x=10:y=5:cr=3
 		'wenn item_cat 9=zurueck -1=leer
 			if {var:item_cat}({var:inventar}(mi))=9  then print"{white}";
 			if {var:item_cat}({var:inventar}(mi))=-1 then print"{cyan}";
-		'wenn ee=3 mainloop shop
-			if ee=3  then print"{white}";
 
 		'print item
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu sort nach item_cat
-			'mt=-1 alle
 			'mt=0  waffe
 			'mt=1  ruestung
 			'mt=2  essbar
@@ -896,7 +870,6 @@ x=10:y=5:cr=3
 			'ee=0 battle
 			'ee=1 equipment
 			'ee=2 inventar
-			'ee=3 shop
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 			'ee=0 battel
@@ -918,16 +891,6 @@ x=10:y=5:cr=3
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
 			if ee=2 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
-
-			'ee=3 mainloop shop
-			if ee=3 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
-			if ee=3 and {var:item_cat}({var:inventar}(mi))=-1 then print {var:item_name}({var:inventar}(mi));
-			if ee=3 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    hp ";{var:item_mana}({var:inventar}(mi))
-			if ee=3 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    mp ";{var:item_mana}({var:inventar}(mi))
-			if ee=3 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
-			if ee=3 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
-			if ee=3 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
-			if ee=3 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
 
 		'mm=menu zaehler
 			mm%=mm%+1
@@ -996,13 +959,11 @@ x=10:y=5:cr=3
 			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
 			if ee=1 then print"               ";
 			if ee=2 then print"                                    ";
-			if ee=3 then print"                                    ";
 		next i
 		return
 {:gosub_inventar_sort}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'menu sort nach item_cat
-	'mt=-1 alle
 	'mt=0  waffe
 	'mt=1  ruestung
 	'mt=2  essbar
@@ -1015,7 +976,6 @@ x=10:y=5:cr=3
 	'ee=0 battle
 	'ee=1 equipment
 	'ee=2 inventar
-	'ee=3 shop
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 	a=0
@@ -1036,8 +996,6 @@ x=10:y=5:cr=3
 		if mt=2 and ee=1 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
 		'ee=2 mainloop inventar
 		if mt=2 and ee=2 then gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3} : a=50 : gosub {:mt=9}
-		'ee=3 mainloop shop
-		if mt=-1 and ee=3 then gosub {:mt=9} : gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3}
 
 	return
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1078,6 +1036,104 @@ x=10:y=5:cr=3
 	'wenn inventar max
 		if is=99 then return
 	goto{:inventar_next}
+
+{:gosub_shop_menu}
+
+	'--------------------->
+	'mc  = menu count max (4 oder 16)
+	'mm% = zaehler print menu
+	'mo  = menu offset    ( +/-4 oder +/-16 )
+	'mi  = mo-1           ( shop_itemnr(0-13) )
+	'--------------------->
+
+	m=0:mo=0
+	{:shop_menu_pos}
+		mi=mo-1:mm%=0}
+		gosub {:shop_shop_menu_clear}
+
+	'--------------------->
+	'->loop print
+	'--------------------->
+
+	{:shop_menu_print}
+			mi=mi+1
+		'print pos menue + mm% down
+			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
+
+		'print item
+			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+			'menu sort nach item_cat
+			'mt=0  waffe
+			'mt=1  ruestung
+			'mt=2  essbar
+			'mt=3  magie
+			'mt=4  relikt
+			'mt=9  zurueck
+			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+			print {var:item_name}(peek({var:RAM2}+mi));
+
+		'mm=menu zaehler
+			mm%=mm%+1
+		'wenn menue zaehler = mc = 14
+			if mm%=mc then{:shop_menu_auswertung}
+		'wenn menue zaehler <49
+			if mi<49 then{:shop_menu_print}
+
+	'--------------------->
+	'->end loop print
+	'--------------------->
+
+	'--------------------->
+	'->joyauswertung
+	'--------------------->
+
+	{:shop_menu_auswertung}
+		cp={var:bildschirmspeicher}+mx+my*40
+	{:shop_menu_joyauswertung}
+		'print cursor
+			poke cp+(m-mo)*40,35
+		'gosub joy
+			gosub{:gosub_joy}
+		'print leerzeichen
+			poke cp+(m-mo)*40,32
+		'joy auf/ab return
+			if a$="w"then m=m-1:goto{:shop_menu_auswertung_posmenu}
+			if a$="s"then m=m+1:goto{:shop_menu_auswertung_posmenu}
+			if a$=chr$(13)then return
+			if a$="fu" then return
+			if a$="fd" then return
+		goto{:shop_menu_joyauswertung}
+	return
+
+	'--------------------->
+	'->auswertung auf / ab
+	'--------------------->
+
+	{:shop_menu_auswertung_posmenu}
+		if m=-1 then m=0 : goto {:shop_menu_auswertung}
+		if m=50 then m=49: goto {:shop_menu_auswertung}
+	
+	{:shop_menu_auswertung_auf_ab}
+
+	'wenn menu=13 < mo=14 then mo=mo-14
+		if m<mo then mo=mo-mc:goto{:shop_menu_pos}
+
+	'wenn menu=14 >= mo+14 then mo=mo+14
+		if m>=mo+mc then mo=mo+mc:goto {:shop_menu_pos}
+
+	'wenn kein seitenwechsel dann shop_menu_joyauswertung
+		goto{:shop_menu_joyauswertung}
+
+	'--------------------->
+	'->clear menu
+	'--------------------->
+	{:shop_shop_menu_clear}
+		for i=0 to 13
+			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
+			print"                                    ";
+		next i
+		return
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'battel
