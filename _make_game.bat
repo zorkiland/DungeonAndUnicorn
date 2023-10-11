@@ -31,7 +31,6 @@ xcopy PETSCII\bin\sprite.prg *.* /Y
 REM MERGE TO MAIN
 copy /b main_code.bas + main_tile.bas main.bas /y
 
-
 REM C64List BAS->PRG
 c64list main.bas -prg -ovr -rem -crunch -supervariables -labels
 c64list asm.raster.asm -prg -ovr
@@ -40,15 +39,16 @@ REM BACK BASIC
 c64list main.prg -txt -ovr
 
 REM BLITZ
-blitz main.prg -o blitz.prg
-REM node reblitz64.js main.prg blitz.prg i,j
+REM blitz main.prg -o blitz.prg
+node reblitz64.js main.prg blitz.prg i,j
 
 
 REM EXOMIZER
 exomizer sfx basic blitz.prg -o game.prg -n
 
 REM COPY PRG->VICE\bin
-xcopy main.prg VICE\bin\*.* /Y
+REM xcopy main.prg VICE\bin\*.* /Y
+REM xcopy compactor.prg VICE\bin\*.* /Y
 xcopy blitz.prg VICE\bin\*.* /Y
 xcopy game.prg VICE\bin\*.* /Y
 xcopy asm.raster.prg VICE\bin\*.* /Y
@@ -65,7 +65,8 @@ REM SCHREIBE DISK
 cd VICE
 cd bin
 c1541 -format "unicorn,id" d64 unicorn.d64
-rem c1541 -attach unicorn.d64 -write main.prg main
+REM c1541 -attach unicorn.d64 -write main.prg main
+REM c1541 -attach unicorn.d64 -write compactor.prg compactor
 c1541 -attach unicorn.d64 -write game.prg game
 c1541 -attach unicorn.d64 -write charset.prg charset
 c1541 -attach unicorn.d64 -write map0.prg map0
@@ -96,4 +97,6 @@ REM del main.txt
 
 REM C64Debugger.exe -clearsettings
 C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
+
+REM C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg compactor.prg -autojmp
 REM C64Debugger.exe -clearsettings -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp

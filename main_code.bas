@@ -1255,7 +1255,7 @@ x=10:y=5:cr=3
 	print"{down}{left:9}{$20:9}";
 	if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then {:battelmenu}
 	if {var:inventar}(m)=3 then gosub {:inventar_auswahl_pilz} : {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
-	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_set_fight(xx)_player}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
 	gosub{:gosub_battel_move_current_tile_oldpos}:goto {:battel_routine_ini}
 {:battelmenu_select_attack}
 	gosub {:gosub_battel_choose_target}
