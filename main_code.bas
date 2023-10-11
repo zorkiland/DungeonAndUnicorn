@@ -823,7 +823,7 @@ x=10:y=5:cr=3
 	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 '--------------------->
-'-> gosub inventar
+'-> gosub item menu
 '--------------------->
 {:gosub_inventar_menu}
 
@@ -971,58 +971,50 @@ x=10:y=5:cr=3
 	'mt=4  relikt
 	'mt=9  zurueck
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	'menu style
-	'
-	'ee=0 battle
-	'ee=1 equipment
-	'ee=2 inventar
-	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-	a=0
-
+	'ini sort
+		a=0
 	'copy inventar -> RAM1 : del inventar
 		for i=0 to 99
 		poke {var:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
 		next i
 	'gosub mt
-		if mt=0 then gosub {:mt=9} : gosub {:mt=0} : a=50 :gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
-		if mt=1 then gosub {:mt=9} : gosub {:mt=1} : a=50 :gosub {:mt=0} : gosub {:mt=2} : gosub {:mt=3} : gosub {:mt=4}
-		if mt=3 then gosub {:mt=9} : gosub {:mt=3} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=4}
-		if mt=4 then gosub {:mt=9} : gosub {:mt=4} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=2} : gosub {:mt=3}
-
-		'ee=0 battel
-		if mt=2 and ee=0 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
-		'ee=1 mainloop equipment
-		if mt=2 and ee=1 then gosub {:mt=9} : gosub {:mt=2} : a=50 :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=3} : gosub {:mt=4}
-		'ee=2 mainloop inventar
-		if mt=2 and ee=2 then gosub {:mt=2} :gosub {:mt=0} : gosub {:mt=1} : gosub {:mt=4} : gosub {:mt=3} : a=50 : gosub {:mt=9}
-
+		if mt=0 then gosub {:search_zurueck} : gosub {:search_waffe}    : a=50 : gosub {:search_other}
+		if mt=1 then gosub {:search_zurueck} : gosub {:search_ruestung} : a=50 : gosub {:search_other}
+		if mt=2 then gosub {:search_zurueck} : gosub {:search_essbar}   : a=50 : gosub {:search_other}
+		if mt=3 then gosub {:search_zurueck} : gosub {:search_magie}    : a=50 : gosub {:search_other}
+		if mt=4 then gosub {:search_zurueck} : gosub {:search_relikt}   : a=50 : gosub {:search_other}
 	return
+
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'gosub copy RAM1 -> inventar
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-	{:mt=9}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=9 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'zurueck
+	{:search_zurueck}
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=9 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 : a=a+1
 		next i
 		return
-	{:mt=0}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=0 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'weapon
+	{:search_waffe}
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=0 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
 		next i
 		return
-	{:mt=1}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=1 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'ruestung
+	{:search_ruestung}
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=1 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
 		next i
 		return
-	{:mt=2}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=2 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'essbar
+	{:search_essbar}
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=2 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
 		next i
 		return
-	{:mt=3}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=3 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'magic
+	{:search_magie}
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=3 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
 		next i
 		return
-	{:mt=4}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=4 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1 : 'relikt
+	{:search_relikt}
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=4 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
+		next i
+		return
+	{:search_other}
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))>0 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
 		next i
 		return
 {:gosub_inventar_add_item}
@@ -1036,7 +1028,6 @@ x=10:y=5:cr=3
 	'wenn inventar max
 		if is=99 then return
 	goto{:inventar_next}
-
 {:gosub_shop_menu}
 
 	'--------------------->
@@ -1061,16 +1052,6 @@ x=10:y=5:cr=3
 			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
 
 		'print item
-			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-			'menu sort nach item_cat
-			'mt=0  waffe
-			'mt=1  ruestung
-			'mt=2  essbar
-			'mt=3  magie
-			'mt=4  relikt
-			'mt=9  zurueck
-			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 			print {var:item_name}(peek({var:RAM2}+mi));
 
 		'mm=menu zaehler
@@ -1273,8 +1254,8 @@ x=10:y=5:cr=3
 	printdd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
 	print"{down}{left:9}{$20:9}";
 	if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then {:battelmenu}
-	if {var:inventar}(m)=3 then gosub {:inventar_auswahl_pilz} :{var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_reanimation}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
-	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar}(m)=3 then gosub {:inventar_auswahl_pilz} : {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_reanimation}: gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
 	gosub{:gosub_battel_move_current_tile_oldpos}:goto {:battel_routine_ini}
 {:battelmenu_select_attack}
 	gosub {:gosub_battel_choose_target}
