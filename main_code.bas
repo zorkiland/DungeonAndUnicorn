@@ -1255,7 +1255,7 @@ x=10:y=5:cr=3
 	print"{down}{left:9}{$20:9}";
 	if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then {:battelmenu}
 	if {var:inventar}(m)=3 then gosub {:inventar_auswahl_pilz} : {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
-	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_reanimation}: gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
 	gosub{:gosub_battel_move_current_tile_oldpos}:goto {:battel_routine_ini}
 {:battelmenu_select_attack}
 	gosub {:gosub_battel_choose_target}
@@ -1606,7 +1606,7 @@ x=10:y=5:cr=3
 	{var:fight_speed}(i)        =       {var:player_speed}(i)+{var:item_speed}({var:player_relikt}(i))
 	{var:fight_basis_speed}(i)  =       {var:player_speed}(i)+{var:item_speed}({var:player_relikt}(i))
 	if {var:player_activ}(i)    =0 then {var:fight_hp}(i)=-1
-	if {var:fight_hp}(i)       <=0 then {var:fight_active}(i)=-1 : pp=pp-1 :
+	if {var:fight_hp}(i)       <=0 then {var:fight_active}(i)=-1 : pp=pp-1 
 	{var:fight_atk}(i)          =       {var:player_atk}(i)+{var:item_atk}({var:player_waffe}(i))+{var:item_atk}({var:player_relikt}(i))
 	{var:fight_def}(i)          =       {var:player_def}(i)+{var:item_def}({var:player_ruestung}(i))+{var:item_def}({var:player_relikt}(i))
 	{var:fight_hp_max}(i)       =       {var:player_hp_max}(i)
@@ -1614,12 +1614,6 @@ x=10:y=5:cr=3
 	next
 	return
 
-{:gosub_battel_reanimation}
-	pp=4
-	for i=0 to 3
-		if {var:player_activ}(i)=1 then {var:fight_active}(i)=-2
-	next
-	return
 {:gosub_battel_print_monster_hp}
 	zm=0: 'zaehler montster
 	for j=4 to 7
