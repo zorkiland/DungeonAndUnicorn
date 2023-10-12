@@ -687,7 +687,7 @@ x=10:y=5:cr=3
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}inventar: waehle dein item           ";
-	mt=2:mx=2:my=4:mc=14:ee=2
+	mt=2:mx=2:my=4:mc=14:ee=1
 	gosub{:gosub_inventar_menu}
 
 	if a$="fu" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
@@ -773,12 +773,12 @@ x=10:y=5:cr=3
 		my=4:mx=22:mc=14:ifp=1orp=3thenmx=2
 		'                                            123456789a123456789b123456789c12345678
 		if sl=0 then print"{home}{down}{right}{white}equipment: waehle deine waffe        ";
-		if sl=1 then print"{home}{down}{right}{white}equipment: waehle deine ruestun      ";
+		if sl=1 then print"{home}{down}{right}{white}equipment: waehle deine ruestung     ";
 		if sl=4 then print"{home}{down}{right}{white}equipment: waehle dein relikt        ";
 		print"{home}"left$(cd$,my-1)spc(mx-2);"{brown}{$c1}{$c2:18}{$c3}";
 		fori=0to13:print"{down}{left:20}{$c4}                  {$c5}";:next
 		print"{down}{left:20}{$c6}{$c7:18}{$c8}";
-		mt=sl:ee=1:gosub {:gosub_inventar_menu}
+		mt=sl:ee=0:gosub {:gosub_inventar_menu}
 		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		'zurueck item ident 9=zurueck
@@ -802,8 +802,6 @@ x=10:y=5:cr=3
 	print"{home}{down}{right}{white}shop                                 ";
 	mx=2:my=4:mc=14
 
-	{:shop_copy_inventar}
-
 	'--------------------->
 	' -> inventar menu
 	'--------------------->
@@ -815,11 +813,11 @@ x=10:y=5:cr=3
 	'--------------------->
 	'nimm item
 		{var:nimm_item}=peek({var:RAM2}+m)
+		gosub{:gosub_inventar_add_item}
+
 	'loesche inventar
 		poke {var:RAM2}+m,0
 
-	gosub{:gosub_inventar_add_item}
-	'goto{:shop_copy_inventar}
 	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 '--------------------->
@@ -867,30 +865,23 @@ x=10:y=5:cr=3
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu style
 			'
-			'ee=0 battle
-			'ee=1 equipment
-			'ee=2 inventar
+			'ee=0 liste kurz
+			'ee=1 liste lang
+			'
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-			'ee=0 battel
+			'ee=0 liste kurz
 			if ee=0 then print {var:item_name}({var:inventar}(mi));
 
-			'ee=1 mainloop equipment
+			'ee=1 liste lang
 			if ee=1 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
 			if ee=1 and {var:item_cat}({var:inventar}(mi))=-1 then print {var:item_name}({var:inventar}(mi));
-			if ee=1 and mt=0 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); " atk";{var:item_atk}({var:inventar}(mi))
-			if ee=1 and mt=1 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); " def";{var:item_def}({var:inventar}(mi))
-			if ee=1 and mt=4 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); " rel";{var:item_mana}({var:inventar}(mi))
-			
-			'ee=2 mainloop inventar
-			if ee=2 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
-			if ee=2 and {var:item_cat}({var:inventar}(mi))=-1 then print {var:item_name}({var:inventar}(mi));
-			if ee=2 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    hp ";{var:item_mana}({var:inventar}(mi))
-			if ee=2 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    mp ";{var:item_mana}({var:inventar}(mi))
-			if ee=2 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
-			if ee=2 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
-			if ee=2 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
-			if ee=2 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
+			if ee=1 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    hp ";{var:item_mana}({var:inventar}(mi))
+			if ee=1 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    mp ";{var:item_mana}({var:inventar}(mi))
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
 
 		'mm=menu zaehler
 			mm%=mm%+1
@@ -957,8 +948,8 @@ x=10:y=5:cr=3
 	{:inventar_menu_clear_big}
 		for i=0 to 13
 			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
-			if ee=1 then print"               ";
-			if ee=2 then print"                                    ";
+			if ee=0 then print"               ";
+			if ee=1 then print"                                    ";
 		next i
 		return
 {:gosub_inventar_sort}
@@ -979,42 +970,38 @@ x=10:y=5:cr=3
 		poke {var:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
 		next i
 	'gosub mt
-		if mt=0 then gosub {:search_zurueck} : gosub {:search_waffe}    : a=50 : gosub {:search_other}
-		if mt=1 then gosub {:search_zurueck} : gosub {:search_ruestung} : a=50 : gosub {:search_other}
-		if mt=2 then gosub {:search_zurueck} : gosub {:search_essbar}   : a=50 : gosub {:search_other}
-		if mt=3 then gosub {:search_zurueck} : gosub {:search_magie}    : a=50 : gosub {:search_other}
-		if mt=4 then gosub {:search_zurueck} : gosub {:search_relikt}   : a=50 : gosub {:search_other}
+		if mt=0 then gosub {:search_zurueck} : gosub {:search_waffe}    : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=1 then gosub {:search_zurueck} : gosub {:search_ruestung} : gosub {:search_waffe} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=2 then gosub {:search_zurueck} : gosub {:search_essbar}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=3 then gosub {:search_zurueck} : gosub {:search_magie}    : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_relikt}
+		if mt=4 then gosub {:search_zurueck} : gosub {:search_relikt}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie}
 	return
 
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'gosub copy RAM1 -> inventar
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	{:search_zurueck}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=9 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 : a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=9 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_waffe}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=0 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=0 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_ruestung}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=1 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=1 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_essbar}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=2 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=2 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_magie}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=3 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=3 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_relikt}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=4 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
-		next i
-		return
-	{:search_other}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))>0 then {var:inventar}(a)=peek({var:RAM1}+i) : poke {var:RAM1}+i,0 :a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=4 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
 		next i
 		return
 {:gosub_inventar_add_item}
@@ -1052,7 +1039,17 @@ x=10:y=5:cr=3
 			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
 
 		'print item
-			print {var:item_name}(peek({var:RAM2}+mi));
+
+			'print {var:item_name}(peek({var:RAM2}+mi));
+
+			if {var:item_cat}(peek({var:RAM2}+mi))=9  then print {var:item_name}(peek({var:RAM2}+mi));
+			if {var:item_cat}(peek({var:RAM2}+mi))=-1 then print {var:item_name}(peek({var:RAM2}+mi));
+			if {var:item_name}(peek({var:RAM2}+mi)) ="apfel   " and {var:item_cat}(peek({var:RAM2}+mi))=2 then print {var:item_name}(peek({var:RAM2}+mi)); "  essbar    hp ";{var:item_mana}(peek({var:RAM2}+mi))
+			if {var:item_name}(peek({var:RAM2}+mi)) ="pilz    " and {var:item_cat}(peek({var:RAM2}+mi))=2 then print {var:item_name}(peek({var:RAM2}+mi)); "  essbar    mp ";{var:item_mana}(peek({var:RAM2}+mi))
+			if {var:item_cat}(peek({var:RAM2}+mi))=0 then print {var:item_name}(peek({var:RAM2}+mi)); "  waffe     atk";{var:item_atk}(peek({var:RAM2}+mi));
+			if {var:item_cat}(peek({var:RAM2}+mi))=1 then print {var:item_name}(peek({var:RAM2}+mi)); "  ruestung  def";{var:item_def}(peek({var:RAM2}+mi));
+			if {var:item_cat}(peek({var:RAM2}+mi))=3 then print {var:item_name}(peek({var:RAM2}+mi)); "  magie     mp ";{var:item_mana}(peek({var:RAM2}+mi));
+			if {var:item_cat}(peek({var:RAM2}+mi))=4 then print {var:item_name}(peek({var:RAM2}+mi)); "  relikt    rel";{var:item_mana}(peek({var:RAM2}+mi));
 
 		'mm=menu zaehler
 			mm%=mm%+1
