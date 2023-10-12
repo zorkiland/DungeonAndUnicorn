@@ -1026,7 +1026,7 @@ x=10:y=5:cr=3
 
 	m=0:mo=0
 	{:shop_menu_pos}
-		mi=mo-1:mm%=0}
+		mi=mo-1:mm%=0
 		gosub {:shop_shop_menu_clear}
 
 	'--------------------->
