@@ -312,7 +312,7 @@
 'read shop
 
 	'zurueck / magie 7x
-		data 99,4,5,6,7,9,12 
+		data 99,4,5,6,7,9,12
 	'waffe / rustung 6x
 		data 11,13,15,14,16,17
 	'relikt 12x
@@ -362,6 +362,37 @@
 
 {var:inventar}(0)=99
 {var:player_activ}(0)=1
+
+'magic
+{var:inventar}(1) =4   'feuer
+{var:inventar}(2) =5   'polar
+{var:inventar}(3) =6   'groll
+{var:inventar}(4) =7   'bombe
+{var:inventar}(5) =12  'blind
+{var:inventar}(6) =9   'heilen
+
+'relikt
+{var:inventar}(7)=18   'level1
+{var:inventar}(8)=19   'level2
+{var:inventar}(9)=20   'level3
+{var:inventar}(10)=21  'attack1
+{var:inventar}(11)=22  'attack2
+{var:inventar}(12)=23  'attack3
+{var:inventar}(13)=24  'defence1
+{var:inventar}(14)=25  'defence2
+{var:inventar}(15)=26  'defence3
+{var:inventar}(16)=27  'speed1
+{var:inventar}(17)=28  'speed2
+{var:inventar}(18)=29  'speed3
+
+'waffen ruestung
+{var:inventar}(19)=14  'rock
+{var:inventar}(20)=16  'weste
+{var:inventar}(21)=17  'schild
+
+{var:inventar}(22)=11  'flegel
+{var:inventar}(23)=13  'speer
+{var:inventar}(24)=15  'schwert
 
 gosub {:gosub_raumaktion_variabeln}
 gosub {:gosub_raumaktion_poke_mapspeicher}
@@ -417,7 +448,8 @@ x=10:y=5:cr=3
 	if a$="s"  then zy=y+1:goto{:mainloop_if_newpos}
 	if a$="fu" then {var:joy_map_true}=0 : goto {:goto_inventar}
 	if a$="fd" then {var:joy_map_true}=0 : goto {:goto_equipment}
-	if a$="q"  then {var:joy_map_true}=0 : goto {:goto_shop}
+	'->MOD SHOP
+	'if a$="q"  then {var:joy_map_true}=0 : goto {:goto_shop}
 
 
 	if a$=chr$(13) and ut$="gefunden" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_gefunden} :ut$="":goto{:mainloop_oldpos}
@@ -858,7 +890,7 @@ x=10:y=5:cr=3
 			mi=mi+1
 		'print pos menue + mm% down
 			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
-		'wenn item_cat 2<>essbar und inventar
+		'wenn ee=2 (inventar) und item_cat 2<>essbar
 			if ee=2 and {var:item_cat}({var:inventar}(mi))<>2 then print"{cyan}";
 		'wenn item_cat 9=zurueck -1=leer
 			if {var:item_cat}({var:inventar}(mi))=9  then print"{white}";
@@ -884,7 +916,7 @@ x=10:y=5:cr=3
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 			'ee=0 battel
-			if ee=0 and mc=4 then print {var:item_name}({var:inventar}(mi));
+			if ee=0 then print {var:item_name}({var:inventar}(mi));
 
 			'ee=1 equipment
 			if ee=1 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
@@ -962,6 +994,15 @@ x=10:y=5:cr=3
 	'->clear menu
 	'--------------------->
 
+	'pos menu mx ist start cursor
+	'item_name   =  8 lang <-ee=0
+	'space       =  1 lang
+	'atk         =  3 lang
+	'space       =  1 lang
+	'zahlenwert  =  2 lang
+	'ergebnis    = 15 lang <-ee=1
+	'ganze zeile = 36 lang <-ee=2
+
 	{:inventar_menu_clear}
 		for i=0 to 3
 			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
@@ -981,6 +1022,7 @@ x=10:y=5:cr=3
 {:gosub_inventar_sort}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	'menu sort nach item_cat
+	'mt=-1 alle
 	'mt=0  waffe
 	'mt=1  ruestung
 	'mt=2  essbar
@@ -996,12 +1038,12 @@ x=10:y=5:cr=3
 		poke {var:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
 		next i
 	'gosub mt
-		if mt=0 then gosub {:search_zurueck} : gosub {:search_waffe}    : a=50 : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
-		if mt=1 then gosub {:search_zurueck} : gosub {:search_ruestung} : a=50 : gosub {:search_waffe} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
-		if mt=2 then gosub {:search_zurueck} : gosub {:search_essbar}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
-		if mt=3 then gosub {:search_zurueck} : gosub {:search_magie}    : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_relikt}
-		if mt=4 then gosub {:search_zurueck} : gosub {:search_relikt}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie}
-		if mt=-1 then gosub {:search_zurueck} : gosub {:search_essbar}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=0  then gosub {:search_zurueck} : gosub {:search_waffe}    : a=50 : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=1  then gosub {:search_zurueck} : gosub {:search_ruestung} : a=50 : gosub {:search_waffe} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=2  then gosub {:search_zurueck} : gosub {:search_essbar}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=3  then gosub {:search_zurueck} : gosub {:search_magie}    : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_relikt}
+		if mt=4  then gosub {:search_zurueck} : gosub {:search_relikt}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie}
+		if mt=-1 then gosub {:search_essbar}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt} : a=50 : gosub {:search_zurueck}
 	return
 
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1222,43 +1264,48 @@ x=10:y=5:cr=3
 		goto{:battel_monster_attack}
 {:battel_player_attack}
 {:battelmenu}
-	gosub{:gosub_clear_top}
-	'                                                 123456789a123456789b123456789c12345678
-	print"{home}{white}{down}{right}"{var:player_name}(c)": ist am zug                     "
-	print dd$;spc(16)"{white} angriff {down}{left:9} inventar";:m=2
-	print dd$;spc(16)"{down:2}{$20:9}{down}{left:9}{$20:9}";
-	if {var:player_mp}(c)>0then print dd$;spc(16)"{down:2} magie   ";:m=3
+		mx=16:my=20:m=0
+	'print payer am zug
+		gosub{:gosub_clear_top}
+		'                                                 123456789a123456789b123456789c12345678
+		print"{home}{white}{down}{right}"{var:player_name}(c)": ist am zug                     "
+	'clear battelmenu
+		printdd$;spc(mx)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}"
+	'print battelmenu
+		printdd$;spc(mx)"{white} angriff ";
+		printdd$;spc(mx)"{white}{down} inventar";:mc=1
+		if {var:player_mp}(c)>0 then print dd$;spc(mx)"{down:2} magie   ";:mc=2
 	'print player tile aktiv
-	gosub{:gosub_battel_print_current_player_tile}
-	my=0 : fz=0
+		gosub{:gosub_battel_print_current_player_tile}
 {:battelmenu_print_cusor}
-	'bildschirmspeicher 49152 + 816 (pro zeile 40 zeichen 0-39)
-	poke {var:bildschirmspeicher}+816+my*40,35 : 'print cursor
+	poke {var:bildschirmspeicher}+mx+(my*40)+(m*40),35
 {:battelmenu_joyauswertung}
 	gosub{:gosub_joy}
-	'bildschirmspeicher -1
-	if a$="s"then poke {var:bildschirmspeicher}+816+my*40,32:fz=0:my=my+1:goto {:battelmenu_joyauswertung_min_max}
-	if a$="w"then poke {var:bildschirmspeicher}+816+my*40,32:fz=0:my=my-1:goto {:battelmenu_joyauswertung_min_max}
-	if a$=chr$(13)then fz=0:goto {:battelmenu_on_goto}
+	if a$="s"then poke {var:bildschirmspeicher}+mx+(my*40)+(m*40),32:m=m+1:goto {:battelmenu_joyauswertung_min_max}
+	if a$="w"then poke {var:bildschirmspeicher}+mx+(my*40)+(m*40),32:m=m-1:goto {:battelmenu_joyauswertung_min_max}
+	if a$=chr$(13)then goto {:battelmenu_on_goto}
 	goto {:battelmenu_joyauswertung}
 {:battelmenu_joyauswertung_min_max}
-	if my>=m then my=0
-	if my<0 then my=m-1
+	if m>mc then m=mc
+	if m<0 then m=0
 	goto {:battelmenu_print_cusor}
 '--------------------->
 '-> select attack item
 '--------------------->
 {:battelmenu_on_goto}
-	'clear player battelmenu
-		printdd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
+	'clear battelmenu
+		printdd$;spc(mx)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
 	'on goto
-		on my+1 goto {:battelmenu_select_attack},{:battelmenu_select_item}
+		on m+1 goto {:battelmenu_select_attack},{:battelmenu_select_item}
 '->else select magic
 {:battelmenu_select_magic}
-		mt=3:mx=16:my=20:mc=4:ee=0:gosub {:gosub_inventar_menu}
+		mt=3:mx=16:my=20:mc=4:ee=0
+	'inventar menu
+		gosub {:gosub_inventar_menu}
+	'clear battelmenu
+		printdd$;spc(mx)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
+	'battelmenu select
 		if {var:item_cat}({var:inventar}(m))=9 then {:battelmenu}
-	'clear menuitem
-		print dd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
 		if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>3then{:battelmenu}
 		m={var:inventar}(m)
 	'nicht genug mana
@@ -1273,14 +1320,18 @@ x=10:y=5:cr=3
 		if{var:fight_active}(c)=7  and {var:fight_mp}(c)>={var:item_mana}(9)then m=9:goto{:goto_heal_magic}
 		goto{:battle_magic_damage}
 {:battelmenu_select_item}
-	mt=2:mx=16:my=20:mc=4:ee=0:gosub {:gosub_inventar_menu}
-	if {var:item_cat}({var:inventar}(m))=9 then {:battelmenu}
-	printdd$;spc(16)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
-	print"{down}{left:9}{$20:9}";
-	if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then {:battelmenu}
-	if {var:inventar}(m)=3 then gosub {:inventar_auswahl_pilz} : {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
-	if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_set_fight(xx)_player}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
-	gosub{:gosub_battel_move_current_tile_oldpos}:goto {:battel_routine_ini}
+		mt=2:mx=16:my=20:mc=4:ee=0
+	'inventar menu
+		gosub {:gosub_inventar_menu}
+	'clear battelmenu
+		printdd$;spc(mx)"{white}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}{down}{left:9}{$20:9}";
+	'battelmenu select
+		if {var:item_cat}({var:inventar}(m))=9 then {:battelmenu}
+		if {var:inventar}(m)=0 or {var:item_cat}({var:inventar}(m))<>mt then {:battelmenu}
+		if {var:inventar}(m)=3 then gosub {:inventar_auswahl_pilz} : {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+		if {var:inventar}(m)=8 then gosub {:inventar_auswahl_apfel}: {var:inventar}(m)=0:gosub{:gosub_print_player_hp}:gosub{:gosub_battel_set_fight(xx)_player}:gosub{:gosub_battel_move_current_tile_oldpos}:gosub{:gosub_battel_print_all_player_tile}:goto{:battel_routine_ini}
+	'else select
+		gosub{:gosub_battel_move_current_tile_oldpos}:goto {:battel_routine_ini}
 {:battelmenu_select_attack}
 	gosub {:gosub_battel_choose_target}
 	gosub{:gosub_clear_top}
@@ -1939,7 +1990,7 @@ x=10:y=5:cr=3
 	return
 {:gosub_print_rahmen_unten_battel}
 	'hp/mp wird nicht geloescht
-		print dd$;"{brown}{up}{$c1}{$c2:7}{white}hp{brown}{$c2:1}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";		
+		print dd$;"{brown}{up}{$c1}{$c2:7}{white}hp{brown}{$c2:1}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}";
 		for i=0 to 3:print"{$c4}{$20:10}{$c5}{$c4}{$20:12}{$c5}{$c4}{right:12}{$c5}";:next
 		print"{$c6}{$c7:10}{$c8}{$c6}{$c7:12}{$c8}{$c6}{$c7:12}";
 		poke 50151,72:poke 56295,9
@@ -2136,7 +2187,8 @@ x=10:y=5:cr=3
 			if b$="d" then a$="d"  : return
 			if b$="w" then a$="w"  : return
 			if b$="s" then a$="s"  : return
-			if b$="q" then a$="q"  : return
+			'->MOD SHOP
+			'if b$="q" then a$="q"  : return
 			if b$=chr$(13) then a$=chr$(13) :return
 		'warten fire und keine bewegung return
 			if j=127 and a$=chr$(13) then return
