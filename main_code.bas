@@ -696,7 +696,7 @@ x=10:y=5:cr=3
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}inventar: waehle dein item           ";
-	mt=2:mx=2:my=4:mc=14:ee=1
+	mt=-1:mx=2:my=4:mc=14:ee=2
 	gosub{:gosub_inventar_menu}
 
 	if a$="fu" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
@@ -787,7 +787,7 @@ x=10:y=5:cr=3
 		print"{home}"left$(cd$,my-1)spc(mx-2);"{brown}{$c1}{$c2:18}{$c3}";
 		fori=0to13:print"{down}{left:20}{$c4}                  {$c5}";:next
 		print"{down}{left:20}{$c6}{$c7:18}{$c8}";
-		mt=sl:ee=0:gosub {:gosub_inventar_menu}
+		mt=sl:ee=1:gosub {:gosub_inventar_menu}
 		if a$="fd" then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 		'zurueck item ident 9=zurueck
@@ -858,8 +858,8 @@ x=10:y=5:cr=3
 			mi=mi+1
 		'print pos menue + mm% down
 			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
-		'wenn item_cat <> menu transition
-			if {var:item_cat}({var:inventar}(mi))<>mt then print"{cyan}";
+		'wenn item_cat 2<>essbar und inventar
+			if ee=2 and {var:item_cat}({var:inventar}(mi))<>2 then print"{cyan}";
 		'wenn item_cat 9=zurueck -1=leer
 			if {var:item_cat}({var:inventar}(mi))=9  then print"{white}";
 			if {var:item_cat}({var:inventar}(mi))=-1 then print"{cyan}";
@@ -867,6 +867,7 @@ x=10:y=5:cr=3
 		'print item
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu sort nach item_cat
+			'mt=-1 alle
 			'mt=0  waffe
 			'mt=1  ruestung
 			'mt=2  essbar
@@ -876,33 +877,34 @@ x=10:y=5:cr=3
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 			'menu style
 			'
-			'ee=0 liste kurz
-			'ee=1 liste lang
+			'ee=0 battel
+			'ee=1 inventar
+			'ee=2 equipment
 			'
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-			'ee=0 liste kurz battel
+			'ee=0 battel
 			if ee=0 and mc=4 then print {var:item_name}({var:inventar}(mi));
 
-			'ee=0 liste kurz equipment
-			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
-			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=-1 then print {var:item_name}({var:inventar}(mi));
-			if ee=0 and mc=14 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); " hp ";{var:item_mana}({var:inventar}(mi))
-			if ee=0 and mc=14 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); " mp ";{var:item_mana}({var:inventar}(mi))
-			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); " atk";{var:item_atk}({var:inventar}(mi));
-			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); " def";{var:item_def}({var:inventar}(mi));
-			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); " mp ";{var:item_mana}({var:inventar}(mi));
-			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); " rel";{var:item_mana}({var:inventar}(mi));
-
-			'ee=1 liste lang
+			'ee=1 equipment
 			if ee=1 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
 			if ee=1 and {var:item_cat}({var:inventar}(mi))=-1 then print {var:item_name}({var:inventar}(mi));
-			if ee=1 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    hp ";{var:item_mana}({var:inventar}(mi))
-			if ee=1 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    mp ";{var:item_mana}({var:inventar}(mi))
-			if ee=1 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
-			if ee=1 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
-			if ee=1 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
-			if ee=1 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
+			if ee=1 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); " hp ";{var:item_mana}({var:inventar}(mi))
+			if ee=1 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); " mp ";{var:item_mana}({var:inventar}(mi))
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); " atk";{var:item_atk}({var:inventar}(mi));
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); " def";{var:item_def}({var:inventar}(mi));
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); " mp ";{var:item_mana}({var:inventar}(mi));
+			if ee=1 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); " rel";{var:item_mana}({var:inventar}(mi));
+
+			'ee=2 inventar
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=-1 then print {var:item_name}({var:inventar}(mi));
+			if ee=2 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    hp ";{var:item_mana}({var:inventar}(mi))
+			if ee=2 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); "  essbar    mp ";{var:item_mana}({var:inventar}(mi))
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); "  waffe     atk";{var:item_atk}({var:inventar}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); "  ruestung  def";{var:item_def}({var:inventar}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); "  magie     mp ";{var:item_mana}({var:inventar}(mi));
+			if ee=2 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); "  relikt    rel";{var:item_mana}({var:inventar}(mi));
 
 		'mm=menu zaehler
 			mm%=mm%+1
@@ -963,14 +965,17 @@ x=10:y=5:cr=3
 	{:inventar_menu_clear}
 		for i=0 to 3
 			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
-			print"        ";
+			if ee=0 then print"        ";
+			if ee=1 then print"               ";
+			if ee=2 then print"                                    ";
 		next i
 		return
 	{:inventar_menu_clear_big}
 		for i=0 to 13
 			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
-			if ee=0 then print"               ";
-			if ee=1 then print"                                    ";
+			if ee=0 then print"        ";
+			if ee=1 then print"               ";
+			if ee=2 then print"                                    ";
 		next i
 		return
 {:gosub_inventar_sort}
@@ -991,11 +996,12 @@ x=10:y=5:cr=3
 		poke {var:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
 		next i
 	'gosub mt
-		if mt=0 then gosub {:search_zurueck} : gosub {:search_waffe}    : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
-		if mt=1 then gosub {:search_zurueck} : gosub {:search_ruestung} : gosub {:search_waffe} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
-		if mt=2 then gosub {:search_zurueck} : gosub {:search_essbar}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
-		if mt=3 then gosub {:search_zurueck} : gosub {:search_magie}    : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_relikt}
-		if mt=4 then gosub {:search_zurueck} : gosub {:search_relikt}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie}
+		if mt=0 then gosub {:search_zurueck} : gosub {:search_waffe}    : a=50 : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=1 then gosub {:search_zurueck} : gosub {:search_ruestung} : a=50 : gosub {:search_waffe} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=2 then gosub {:search_zurueck} : gosub {:search_essbar}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
+		if mt=3 then gosub {:search_zurueck} : gosub {:search_magie}    : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_relikt}
+		if mt=4 then gosub {:search_zurueck} : gosub {:search_relikt}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie}
+		if mt=-1 then gosub {:search_zurueck} : gosub {:search_essbar}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
 	return
 
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
