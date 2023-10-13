@@ -881,11 +881,18 @@ x=10:y=5:cr=3
 			'
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-			'ee=0 liste kurz
-			'->MOD ander item cat wrden einfach nicht geprinted
-			if ee=0 then print {var:item_name}({var:inventar}(mi));
-			'if ee=0 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
-			'if ee=0 and {var:item_cat}({var:inventar}(mi))=mt then print {var:item_name}({var:inventar}(mi));
+			'ee=0 liste kurz battel
+			if ee=0 and mc=4 then print {var:item_name}({var:inventar}(mi));
+
+			'ee=0 liste kurz equipment
+			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
+			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=-1 then print {var:item_name}({var:inventar}(mi));
+			if ee=0 and mc=14 and {var:item_name}({var:inventar}(mi)) ="apfel   " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); " hp ";{var:item_mana}({var:inventar}(mi))
+			if ee=0 and mc=14 and {var:item_name}({var:inventar}(mi)) ="pilz    " and {var:item_cat}({var:inventar}(mi))=2 then print {var:item_name}({var:inventar}(mi)); " mp ";{var:item_mana}({var:inventar}(mi))
+			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=0 then print {var:item_name}({var:inventar}(mi)); " atk";{var:item_atk}({var:inventar}(mi));
+			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=1 then print {var:item_name}({var:inventar}(mi)); " def";{var:item_def}({var:inventar}(mi));
+			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=3 then print {var:item_name}({var:inventar}(mi)); " mp ";{var:item_mana}({var:inventar}(mi));
+			if ee=0 and mc=14 and {var:item_cat}({var:inventar}(mi))=4 then print {var:item_name}({var:inventar}(mi)); " rel";{var:item_mana}({var:inventar}(mi));
 
 			'ee=1 liste lang
 			if ee=1 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
