@@ -309,6 +309,25 @@
 	poke 1020,6    'hintergrundfarbe map
 	poke 1021,6    'hintergrundfarbe schrift
 	sys 820        'start asm.raster
+'read shop
+
+	'zurueck / magie 7x
+		data 99,4,5,6,7,9,12 
+	'waffe / rustung 6x
+		data 11,13,15,14,16,17
+	'relikt 12x
+		data 18,19,20,21,22,23,24,25,26,27,28,29
+
+	'clear RAM
+		for i=0 to 999
+		poke 1024+i,0
+		next i
+	
+	'RAM2 item 0-24
+		for i=0 to 24
+		read a
+		poke {var:RAM2}+i,a
+		next i
 'read data
 	'read monster
 		for i=0 to 13
@@ -340,16 +359,6 @@
 		j=j+1
 		next i
 
-
-'clear RAM
-for i=0 to 999
-poke 1024+i,0
-next i
-
-'RAM2 item 0-99
-for i=0 to 99
-poke {var:RAM2}+i,i
-next i
 
 {var:inventar}(0)=99
 {var:player_activ}(0)=1
@@ -802,11 +811,12 @@ x=10:y=5:cr=3
 	print"{home}{down}{right}{white}shop                                 ";
 	mx=2:my=4:mc=14
 
+	{:shop_menu}
 	'--------------------->
 	' -> inventar menu
 	'--------------------->
 	gosub{:gosub_shop_menu}
-	'if {var:inventar}(m)=99 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	if {var:inventar}(m)=99 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
 
 	'--------------------->
 	' -> nimm inventar
@@ -818,7 +828,8 @@ x=10:y=5:cr=3
 	'loesche inventar
 		poke {var:RAM2}+m,0
 
-	gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
+	'goto shop menu
+		goto{:shop_menu}
 
 '--------------------->
 '-> gosub item menu
@@ -871,7 +882,10 @@ x=10:y=5:cr=3
 			'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 			'ee=0 liste kurz
+			'->MOD ander item cat wrden einfach nicht geprinted
 			if ee=0 then print {var:item_name}({var:inventar}(mi));
+			'if ee=0 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
+			'if ee=0 and {var:item_cat}({var:inventar}(mi))=mt then print {var:item_name}({var:inventar}(mi));
 
 			'ee=1 liste lang
 			if ee=1 and {var:item_cat}({var:inventar}(mi))=9  then print {var:item_name}({var:inventar}(mi));
