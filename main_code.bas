@@ -32,7 +32,75 @@
 '<---> = wird z.B. bei POKE geschrieben
 '<+++> = lesend + schreibend
 '<   > = von BASIC aus nicht erreichbar
-'
+'fre=5239
+'fre=5686
+
+
+{def:raster_sys=820}
+{def:raster_top=1021}
+{def:raster_bak=1020}
+
+{def:rahmenfarbe=53280}          '=$d020
+{def:bildschirmfarbe=53281}      '=$d021
+{def:multifarbspeicher_1=53282}  '=$d022
+{def:multifarbspeicher_2=53283}  '=$d023
+{def:bildschirmspeicher=49152}   '=$c000
+{def:video_interface_chip=53248} '=$d000
+{def:start_map=50176}            '=$c400
+{def:sprite0_x=53248}            '=$d000+0
+{def:sprite0_y=53249}            '=$d000+1
+{def:sprite1_x=53250}            '=$d000+2
+{def:sprite1_y=53251}            '=$d000+3
+{def:sprite2_x=53252}            '=$d000+4
+{def:sprite2_y=53253}            '=$d000+5
+{def:sprite3_x=53254}            '=$d000+6
+{def:sprite3_y=53255}            '=$d000+7
+{def:sprite4_x=53256}            '=$d000+8
+{def:sprite4_y=53257}            '=$d000+9
+{def:sprite5_x=53258}            '=$d000+10
+{def:sprite5_y=53259}            '=$d000+11
+{def:sprite6_x=53260}            '=$d000+12
+{def:sprite6_y=53261}            '=$d000+13
+{def:sprite7_x=53262}            '=$d000+14
+{def:sprite7_y=53263}            '=$d000+15
+{def:sprite_x_highbit=53264}     '=$d000+16 {%:00000000}
+{def:sprite_on_off=53269}        '=$d000+21 {%:00000000}
+{def:sprite_multi_on_off=53276}  '=$d000+28 {%:00000000}
+{def:sprite_multicolor_1=53285}  '=$d000+37
+{def:sprite_multicolor_2=53286}  '=$d000+38
+{def:sprite_hirescolor=53287}    '=$d000+39
+{def:sprite_register=50168}      '=$c3f8 ende bidschirmspeicher c3f8 sprite 0
+
+{def:RAM1=1024}
+{def:RAM2=1124}
+{def:RAM3=1224}
+
+{def:farbe_sw=0}
+{def:farbe_ws=1}
+{def:farbe_rd=2}
+{def:farbe_tk=3}
+{def:farbe_vi=4}
+{def:farbe_gn=5}
+{def:farbe_bl=6}
+{def:farbe_ge=7}
+{def:farbe_or=8}
+{def:farbe_br=9}
+{def:farbe_lrd=10}
+{def:farbe_dgr=11}
+{def:farbe_mgr=12}
+{def:farbe_lgn=13}
+{def:farbe_lbl=14}
+{def:farbe_lgr=15}
+{def:farbe_multi_sw=8}
+{def:farbe_multi_ws=9}
+{def:farbe_multi_br=10}
+{def:farbe_multi_tk=11}
+{def:farbe_multi_vi=12}
+{def:farbe_multi_gn=13}
+{def:farbe_multi_bl=14}
+{def:farbe_multi_ge=15}
+
+
 {renumber}
 'super variabeln
 	'supervar_tile
@@ -48,9 +116,6 @@
 		{var:inventar=in%}
 		{var:inventar_max=ix%}
 		{var:nimm_item=ni%}
-		{var:RAM1=r1%}
-		{var:RAM2=r2%}
-		{var:RAM3=r3%}
 	'supervar_player
 		{var:player_name=p$}
 		{var:player_hp=ph%}
@@ -78,39 +143,9 @@
 		{var:monster_exp=mx%}
 		{var:monster_speed=mb%}
 	'supervar_speicher
-		{var:bildschirmspeicher=qs}
-		{var:multifarbspeicher_1=qo}
-		{var:multifarbspeicher_2=qp}
-		{var:bildschirmfarbe=qq}
-		{var:rahmenfarbe=qr}
-		{var:start_map=sm}
 		{var:offset_map=ze}
-		{var:video_interface_chip=v}
 	'supervar_sprite
-		{var:sprite0_x=h0}
-		{var:sprite0_y=h1}
-		{var:sprite1_x=h2}
-		{var:sprite1_y=h3}
-		{var:sprite2_x=h4}
-		{var:sprite2_y=h5}
-		{var:sprite3_x=h6}
-		{var:sprite3_y=h7}
-		{var:sprite4_x=h8}
-		{var:sprite4_y=h9}
-		{var:sprite5_x=i0}
-		{var:sprite5_y=i1}
-		{var:sprite6_x=i2}
-		{var:sprite6_y=i3}
-		{var:sprite7_x=i4}
-		{var:sprite7_y=i5}
-		{var:sprite_on_off=i6}
-		{var:sprite_multi_on_off=i7}
-		{var:sprite_multicolor_1=i8}
-		{var:sprite_multicolor_2=i9}
-		{var:sprite_hirescolor=j0}
-		{var:sprite_register=j1}
-		{var:sprite_x_highbit=j2}
-		{var:spritebank=j3}
+		{var:var_spritebank=j3}
 	'supervar_color
 		{var:farbe_sw=q1%}
 		{var:farbe_ws=q2%}
@@ -210,83 +245,19 @@
 'load game seq
 	{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
 'set variablen
-	'variabeln speicher
-		{var:rahmenfarbe}          ={$:d020}
-		{var:bildschirmfarbe}      ={$:d021}
-		{var:multifarbspeicher_1}  ={$:d022}
-		{var:multifarbspeicher_2}  ={$:d023}
-		{var:bildschirmspeicher}   ={$:c000}
-		{var:video_interface_chip} ={$:d000}
-		{var:start_map}            ={$:c400}
-	'variabeln sprite
-		{var:sprite0_x}          ={var:video_interface_chip}+0
-		{var:sprite0_y}          ={var:video_interface_chip}+1
-		{var:sprite1_x}          ={var:video_interface_chip}+2
-		{var:sprite1_y}          ={var:video_interface_chip}+3
-		{var:sprite2_x}          ={var:video_interface_chip}+4
-		{var:sprite2_y}          ={var:video_interface_chip}+5
-		{var:sprite3_x}          ={var:video_interface_chip}+6
-		{var:sprite3_y}          ={var:video_interface_chip}+7
-		{var:sprite4_x}          ={var:video_interface_chip}+8
-		{var:sprite4_y}          ={var:video_interface_chip}+9
-		{var:sprite5_x}          ={var:video_interface_chip}+10
-		{var:sprite5_y}          ={var:video_interface_chip}+11
-		{var:sprite6_x}          ={var:video_interface_chip}+12
-		{var:sprite6_y}          ={var:video_interface_chip}+13
-		{var:sprite7_x}          ={var:video_interface_chip}+14
-		{var:sprite7_y}          ={var:video_interface_chip}+15
-		{var:sprite_x_highbit}   ={var:video_interface_chip}+16 '{%:00000000}
-
-		{var:sprite_on_off}      ={var:video_interface_chip}+21 '{%:00000000}
-		{var:sprite_multi_on_off}={var:video_interface_chip}+28 '{%:00000000}
-		{var:sprite_multicolor_1}={var:video_interface_chip}+37
-		{var:sprite_multicolor_2}={var:video_interface_chip}+38
-		{var:sprite_hirescolor}  ={var:video_interface_chip}+39
-		{var:sprite_register}    ={$:c3f8}                      'ende bidschirmspeicher c3f8 sprite 0
-	'variabeln farben
-		'{var:farbe_sw..}       =0
-		'{var:farbe_ws}         =1
-		'{var:farbe_rd}         =2
-		'{var:farbe_tk}         =3
-		'{var:farbe_vi}         =4
-		'{var:farbe_gn}         =5
-		'{var:farbe_bl..}       =6
-		'{var:farbe_ge}         =7
-		'{var:farbe_or}         =8
-		'{var:farbe_br}         =9
-		'{var:farbe_lrd}        =10
-		'{var:farbe_dgr}        =11
-		'{var:farbe_mgr}        =12
-		'{var:farbe_lgn}        =13
-		'{var:farbe_lbl}        =14
-		'{var:farbe_lgr}        =15
-	'variabeln farben multi
-		'{var:farbe_multi_sw}   =8
-		'{var:farbe_multi_ws}   =9
-		'{var:farbe_multi_br}   =10
-		'{var:farbe_multi_tk}   =11
-		'{var:farbe_multi_vi}   =12
-		'{var:farbe_multi_gn}   =13
-		'{var:farbe_multi_bl}   =14
-		'{var:farbe_multi_ge}   =15
-	'variabel integer
-		rs=160: 'pro raum 160 data
 	'konstante Variabel string
 		dd$="{home}{down:20}{white}"
 		cd$="{down:25}"
-	'RAM
-		{var:RAM1}=1024
-		{var:RAM2}=1124
-		{var:RAM3}=1224
+
 'set color / speicher
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
-	'spritebank $e000 (verstatz von $c000)
+	'var_spritebank $e000 (verstatz von $c000)
 	'  $10=$400
 	'  $e800 - $c000 = $2800 / $400 = a
 	'  $ec00 - $c000 = $2C00 / $400 = b
-	{var:spritebank}={$:b0}
+	{var:var_spritebank}={$:b0}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
-	poke {var:video_interface_chip}+21,0'                sprites aus
+	poke {usedef:video_interface_chip}+21,0'             sprites aus
 	poke 648,{$:c0}'                                     bildschirspeicher ab ($c000) hibyte $c0
 	poke {$:dd00},0'                                     speicherbank 3    ab ($c000)
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -299,16 +270,16 @@
 	'  $c000 + $2000 = $e000
 	poke {$:d018},{%:00001000}
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
-	poke 53270,peek(53270)or16'            multicolor (ein=16 aus=239)
-	poke {var:multifarbspeicher_1},8'      multicolor 1 =8 (or)
-	poke {var:multifarbspeicher_2},0'      multicolor 2 =0 (sw)
-	poke {var:rahmenfarbe},0'              rahmenfarbe (sw)
-	poke {var:bildschirmfarbe},6'          bildschirmfarbe (bl)
+	poke 53270,peek(53270)or16'               multicolor (ein=16 aus=239)
+	poke {usedef:multifarbspeicher_1},8'      multicolor 1 =8 (or)
+	poke {usedef:multifarbspeicher_2},0'      multicolor 2 =0 (sw)
+	poke {usedef:rahmenfarbe},0'              rahmenfarbe (sw)
+	poke {usedef:bildschirmfarbe},6'          bildschirmfarbe (bl)
 	print"{clear}"
 'set raster
-	poke 1020,6    'hintergrundfarbe map
-	poke 1021,6    'hintergrundfarbe schrift
-	sys 820        'start asm.raster
+	poke {usedef:raster_bak},6
+	poke {usedef:raster_top},6
+	sys  {usedef:raster_sys}
 'read shop
 
 	'zurueck / magie 7x
@@ -326,7 +297,7 @@
 	'RAM2 item 0-24
 		for i=0 to 24
 		read a
-		poke {var:RAM2}+i,a
+		poke {usedef:RAM2}+i,a
 		next i
 'read data
 	'read monster
@@ -398,7 +369,7 @@ gosub {:gosub_raumaktion_variabeln}
 gosub {:gosub_raumaktion_poke_mapspeicher}
 
 {:start}
-gosub{:gosub_print_rahmen_aussen} : poke 1020,6 : {var:seq_select}="intro" : gosub {:gosub_load_screen_seq} : gosub {:gosub_print_txt_screen}
+gosub{:gosub_print_rahmen_aussen} : poke {usedef:raster_bak},6 : {var:seq_select}="intro" : gosub {:gosub_load_screen_seq} : gosub {:gosub_print_txt_screen}
 for i=0 to 3: {var:player_hp}(i)={var:player_hp_max}(i) : {var:player_mp}(i)={var:player_mp_max}(i) : next
 
 x=10:y=5:cr=3
@@ -407,8 +378,8 @@ x=10:y=5:cr=3
 'mainloop
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:mainloop}
-	'spritebank mainloop
-	{var:spritebank}={$:b0}
+	'var_spritebank mainloop
+	{var:var_spritebank}={$:b0}
 	gosub{:gosub_print_rahmen_oben}
 	gosub{:gosub_clear_map}
 	gosub{:gosub_print_rahmen_unten_map}
@@ -419,12 +390,12 @@ x=10:y=5:cr=3
 	gosub{:gosub_clear_info_txt}
 {:mainloop_print_map}
 	'-> sprite off
-	poke {var:sprite_on_off},{%:00000000}
+	poke {usedef:sprite_on_off},{%:00000000}
 
 	'color und name raum
-	if cr=10 then poke 1020,11 : gb$="schlafender wald"
-	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke 1020,11 : gb$="nibelheim"
-	if cr=8 or cr=5 or cr=2 then poke 1020,11  : gb$="im haus von lena"
+	if cr=10 then poke {usedef:raster_bak},11 : gb$="schlafender wald"
+	if cr=0 or cr=1 or cr=3 or cr=4 or cr=6 or cr=7  then poke {usedef:raster_bak},11 : gb$="nibelheim"
+	if cr=8 or cr=5 or cr=2 then poke {usedef:raster_bak},11  : gb$="im haus von lena"
 
 	gosub{:gosub_clear_top}
 	gosub{:gosub_print_map}
@@ -468,7 +439,7 @@ x=10:y=5:cr=3
 	'wenn am rand der map
 		if zx=-1 or zx=20 or zy=-1 or zy=8 then{:mainloop_set_newpos}
 	'read nextpos map
-		c=peek({var:start_map}+{var:offset_map}+zx+(zy*60))
+		c=peek({usedef:start_map}+{var:offset_map}+zx+(zy*60))
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'wenn nextpos
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -660,9 +631,7 @@ x=10:y=5:cr=3
 	bi%={%:00000010}:gosub{:gosub_sprite_off}
 	bi%={%:00000001}:gosub{:gosub_sprite_off}
 	va$="zzzzz!" : gosub{:gosub_print_info_txt}
-	'poke 1020,0
 	gosub{:gosub_delay_text}
-	'poke 1020,11
 	gosub{:gosub_heilen} : gosub{:gosub_print_player_hp} : gosub{:gosub_clear_info_txt}
 	bi%={%:00000001}:gosub{:gosub_sprite_on}
 	return
@@ -699,22 +668,22 @@ x=10:y=5:cr=3
 	return
 	{:raumaktion_poke_mapspeicher_map0}
 		'npc raum
-		poke {var:start_map}+20+{var:npc_posx}(0)+{var:npc_posy}(0)*60,50+{var:npc_flag}(0)*30  'c=50 lena (kann 50 oder 80 sein)
+		poke {usedef:start_map}+20+{var:npc_posx}(0)+{var:npc_posy}(0)*60,50+{var:npc_flag}(0)*30  'c=50 lena (kann 50 oder 80 sein)
 
 		'schalter aktor raum 8 (1000) c=14 schalter c=3 tuere
-		poke {var:start_map}+1000+{var:schalter_posx}(0)+{var:schalter_posy}(0)*60,14+{var:schalter_flag}(0)
-		poke {var:start_map}+1000+{var:schalter_posx}(1)+{var:schalter_posy}(1)*60,14+{var:schalter_flag}(1)
-		poke {var:start_map}+1000+{var:schalter_posx}(2)+{var:schalter_posy}(2)*60,14+{var:schalter_flag}(2)
+		poke {usedef:start_map}+1000+{var:schalter_posx}(0)+{var:schalter_posy}(0)*60,14+{var:schalter_flag}(0)
+		poke {usedef:start_map}+1000+{var:schalter_posx}(1)+{var:schalter_posy}(1)*60,14+{var:schalter_flag}(1)
+		poke {usedef:start_map}+1000+{var:schalter_posx}(2)+{var:schalter_posy}(2)*60,14+{var:schalter_flag}(2)
 
 		if {var:schalter_flag}(0)=1  and {var:schalter_flag}(1)=0  and {var:schalter_flag}(2)=1 then t=82 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
 		t=13 :goto {:raumaktion_poke_mapspeicher_map0_aktor0}
 		return
 		{:raumaktion_poke_mapspeicher_map0_aktor0}
-		poke {var:start_map}+1000+{var:aktor_posx}(0)+{var:aktor_posy}(0)*60,t
+		poke {usedef:start_map}+1000+{var:aktor_posx}(0)+{var:aktor_posy}(0)*60,t
 		return
 	{:raumaktion_poke_mapspeicher_map1}
 		'npc raum 10 (0) c=50 lena 
-		'poke {var:start_map}+0 +{var:npc_posx}(0)+{var:npc_posy}(0)*60,50-{var:npc_flag}(0)*50
+		'poke {usedef:start_map}+0 +{var:npc_posx}(0)+{var:npc_posy}(0)*60,50-{var:npc_flag}(0)*50
 		return
 ''--------------------->
 '-> inventar/equipmnent
@@ -723,8 +692,8 @@ x=10:y=5:cr=3
 	gosub{:gosub_clear_top}
 	gosub {:gosub_clear_info_txt}
 	'-> sprite all off
-	poke {var:sprite_on_off},{%:00000000}
-	poke 1020,0 'hintergrundfarbe map
+	poke {usedef:sprite_on_off},{%:00000000}
+	poke {usedef:raster_bak},0
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}inventar: waehle dein item           ";
@@ -749,8 +718,8 @@ x=10:y=5:cr=3
 		gosub{:gosub_clear_top}
 		gosub {:gosub_clear_info_txt}
 		'-> all sprite off
-		poke {var:sprite_on_off},{%:00000000}
-		poke 1020,0 'hintergrundfarbe map
+		poke {usedef:sprite_on_off},{%:00000000}
+		poke {usedef:raster_bak},0
 		pj=0
 	{:equipment_ini}
 		gosub {:gosub_clear_top}
@@ -763,7 +732,7 @@ x=10:y=5:cr=3
 		va$=""
 		p=pj
 	{:player_joy}
-		cp={var:bildschirmspeicher}+2+(4-8*(p>1))*40:if p=1 or p=3 then cp=cp+20
+		cp={usedef:bildschirmspeicher}+2+(4-8*(p>1))*40:if p=1 or p=3 then cp=cp+20
 		poke cp,35 : 'print cursor
 		gosub{:gosub_joy}
 		poke cp,32 : 'print leerzeichen
@@ -836,8 +805,8 @@ x=10:y=5:cr=3
 	gosub{:gosub_clear_top}
 	gosub {:gosub_clear_info_txt}
 	'-> sprite all off
-	poke {var:sprite_on_off},{%:00000000}
-	poke 1020,0 'hintergrundfarbe map
+	poke {usedef:sprite_on_off},{%:00000000}
+	poke {usedef:raster_bak},0
 	gosub{:gosub_print_rahmen_mitte}
 	'                               123456789a123456789b123456789c12345678
 	print"{home}{down}{right}{white}shop                                 ";
@@ -854,11 +823,11 @@ x=10:y=5:cr=3
 	' -> nimm inventar
 	'--------------------->
 	'nimm item
-		{var:nimm_item}=peek({var:RAM2}+m)
+		{var:nimm_item}=peek({usedef:RAM2}+m)
 		gosub{:gosub_inventar_add_item}
 
 	'loesche inventar
-		poke {var:RAM2}+m,0
+		poke {usedef:RAM2}+m,0
 
 	'goto shop menu
 		goto{:shop_menu}
@@ -954,7 +923,7 @@ x=10:y=5:cr=3
 	'--------------------->
 
 	{:inventar_menu_auswertung}
-		cp={var:bildschirmspeicher}+mx+my*40
+		cp={usedef:bildschirmspeicher}+mx+my*40
 	{:inventar_menu_joyauswertung}
 		'print cursor
 			poke cp+(m-mo)*40,35
@@ -1035,7 +1004,7 @@ x=10:y=5:cr=3
 		a=0
 	'copy inventar -> RAM1 : del inventar
 		for i=0 to 99
-		poke {var:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
+		poke {usedef:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
 		next i
 	'gosub mt
 		if mt=0  then gosub {:search_zurueck} : gosub {:search_waffe}    : a=50 : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
@@ -1050,27 +1019,27 @@ x=10:y=5:cr=3
 	'gosub copy RAM1 -> inventar
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 	{:search_zurueck}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=9 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({usedef:RAM1}+i))=9 then {var:inventar}(a)=peek({usedef:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_waffe}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=0 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({usedef:RAM1}+i))=0 then {var:inventar}(a)=peek({usedef:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_ruestung}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=1 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({usedef:RAM1}+i))=1 then {var:inventar}(a)=peek({usedef:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_essbar}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=2 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({usedef:RAM1}+i))=2 then {var:inventar}(a)=peek({usedef:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_magie}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=3 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({usedef:RAM1}+i))=3 then {var:inventar}(a)=peek({usedef:RAM1}+i) : a=a+1
 		next i
 		return
 	{:search_relikt}
-		for i=0 to 99 : if {var:item_cat}(peek({var:RAM1}+i))=4 then {var:inventar}(a)=peek({var:RAM1}+i) : a=a+1
+		for i=0 to 99 : if {var:item_cat}(peek({usedef:RAM1}+i))=4 then {var:inventar}(a)=peek({usedef:RAM1}+i) : a=a+1
 		next i
 		return
 {:gosub_inventar_add_item}
@@ -1109,16 +1078,15 @@ x=10:y=5:cr=3
 
 		'print item
 
-			'print {var:item_name}(peek({var:RAM2}+mi));
 
-			if {var:item_cat}(peek({var:RAM2}+mi))=9  then print {var:item_name}(peek({var:RAM2}+mi));
-			if {var:item_cat}(peek({var:RAM2}+mi))=-1 then print {var:item_name}(peek({var:RAM2}+mi));
-			if {var:item_name}(peek({var:RAM2}+mi)) ="apfel   " and {var:item_cat}(peek({var:RAM2}+mi))=2 then print {var:item_name}(peek({var:RAM2}+mi)); "  essbar    hp ";{var:item_mana}(peek({var:RAM2}+mi))
-			if {var:item_name}(peek({var:RAM2}+mi)) ="pilz    " and {var:item_cat}(peek({var:RAM2}+mi))=2 then print {var:item_name}(peek({var:RAM2}+mi)); "  essbar    mp ";{var:item_mana}(peek({var:RAM2}+mi))
-			if {var:item_cat}(peek({var:RAM2}+mi))=0 then print {var:item_name}(peek({var:RAM2}+mi)); "  waffe     atk";{var:item_atk}(peek({var:RAM2}+mi));
-			if {var:item_cat}(peek({var:RAM2}+mi))=1 then print {var:item_name}(peek({var:RAM2}+mi)); "  ruestung  def";{var:item_def}(peek({var:RAM2}+mi));
-			if {var:item_cat}(peek({var:RAM2}+mi))=3 then print {var:item_name}(peek({var:RAM2}+mi)); "  magie     mp ";{var:item_mana}(peek({var:RAM2}+mi));
-			if {var:item_cat}(peek({var:RAM2}+mi))=4 then print {var:item_name}(peek({var:RAM2}+mi)); "  relikt    rel";{var:item_mana}(peek({var:RAM2}+mi));
+			if {var:item_cat}(peek({usedef:RAM2}+mi))=9  then print {var:item_name}(peek({usedef:RAM2}+mi));
+			if {var:item_cat}(peek({usedef:RAM2}+mi))=-1 then print {var:item_name}(peek({usedef:RAM2}+mi));
+			if {var:item_name}(peek({usedef:RAM2}+mi)) ="apfel   " and {var:item_cat}(peek({usedef:RAM2}+mi))=2 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  essbar    hp ";{var:item_mana}(peek({usedef:RAM2}+mi))
+			if {var:item_name}(peek({usedef:RAM2}+mi)) ="pilz    " and {var:item_cat}(peek({usedef:RAM2}+mi))=2 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  essbar    mp ";{var:item_mana}(peek({usedef:RAM2}+mi))
+			if {var:item_cat}(peek({usedef:RAM2}+mi))=0 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  waffe     atk";{var:item_atk}(peek({usedef:RAM2}+mi));
+			if {var:item_cat}(peek({usedef:RAM2}+mi))=1 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  ruestung  def";{var:item_def}(peek({usedef:RAM2}+mi));
+			if {var:item_cat}(peek({usedef:RAM2}+mi))=3 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  magie     mp ";{var:item_mana}(peek({usedef:RAM2}+mi));
+			if {var:item_cat}(peek({usedef:RAM2}+mi))=4 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  relikt    rel";{var:item_mana}(peek({usedef:RAM2}+mi));
 
 		'mm=menu zaehler
 			mm%=mm%+1
@@ -1136,7 +1104,7 @@ x=10:y=5:cr=3
 	'--------------------->
 
 	{:shop_menu_auswertung}
-		cp={var:bildschirmspeicher}+mx+my*40
+		cp={usedef:bildschirmspeicher}+mx+my*40
 	{:shop_menu_joyauswertung}
 		'print cursor
 			poke cp+(m-mo)*40,35
@@ -1212,14 +1180,14 @@ x=10:y=5:cr=3
 	'""""""""""""""""""""""""""""""""""""""""""
 
 {:battel}
-	'spritebank battle
-		{var:spritebank}={$:a0}
+	'var_spritebank battle
+		{var:var_spritebank}={$:a0}
 	'start
 		{var:joy_map_true}=0
 		gosub{:gosub_clear_top}
 		'-> player sprite off
-		poke {var:sprite_on_off},{%:00000000}
-		poke 1020,6
+		poke {usedef:sprite_on_off},{%:00000000}
+		poke {usedef:raster_bak},6
 		gosub{:gosub_clear_map}
 	'set fight(xx)
 		gosub{:gosub_battel_set_fight(xx)_player}
@@ -1278,11 +1246,11 @@ x=10:y=5:cr=3
 	'print player tile aktiv
 		gosub{:gosub_battel_print_current_player_tile}
 {:battelmenu_print_cusor}
-	poke {var:bildschirmspeicher}+mx+(my*40)+(m*40),35
+	poke {usedef:bildschirmspeicher}+mx+(my*40)+(m*40),35
 {:battelmenu_joyauswertung}
 	gosub{:gosub_joy}
-	if a$="s"then poke {var:bildschirmspeicher}+mx+(my*40)+(m*40),32:m=m+1:goto {:battelmenu_joyauswertung_min_max}
-	if a$="w"then poke {var:bildschirmspeicher}+mx+(my*40)+(m*40),32:m=m-1:goto {:battelmenu_joyauswertung_min_max}
+	if a$="s"then poke {usedef:bildschirmspeicher}+mx+(my*40)+(m*40),32:m=m+1:goto {:battelmenu_joyauswertung_min_max}
+	if a$="w"then poke {usedef:bildschirmspeicher}+mx+(my*40)+(m*40),32:m=m-1:goto {:battelmenu_joyauswertung_min_max}
 	if a$=chr$(13)then goto {:battelmenu_on_goto}
 	goto {:battelmenu_joyauswertung}
 {:battelmenu_joyauswertung_min_max}
@@ -1359,23 +1327,23 @@ x=10:y=5:cr=3
 		{var:fight_active}(ce)=-1
 {:battel_print_attack_damage}
 	'sprite position ini
-		poke {var:sprite0_x},({var:fight_posx}(ce)*8+22)and 255        'sprite 0 posx
-		poke {var:sprite0_y},{var:fight_posy}(ce)*8+48                 'sprite 0 posy
-		poke {var:sprite_x_highbit},-({var:fight_posx}(ce)>30)         'x highbit %00000000 sprite posx
-		poke {var:sprite_register},{var:spritebank}                    'datenzeiger sprite 0
-		poke {var:sprite_hirescolor},1                                 'sprite color white
-		poke {var:sprite_multi_on_off},{%:00000000}                    'sprite multicolor aus
-		poke {var:sprite_on_off},{%:00000001}                          'sprite 0 on
+		poke {usedef:sprite0_x},({var:fight_posx}(ce)*8+22)and 255        'sprite 0 posx
+		poke {usedef:sprite0_y},{var:fight_posy}(ce)*8+48                 'sprite 0 posy
+		poke {usedef:sprite_x_highbit},-({var:fight_posx}(ce)>30)         'x highbit %00000000 sprite posx
+		poke {usedef:sprite_register},{var:var_spritebank}                'datenzeiger sprite 0
+		poke {usedef:sprite_hirescolor},1                                 'sprite color white
+		poke {usedef:sprite_multi_on_off},{%:00000000}                    'sprite multicolor aus
+		poke {usedef:sprite_on_off},{%:00000001}                          'sprite 0 on
 	'print damage string
 		gosub{:gosub_validate_damage}
 		print"{home}"left$(cd$,{var:fight_posy}(ce))spc({var:fight_posx}(ce))"{up}{white}";ap$
 	'animation sprite
 		for i=0 to 5
 			gosub{:gosub_delay_sprite}
-			poke {var:sprite0_x},peek({var:sprite0_x})+2
-			poke {var:sprite0_y},peek({var:sprite0_y})+2
+			poke {usedef:sprite0_x},peek({usedef:sprite0_x})+2
+			poke {usedef:sprite0_y},peek({usedef:sprite0_y})+2
 		next i
-		poke {var:sprite_on_off},{%:00000000}
+		poke {usedef:sprite_on_off},{%:00000000}
 	'print player hp
 		if ce<4 then gosub{:gosub_print_player_hp}
 	'print monster hp
@@ -1411,15 +1379,15 @@ x=10:y=5:cr=3
 	goto{:battel_print_magic_damage}
 {:battel_print_magic_damage}
 	'sprite position ini
-		if m=4 then b={var:spritebank}+1 : poke {var:sprite_multicolor_1},2  : poke {var:sprite_multicolor_2},7  : poke {var:sprite_hirescolor},1 :poke {var:sprite_multi_on_off},{%:00000001} 'm=4 feuer
-		if m=5 then b={var:spritebank}+5 : poke {var:sprite_multicolor_1},14 : poke {var:sprite_multicolor_2},3  : poke {var:sprite_hirescolor},1 :poke {var:sprite_multi_on_off},{%:00000001} 'm=5 polar
-		if m=6 then b={var:spritebank}+3 : poke {var:sprite_multicolor_1},11 : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor},1 :poke {var:sprite_multi_on_off},{%:00000001} 'm=6 groll
-		if m=7 then b={var:spritebank}+7 : poke {var:sprite_multicolor_1},2  : poke {var:sprite_multicolor_2},7  : poke {var:sprite_hirescolor},0 :poke {var:sprite_multi_on_off},{%:00000001} 'm=7 bombe
-		poke {var:sprite0_x},({var:fight_posx}(ce)*8+24)and 255           'sprite 0 posx
-		poke {var:sprite0_y},{var:fight_posy}(ce)*8+50                    'sprite 0 posy
-		poke {var:sprite_x_highbit},-({var:fight_posx}(ce)>30)            'x highbit %00000000 sprite posx
-		poke {var:sprite_register},b                                      'datenzeiger sprite auf b 16=1. sprite,17=2. sprite,....
-		poke {var:sprite_on_off},{%:00000001}                             'sprite 0 on
+		if m=4 then b={var:var_spritebank}+1 : poke {usedef:sprite_multicolor_1},2  : poke {usedef:sprite_multicolor_2},7  : poke {usedef:sprite_hirescolor},1 :poke {usedef:sprite_multi_on_off},{%:00000001} 'm=4 feuer
+		if m=5 then b={var:var_spritebank}+5 : poke {usedef:sprite_multicolor_1},14 : poke {usedef:sprite_multicolor_2},3  : poke {usedef:sprite_hirescolor},1 :poke {usedef:sprite_multi_on_off},{%:00000001} 'm=5 polar
+		if m=6 then b={var:var_spritebank}+3 : poke {usedef:sprite_multicolor_1},11 : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor},1 :poke {usedef:sprite_multi_on_off},{%:00000001} 'm=6 groll
+		if m=7 then b={var:var_spritebank}+7 : poke {usedef:sprite_multicolor_1},2  : poke {usedef:sprite_multicolor_2},7  : poke {usedef:sprite_hirescolor},0 :poke {usedef:sprite_multi_on_off},{%:00000001} 'm=7 bombe
+		poke {usedef:sprite0_x},({var:fight_posx}(ce)*8+24)and 255           'sprite 0 posx
+		poke {usedef:sprite0_y},{var:fight_posy}(ce)*8+50                    'sprite 0 posy
+		poke {usedef:sprite_x_highbit},-({var:fight_posx}(ce)>30)            'x highbit %00000000 sprite posx
+		poke {usedef:sprite_register},b                                      'datenzeiger sprite auf b 16=1. sprite,17=2. sprite,....
+		poke {usedef:sprite_on_off},{%:00000001}                             'sprite 0 on
 
 	'delete tile
 		gosub{:gosub_battel_delete_current_enemy_tile}
@@ -1430,7 +1398,7 @@ x=10:y=5:cr=3
 	'animation sprite
 		for k=0 to 3
 			for i=0 to 1
-			poke {var:sprite_register},b+i
+			poke {usedef:sprite_register},b+i
 			gosub{:gosub_delay_sprite_animation}
 			next i
 		next k
@@ -1440,7 +1408,7 @@ x=10:y=5:cr=3
 		gosub{:gosub_battel_print_monster_hp}
 	'delete damage string
 		print"{home}"left$(cd$,{var:fight_posy}(ce))spc({var:fight_posx}(ce))"{up}{left}    "
-		poke {var:sprite_on_off},{%:00000000}
+		poke {usedef:sprite_on_off},{%:00000000}
 	'print tile
 		gosub{:gosub_battel_move_current_tile_oldpos}
 	'delete fight tile death
@@ -1463,14 +1431,14 @@ x=10:y=5:cr=3
 	ifce<4then{var:player_hp}(ce)={var:fight_hp}(ce):gosub{:gosub_print_player_hp}
 
 	'sprite position ini
-		if m=9 then b={var:spritebank}+9 : poke {var:sprite_multicolor_1},5  : poke {var:sprite_multicolor_2},12  : poke {var:sprite_hirescolor},3:poke {var:sprite_multi_on_off},{%:00000001}
-		poke {var:sprite0_x},({var:fight_posx}(ce)*8+24)and 255                          'sprite 0 posx
-		if c=ce and c < 4 then poke {var:sprite0_x},({var:fight_posx}(ce)*8+24-8)and 255 'sprite 0 posx player 
-		if c=ce and c > 3 then poke {var:sprite0_x},({var:fight_posx}(ce)*8+24+8)and 255 'sprite 0 posx monster
-		poke {var:sprite0_y},{var:fight_posy}(ce)*8+50                                   'sprite 0 posy
-		poke {var:sprite_x_highbit},-({var:fight_posx}(ce)>30)                           'x highbit %00000000 sprite posx
-		poke {var:sprite_register},b                                                     'datenzeiger sprite auf b 16=1. sprite,17=2. sprite,....
-		poke {var:sprite_on_off},{%:00000001}                                            'sprite 0 on
+		if m=9 then b={var:var_spritebank}+9 : poke {usedef:sprite_multicolor_1},5  : poke {usedef:sprite_multicolor_2},12  : poke {usedef:sprite_hirescolor},3:poke {usedef:sprite_multi_on_off},{%:00000001}
+		poke {usedef:sprite0_x},({var:fight_posx}(ce)*8+24)and 255                          'sprite 0 posx
+		if c=ce and c < 4 then poke {usedef:sprite0_x},({var:fight_posx}(ce)*8+24-8)and 255 'sprite 0 posx player 
+		if c=ce and c > 3 then poke {usedef:sprite0_x},({var:fight_posx}(ce)*8+24+8)and 255 'sprite 0 posx monster
+		poke {usedef:sprite0_y},{var:fight_posy}(ce)*8+50                                   'sprite 0 posy
+		poke {usedef:sprite_x_highbit},-({var:fight_posx}(ce)>30)                           'x highbit %00000000 sprite posx
+		poke {usedef:sprite_register},b                                                     'datenzeiger sprite auf b 16=1. sprite,17=2. sprite,....
+		poke {usedef:sprite_on_off},{%:00000001}                                            'sprite 0 on
 
 	'delete tile
 		gosub{:gosub_battel_delete_current_enemy_tile}
@@ -1484,7 +1452,7 @@ x=10:y=5:cr=3
 	'animation sprite
 		for k=0 to 3
 			for i=0 to 1
-			poke {var:sprite_register},b+i
+			poke {usedef:sprite_register},b+i
 			gosub{:gosub_delay_sprite_animation}
 			next i
 		next k
@@ -1495,7 +1463,7 @@ x=10:y=5:cr=3
 		gosub{:gosub_battel_print_monster_hp}
 	'delete heilen string
 		print"{home}"left$(cd$,{var:fight_posy}(ce))spc({var:fight_posx}(ce))"{up}{left}{left}     "
-		poke {var:sprite_on_off},{%:00000000}
+		poke {usedef:sprite_on_off},{%:00000000}
 	'print tile
 		gosub{:gosub_battel_move_current_tile_oldpos}
 
@@ -1507,12 +1475,12 @@ x=10:y=5:cr=3
 	{var:fight_level}(ce)={var:fight_level}(ce)/2: if {var:fight_level}(ce) <5 then {var:fight_level}(ce)=5
 
 	'sprite position ini
-		if m=12 then b={var:spritebank}+9 : poke {var:sprite_multicolor_1},0  : poke {var:sprite_multicolor_2},12 : poke {var:sprite_hirescolor},3:poke {var:sprite_multi_on_off},{%:00000001}
-		poke {var:sprite0_x},({var:fight_posx}(ce)*8+24)and 255           'sprite 0 posx
-		poke {var:sprite0_y},{var:fight_posy}(ce)*8+50                    'sprite 0 posy
-		poke {var:sprite_x_highbit},-({var:fight_posx}(ce)>30)            'x highbit %00000000 sprite posx
-		poke {var:sprite_register},b                                      'datenzeiger sprite auf b 16=1. sprite,17=2. sprite,....
-		poke {var:sprite_on_off},{%:00000001}                             'sprite 0 on
+		if m=12 then b={var:var_spritebank}+9 : poke {usedef:sprite_multicolor_1},0  : poke {usedef:sprite_multicolor_2},12 : poke {usedef:sprite_hirescolor},3:poke {usedef:sprite_multi_on_off},{%:00000001}
+		poke {usedef:sprite0_x},({var:fight_posx}(ce)*8+24)and 255           'sprite 0 posx
+		poke {usedef:sprite0_y},{var:fight_posy}(ce)*8+50                    'sprite 0 posy
+		poke {usedef:sprite_x_highbit},-({var:fight_posx}(ce)>30)            'x highbit %00000000 sprite posx
+		poke {usedef:sprite_register},b                                      'datenzeiger sprite auf b 16=1. sprite,17=2. sprite,....
+		poke {usedef:sprite_on_off},{%:00000001}                             'sprite 0 on
 
 	'delete tile
 		gosub{:gosub_battel_delete_current_enemy_tile}
@@ -1522,7 +1490,7 @@ x=10:y=5:cr=3
 	'animation sprite
 		for k=0 to 3
 			for i=0 to 1
-			poke {var:sprite_register},b+i
+			poke {usedef:sprite_register},b+i
 			gosub{:gosub_delay_sprite_animation}
 			next i
 		next k
@@ -1532,7 +1500,7 @@ x=10:y=5:cr=3
 		if ce < 3 then gosub{:gosub_battel_print_monster_hp}
 	'delete blind string
 		print"{home}"left$(cd$,{var:fight_posy}(ce))spc({var:fight_posx}(ce))"{up}{left}    "
-		poke {var:sprite_on_off},{%:00000000}
+		poke {usedef:sprite_on_off},{%:00000000}
 	'print tile
 		gosub{:gosub_battel_move_current_tile_oldpos}
 
@@ -1573,23 +1541,23 @@ x=10:y=5:cr=3
 	{:choose_target_poke_cursor}
 		'bildschirmspeicher 49152 -1 (pro zeile 40 zeichen 0-39)
 		'cursor links von target
-		poke {var:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,35
+		poke {usedef:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,35
 
 	{:choose_target_joyauswertung}
 		'joyauswertung
 			gosub{:gosub_joy}
 		'auswahl
-			if a$=chr$(13)     then poke {var:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32 :             return                     'print leerzeichen : fire
-			if a$="s"          then                                                                                               goto{:choose_target_plus}  '                  : target +
-			if a$="w"          then                                                                                               goto{:choose_target_minus} '                  : target -
-			if a$="d" and ce>3 then      poke {var:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32 : ce=0 : goto{:choose_target_start} 'print leerzeichen : target player
-			if a$="a" and ce<4 then      poke {var:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32 : ce=4 : goto{:choose_target_start} 'print leerzeichen : tagret monster
+			if a$=chr$(13)     then poke {usedef:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32 :        return                     'print leerzeichen : fire
+			if a$="s"          then                                                                                             goto{:choose_target_plus}  '                  : target +
+			if a$="w"          then                                                                                             goto{:choose_target_minus} '                  : target -
+			if a$="d" and ce>3 then poke {usedef:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32 : ce=0 : goto{:choose_target_start} 'print leerzeichen : target player
+			if a$="a" and ce<4 then poke {usedef:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32 : ce=4 : goto{:choose_target_start} 'print leerzeichen : tagret monster
 		goto{:choose_target_joyauswertung}
 
 	{:choose_target_plus}
 		co=ce
 		'loesche cusor
-			poke {var:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32
+			poke {usedef:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32
 		{:choose_target_ce+1}
 			ce=ce+1
 			if ce>= 12       then ce=0  'ce=max
@@ -1601,7 +1569,7 @@ x=10:y=5:cr=3
 	{:choose_target_minus}
 		co=ce
 		'loesche cursor
-			poke {var:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32
+			poke {usedef:bildschirmspeicher}-2+{var:fight_posx}(ce)+{var:fight_posy}(ce)*40,32
 		{:choose_target_ce-1}
 			ce=ce-1
 			if ce<0 then          ce=11 'ce=min
@@ -1749,7 +1717,7 @@ x=10:y=5:cr=3
 	return
 
 {:goto_battel_gewonnen}
-	poke 1020,0 'hintergrundfarbe map
+	poke {usedef:raster_bak},0
 	'print rahmen ohne hp monster
 	printdd$;"{brown}{up}{$c1}{$c2:10}{$c3}{$c1}{$c2:12}{$c3}{$c1}{$c2:5}{white}hp{brown}{$c2:2}{white}mp{brown}{$c2}{$c3}{white}";
 	'                        123456789a123456789b123456789c12345678
@@ -1891,7 +1859,7 @@ x=10:y=5:cr=3
 	if cr=7 or cr=17 then {var:offset_map}=960+20
 	if cr=8 or cr=18 then {var:offset_map}=960+40
 
-	sp={var:start_map}+{var:offset_map}
+	sp={usedef:start_map}+{var:offset_map}
 	
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'print map
@@ -1913,69 +1881,69 @@ x=10:y=5:cr=3
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:gosub_sprite_player}          'sprite 0 multi
 	'sprite
-		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor},2
-		poke {var:sprite_multi_on_off},{%:00010111}       'set colormod sprite 0-7
-		poke {var:sprite0_x},((x*2)*8+24) and 255         'sprite 0 posx (24=sichtbar)
-		poke {var:sprite0_y},(y*2)*8+50+24                'sprite 0 posy (50=sichtbar +24=map ist drei zeilen weiter unten)
-		poke {var:sprite_x_highbit},-((x*2)>29)           'x highbit %00000011 sprite posx
-		poke {var:sprite_register},{var:spritebank}+0     'datenzeiger sprite 0 auf 0
+		poke {usedef:sprite_multicolor_1},8  : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor},2
+		poke {usedef:sprite_multi_on_off},{%:00010111}           'set colormod sprite 0-7
+		poke {usedef:sprite0_x},((x*2)*8+24) and 255             'sprite 0 posx (24=sichtbar)
+		poke {usedef:sprite0_y},(y*2)*8+50+24                    'sprite 0 posy (50=sichtbar +24=map ist drei zeilen weiter unten)
+		poke {usedef:sprite_x_highbit},-((x*2)>29)               'x highbit %00000011 sprite posx
+		poke {usedef:sprite_register},{var:var_spritebank}+0     'datenzeiger sprite 0 auf 0
 		bi%={%:00000001}:gosub{:gosub_sprite_on}
 	return
 {:gosub_sprite_aurufezeichen}   'sprite 1 multi
 	'sprite
-		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+1,1
-		poke {var:sprite1_x},((x*2)*8+24) and 255        'sprite 1 posx
-		poke {var:sprite1_y},((y*2)*8+50+24)-16          'sprite 1 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_x_highbit},-((x*2)>29)          'x highbit %00000000 sprite posx
-		poke {var:sprite_register}+1,{var:spritebank}+1  'datenzeiger sprite 1 auf 1
+		poke {usedef:sprite_multicolor_1},8  : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor}+1,1
+		poke {usedef:sprite1_x},((x*2)*8+24) and 255            'sprite 1 posx
+		poke {usedef:sprite1_y},((y*2)*8+50+24)-16              'sprite 1 posy (+24=map ist drei zeilen weiter unten)
+		poke {usedef:sprite_x_highbit},-((x*2)>29)              'x highbit %00000000 sprite posx
+		poke {usedef:sprite_register}+1,{var:var_spritebank}+1  'datenzeiger sprite 1 auf 1
 		bi%={%:00000010}:gosub{:gosub_sprite_on}
 	return
 {:gosub_sprite_fragezeichen}    'sprite 1 multi
 	'sprite
-		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+1,1
-		poke {var:sprite1_x},((x*2)*8+24) and 255        'sprite 1 posx
-		poke {var:sprite1_y},((y*2)*8+50+24)-16          'sprite 1 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_x_highbit},-((x*2)>29)          'x highbit %00000000 sprite posx
-		poke {var:sprite_register}+1,{var:spritebank}+2 'datenzeiger sprite 1 auf 2
+		poke {usedef:sprite_multicolor_1},8  : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor}+1,1
+		poke {usedef:sprite1_x},((x*2)*8+24) and 255           'sprite 1 posx
+		poke {usedef:sprite1_y},((y*2)*8+50+24)-16             'sprite 1 posy (+24=map ist drei zeilen weiter unten)
+		poke {usedef:sprite_x_highbit},-((x*2)>29)             'x highbit %00000000 sprite posx
+		poke {usedef:sprite_register}+1,{var:var_spritebank}+2 'datenzeiger sprite 1 auf 2
 		bi%={%:00000010}:gosub{:gosub_sprite_on}
 	return
 {:gosub_sprite_apfel}           'sprite 2 multi
 	'sprite
-		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+2,2
-		poke {var:sprite2_x},((xe%*2)*8+24) and 255      'sprite 2 posx
-		poke {var:sprite2_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_register}+2,{var:spritebank}+3 'datenzeiger sprite 2 auf 3
+		poke {usedef:sprite_multicolor_1},8  : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor}+2,2
+		poke {usedef:sprite2_x},((xe%*2)*8+24) and 255         'sprite 2 posx
+		poke {usedef:sprite2_y},((ye%*2)*8+50+24)              'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {usedef:sprite_register}+2,{var:var_spritebank}+3 'datenzeiger sprite 2 auf 3
 		bi%={%:00000100}:gosub{:gosub_sprite_on}
 	return
 {:gosub_sprite_pilz}            'sprite 2 multi
 	'sprite
-		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+2,2
-		poke {var:sprite2_x},((xe%*2)*8+24) and 255      'sprite 2 posx
-		poke {var:sprite2_y},((ye%*2)*8+50+24)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_register}+2,{var:spritebank}+4 'datenzeiger sprite 2 auf 4
+		poke {usedef:sprite_multicolor_1},8  : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor}+2,2
+		poke {usedef:sprite2_x},((xe%*2)*8+24) and 255         'sprite 2 posx
+		poke {usedef:sprite2_y},((ye%*2)*8+50+24)              'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {usedef:sprite_register}+2,{var:var_spritebank}+4 'datenzeiger sprite 2 auf 4
 		bi%={%:00000100}:gosub{:gosub_sprite_on}
 	return
 {:gosub_sprite_unicorn_overlay} 'sprite 3 hires
 	'sprite
-		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+3,0
-		poke {var:sprite3_x},((xe%*2)*8+24-3) and 255      'sprite 2 posx
-		poke {var:sprite3_y},((ye%*2)*8+50+24-5)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_register}+3,{var:spritebank}+9  'datenzeiger sprite 3 auf 8
+		poke {usedef:sprite_multicolor_1},8  : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor}+3,0
+		poke {usedef:sprite3_x},((xe%*2)*8+24-3) and 255        'sprite 2 posx
+		poke {usedef:sprite3_y},((ye%*2)*8+50+24-5)             'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {usedef:sprite_register}+3,{var:var_spritebank}+9  'datenzeiger sprite 3 auf 8
 	return
 {:gosub_sprite_unicorn}         'sprite 4 multi
 	'sprite
-		poke {var:sprite_multicolor_1},8  : poke {var:sprite_multicolor_2},0  : poke {var:sprite_hirescolor}+4,1
-		poke {var:sprite4_x},((xe%*2)*8+24-3) and 255      'sprite 2 posx
-		poke {var:sprite4_y},((ye%*2)*8+50+24-5)           'sprite 2 posy (+24=map ist drei zeilen weiter unten)
-		poke {var:sprite_register}+4,{var:spritebank}+8  'datenzeiger sprite 4 auf 9
+		poke {usedef:sprite_multicolor_1},8  : poke {usedef:sprite_multicolor_2},0  : poke {usedef:sprite_hirescolor}+4,1
+		poke {usedef:sprite4_x},((xe%*2)*8+24-3) and 255        'sprite 2 posx
+		poke {usedef:sprite4_y},((ye%*2)*8+50+24-5)             'sprite 2 posy (+24=map ist drei zeilen weiter unten)
+		poke {usedef:sprite_register}+4,{var:var_spritebank}+8  'datenzeiger sprite 4 auf 9
 		bi%={%:00011000}:gosub{:gosub_sprite_on}
 	return
 {:gosub_sprite_on}
-	poke {var:sprite_on_off},peek({var:sprite_on_off}) or bi%
+	poke {usedef:sprite_on_off},peek({usedef:sprite_on_off}) or bi%
 	'-> player sprite off direkt poke {%:00000000}
 	return
 {:gosub_sprite_off}
-	poke {var:sprite_on_off},peek({var:sprite_on_off}) and {%:11111111}-bi%
+	poke {usedef:sprite_on_off},peek({usedef:sprite_on_off}) and {%:11111111}-bi%
 	'-> player sprite off direkt poke {%:00000000}
 	return
 
@@ -2091,11 +2059,11 @@ x=10:y=5:cr=3
 	'bildschirmspeicher (pro zeile 40 zeichen 0-39)
 	py=(sy*40)
 	px=sx
-	poke {var:bildschirmspeicher}+py+px,35 : 'print cursor
+	poke {usedef:bildschirmspeicher}+py+px,35 : 'print cursor
 	{:joy_choose}
 		{var:joy_map_true}=0:gosub{:gosub_joy}
-		if a$="a" then ch=1 : poke {var:bildschirmspeicher}+py+px+ss,32 :poke {var:bildschirmspeicher}+py+px,35
-		if a$="d" then ch=0 : poke {var:bildschirmspeicher}+py+px,32    :poke {var:bildschirmspeicher}+py+px+ss,35
+		if a$="a" then ch=1 : poke {usedef:bildschirmspeicher}+py+px+ss,32 :poke {usedef:bildschirmspeicher}+py+px,35
+		if a$="d" then ch=0 : poke {usedef:bildschirmspeicher}+py+px,32    :poke {usedef:bildschirmspeicher}+py+px+ss,35
 		if a$=chr$(13) and ch=1 then return
 		if a$=chr$(13) and ch=0 then return
 	goto{:joy_choose}
@@ -2103,8 +2071,8 @@ x=10:y=5:cr=3
 'load
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:gosub_load_map}
-	poke {var:sprite_on_off},{%:00000000}
-	poke 1020,6
+	poke {usedef:sprite_on_off},{%:00000000}
+	poke {usedef:raster_bak},6
 	gosub{:gosub_clear_top}
 	gosub{:gosub_clear_map}
 	print"{home}{down:10}{right:16}{white}loading..."
