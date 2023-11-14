@@ -1,108 +1,114 @@
-'*****************************
-'c64list v4.04
-'*****************************
+'"""""""""""""""""""""""""""""""""""""""""""""""""
+' __  __              __ ___
+'/   /__  |__| |   | (_   | 
+'\__ \__)    | |__ | __)  | 
 '
-'$FFFF           """""""""""""""""""""""""""""""""
-'                " ------------- " ||||||||||||| "
-'$EC00 = SPRITES " ------------- " || KERNAL ||| " -> MAIN
-'$E800 = SPRITES " ------------- " ||||||||||||| " -> BATTEL
-'$E000 = CHAR    """""""""""""""""""""""""""""""""""""""""""""""""
-'                "               "               " +++++++++++++ "
-'                "               "     CHAR      " ++++ I/O ++++ "
-'                "               "               " +++++++++++++ "
-'$D000 = VIC     """""""""""""""""""""""""""""""""""""""""""""""""
-'                " +++++++++++++ " 
-'$CA00 = FREE    " +++++++++++++ "  -> BIS $D000 = $0600 FREE
-'$C400 = MAP     " +++++++++++++ "  -> BIS $C9A0
-'$C000 = SCREEN  """""""""""""""""""""""""""""""""
-'                " ------------- " ||||||||||||| "
-'                " ------------- " || BASIC- ||| "
-'                " ------------- " ||  ROM   ||| "
-'                " ------------- " ||||||||||||| "
-'$A000           """""""""""""""""""""""""""""""""
-'                " +++++++++++++ "
-'                " +++++++++++++ "
-'$0800 = BASIC   " +++++++++++++ "
-'$04c8 = RAM3    " +++++++++++++ " RAM 1224 (0-99)
-'$0464 = RAM2    " +++++++++++++ " RAM 1124 (0-99) SHOP
-'$0400 = RAM1    " +++++++++++++ " RAM 1024 (0-99) TEMP
-'$0000 = ZERO    """""""""""""""""
+'"""""""""""""""""""""""""""""""""""""""""""""""""
+'C64List speicher
+	'
+	'$FFFF           """""""""""""""""""""""""""""""""
+	'                " ------------- " ||||||||||||| "
+	'$EC00 = SPRITES " ------------- " || KERNAL ||| " -> MAIN
+	'$E800 = SPRITES " ------------- " ||||||||||||| " -> BATTEL
+	'$E000 = CHAR    """""""""""""""""""""""""""""""""""""""""""""""""
+	'                "               "               " +++++++++++++ "
+	'                "               "     CHAR      " ++++ I/O ++++ "
+	'                "               "               " +++++++++++++ "
+	'$D000 = VIC     """""""""""""""""""""""""""""""""""""""""""""""""
+	'                " +++++++++++++ " 
+	'$CA00 = FREE    " +++++++++++++ "  -> BIS $D000 = $0600 FREE
+	'$C400 = MAP     " +++++++++++++ "  -> BIS $C9A0
+	'$C000 = SCREEN  """""""""""""""""""""""""""""""""
+	'                " ------------- " ||||||||||||| "
+	'                " ------------- " || BASIC- ||| "
+	'                " ------------- " ||  ROM   ||| "
+	'                " ------------- " ||||||||||||| "
+	'$A000           """""""""""""""""""""""""""""""""
+	'                " +++++++++++++ "
+	'                " +++++++++++++ "
+	'$0800 = BASIC   " +++++++++++++ "
+	'$04c8 = RAM3    " +++++++++++++ " RAM 1224 (0-99)
+	'$0464 = RAM2    " +++++++++++++ " RAM 1124 (0-99)
+	'$0400 = RAM1    " +++++++++++++ " RAM 1024 (0-99) TEMP
+	'$0000 = ZERO    """""""""""""""""
+	'
+	'<|||> = wird z.B. bei PEEK gelesen
+	'<---> = wird z.B. bei POKE geschrieben
+	'<+++> = lesend + schreibend
+	'<   > = von BASIC aus nicht erreichbar
 
-'<|||> = wird z.B. bei PEEK gelesen
-'<---> = wird z.B. bei POKE geschrieben
-'<+++> = lesend + schreibend
-'<   > = von BASIC aus nicht erreichbar
-'fre=5239
-'fre=5686
+	'NOTIZ->
+	'fre=5239 start mit variabeln
+	'fre=5686 neu mit def und usedef
+	'fre=6434 kill shop	
+	'https://www.asciiart.eu/text-to-ascii-art standart und straight
+	'
+'C64List def
+	{def:raster_sys=820}
+	{def:raster_top=1021}
+	{def:raster_bak=1020}
+	{def:rahmenfarbe=53280}          '=$d020
+	{def:bildschirmfarbe=53281}      '=$d021
+	{def:multifarbspeicher_1=53282}  '=$d022
+	{def:multifarbspeicher_2=53283}  '=$d023
+	{def:bildschirmspeicher=49152}   '=$c000
+	{def:video_interface_chip=53248} '=$d000
+	{def:start_map=50176}            '=$c400
+	{def:sprite0_x=53248}            '=$d000+0
+	{def:sprite0_y=53249}            '=$d000+1
+	{def:sprite1_x=53250}            '=$d000+2
+	{def:sprite1_y=53251}            '=$d000+3
+	{def:sprite2_x=53252}            '=$d000+4
+	{def:sprite2_y=53253}            '=$d000+5
+	{def:sprite3_x=53254}            '=$d000+6
+	{def:sprite3_y=53255}            '=$d000+7
+	{def:sprite4_x=53256}            '=$d000+8
+	{def:sprite4_y=53257}            '=$d000+9
+	{def:sprite5_x=53258}            '=$d000+10
+	{def:sprite5_y=53259}            '=$d000+11
+	{def:sprite6_x=53260}            '=$d000+12
+	{def:sprite6_y=53261}            '=$d000+13
+	{def:sprite7_x=53262}            '=$d000+14
+	{def:sprite7_y=53263}            '=$d000+15
+	{def:sprite_x_highbit=53264}     '=$d000+16 {%:00000000}
+	{def:sprite_on_off=53269}        '=$d000+21 {%:00000000}
+	{def:sprite_multi_on_off=53276}  '=$d000+28 {%:00000000}
+	{def:sprite_multicolor_1=53285}  '=$d000+37
+	{def:sprite_multicolor_2=53286}  '=$d000+38
+	{def:sprite_hirescolor=53287}    '=$d000+39
+	{def:sprite_register=50168}      '=$c3f8 ende bidschirmspeicher c3f8 sprite 0
 
+	{def:RAM1=1024}
+	{def:RAM2=1124}
+	{def:RAM3=1224}
 
-{def:raster_sys=820}
-{def:raster_top=1021}
-{def:raster_bak=1020}
-
-{def:rahmenfarbe=53280}          '=$d020
-{def:bildschirmfarbe=53281}      '=$d021
-{def:multifarbspeicher_1=53282}  '=$d022
-{def:multifarbspeicher_2=53283}  '=$d023
-{def:bildschirmspeicher=49152}   '=$c000
-{def:video_interface_chip=53248} '=$d000
-{def:start_map=50176}            '=$c400
-{def:sprite0_x=53248}            '=$d000+0
-{def:sprite0_y=53249}            '=$d000+1
-{def:sprite1_x=53250}            '=$d000+2
-{def:sprite1_y=53251}            '=$d000+3
-{def:sprite2_x=53252}            '=$d000+4
-{def:sprite2_y=53253}            '=$d000+5
-{def:sprite3_x=53254}            '=$d000+6
-{def:sprite3_y=53255}            '=$d000+7
-{def:sprite4_x=53256}            '=$d000+8
-{def:sprite4_y=53257}            '=$d000+9
-{def:sprite5_x=53258}            '=$d000+10
-{def:sprite5_y=53259}            '=$d000+11
-{def:sprite6_x=53260}            '=$d000+12
-{def:sprite6_y=53261}            '=$d000+13
-{def:sprite7_x=53262}            '=$d000+14
-{def:sprite7_y=53263}            '=$d000+15
-{def:sprite_x_highbit=53264}     '=$d000+16 {%:00000000}
-{def:sprite_on_off=53269}        '=$d000+21 {%:00000000}
-{def:sprite_multi_on_off=53276}  '=$d000+28 {%:00000000}
-{def:sprite_multicolor_1=53285}  '=$d000+37
-{def:sprite_multicolor_2=53286}  '=$d000+38
-{def:sprite_hirescolor=53287}    '=$d000+39
-{def:sprite_register=50168}      '=$c3f8 ende bidschirmspeicher c3f8 sprite 0
-
-{def:RAM1=1024}
-{def:RAM2=1124}
-{def:RAM3=1224}
-
-{def:farbe_sw=0}
-{def:farbe_ws=1}
-{def:farbe_rd=2}
-{def:farbe_tk=3}
-{def:farbe_vi=4}
-{def:farbe_gn=5}
-{def:farbe_bl=6}
-{def:farbe_ge=7}
-{def:farbe_or=8}
-{def:farbe_br=9}
-{def:farbe_lrd=10}
-{def:farbe_dgr=11}
-{def:farbe_mgr=12}
-{def:farbe_lgn=13}
-{def:farbe_lbl=14}
-{def:farbe_lgr=15}
-{def:farbe_multi_sw=8}
-{def:farbe_multi_ws=9}
-{def:farbe_multi_br=10}
-{def:farbe_multi_tk=11}
-{def:farbe_multi_vi=12}
-{def:farbe_multi_gn=13}
-{def:farbe_multi_bl=14}
-{def:farbe_multi_ge=15}
-
-
-{renumber}
-'super variabeln
+	{def:farbe_sw=0}
+	{def:farbe_ws=1}
+	{def:farbe_rd=2}
+	{def:farbe_tk=3}
+	{def:farbe_vi=4}
+	{def:farbe_gn=5}
+	{def:farbe_bl=6}
+	{def:farbe_ge=7}
+	{def:farbe_or=8}
+	{def:farbe_br=9}
+	{def:farbe_lrd=10}
+	{def:farbe_dgr=11}
+	{def:farbe_mgr=12}
+	{def:farbe_lgn=13}
+	{def:farbe_lbl=14}
+	{def:farbe_lgr=15}
+	{def:farbe_multi_sw=8}
+	{def:farbe_multi_ws=9}
+	{def:farbe_multi_br=10}
+	{def:farbe_multi_tk=11}
+	{def:farbe_multi_vi=12}
+	{def:farbe_multi_gn=13}
+	{def:farbe_multi_bl=14}
+	{def:farbe_multi_ge=15}
+'C64List commands
+	{renumber}
+'C64List super variabeln
 	'supervar_tile
 		{var:map_tile=t$}
 	'supervar_item
@@ -214,6 +220,13 @@
 		{var:event_true=aa%}
 	'supervar_joy
 		{var:joy_map_true=jm%}
+
+'"""""""""""""""""""""""""""""""""""""""""""""""""
+' __    __   __ ___     __           
+'|_  | |__) (_   |     |__) /  \ |\ |
+'|   | | \  __)  |     | \  \__/ | \| 
+'
+'"""""""""""""""""""""""""""""""""""""""""""""""""
 'load
 	if peek(2)=0  then poke 2,99 : load"asm.raster",8,1
 	if peek(2)=99 then poke 2,98 : load"charset",8,1
@@ -244,11 +257,9 @@
 		dim sb$(50),si$(5)
 'load game seq
 	{var:seq_select}="nibelheim" :gosub{:gosub_load_game_seq}
-'set variablen
-	'konstante Variabel string
-		dd$="{home}{down:20}{white}"
-		cd$="{down:25}"
-
+'set konstate string
+	dd$="{home}{down:20}{white}"
+	cd$="{down:25}"
 'set color / speicher
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
 	'var_spritebank $e000 (verstatz von $c000)
@@ -280,25 +291,6 @@
 	poke {usedef:raster_bak},6
 	poke {usedef:raster_top},6
 	sys  {usedef:raster_sys}
-'read shop
-
-	'zurueck / magie 7x
-		data 99,4,5,6,7,9,12
-	'waffe / rustung 6x
-		data 11,13,15,14,16,17
-	'relikt 12x
-		data 18,19,20,21,22,23,24,25,26,27,28,29
-
-	'clear RAM
-		for i=0 to 999
-		poke 1024+i,0
-		next i
-	
-	'RAM2 item 0-24
-		for i=0 to 24
-		read a
-		poke {usedef:RAM2}+i,a
-		next i
 'read data
 	'read monster
 		for i=0 to 13
@@ -329,53 +321,51 @@
 		{var:monster_tile}(i) = {var:map_tile}(j)
 		j=j+1
 		next i
-
-
-{var:inventar}(0)=99
-{var:player_activ}(0)=1
-
-'magic
-{var:inventar}(1) =4   'feuer
-{var:inventar}(2) =5   'polar
-{var:inventar}(3) =6   'groll
-{var:inventar}(4) =7   'bombe
-{var:inventar}(5) =12  'blind
-{var:inventar}(6) =9   'heilen
-
-'relikt
-{var:inventar}(7)=18   'level1
-{var:inventar}(8)=19   'level2
-{var:inventar}(9)=20   'level3
-{var:inventar}(10)=21  'attack1
-{var:inventar}(11)=22  'attack2
-{var:inventar}(12)=23  'attack3
-{var:inventar}(13)=24  'defence1
-{var:inventar}(14)=25  'defence2
-{var:inventar}(15)=26  'defence3
-{var:inventar}(16)=27  'speed1
-{var:inventar}(17)=28  'speed2
-{var:inventar}(18)=29  'speed3
-
-'waffen ruestung
-{var:inventar}(19)=14  'rock
-{var:inventar}(20)=16  'weste
-{var:inventar}(21)=17  'schild
-
-{var:inventar}(22)=11  'flegel
-{var:inventar}(23)=13  'speer
-{var:inventar}(24)=15  'schwert
-
-gosub {:gosub_raumaktion_variabeln}
-gosub {:gosub_raumaktion_poke_mapspeicher}
-
+'start condition
+	{var:inventar}(0)=99
+	{var:player_activ}(0)=1
+'start condition magic
+	{var:inventar}(1) =4   'feuer
+	{var:inventar}(2) =5   'polar
+	{var:inventar}(3) =6   'groll
+	{var:inventar}(4) =7   'bombe
+	{var:inventar}(5) =12  'blind
+	{var:inventar}(6) =9   'heilen
+'start conditionrelikt
+	{var:inventar}(7)=18   'level1
+	{var:inventar}(8)=19   'level2
+	{var:inventar}(9)=20   'level3
+	{var:inventar}(10)=21  'attack1
+	{var:inventar}(11)=22  'attack2
+	{var:inventar}(12)=23  'attack3
+	{var:inventar}(13)=24  'defence1
+	{var:inventar}(14)=25  'defence2
+	{var:inventar}(15)=26  'defence3
+	{var:inventar}(16)=27  'speed1
+	{var:inventar}(17)=28  'speed2
+	{var:inventar}(18)=29  'speed3
+'start condition waffen ruestung
+	{var:inventar}(19)=14  'rock
+	{var:inventar}(20)=16  'weste
+	{var:inventar}(21)=17  'schild
+	{var:inventar}(22)=11  'flegel
+	{var:inventar}(23)=13  'speer
+	{var:inventar}(24)=15  'schwert
+'gosub raumaktion
+	gosub {:gosub_raumaktion_variabeln}
+	gosub {:gosub_raumaktion_poke_mapspeicher}
 {:start}
-gosub{:gosub_print_rahmen_aussen} : poke {usedef:raster_bak},6 : {var:seq_select}="intro" : gosub {:gosub_load_screen_seq} : gosub {:gosub_print_txt_screen}
-for i=0 to 3: {var:player_hp}(i)={var:player_hp_max}(i) : {var:player_mp}(i)={var:player_mp_max}(i) : next
-
-x=10:y=5:cr=3
+	gosub{:gosub_print_rahmen_aussen} : poke {usedef:raster_bak},6 : {var:seq_select}="intro" : gosub {:gosub_load_screen_seq} : gosub {:gosub_print_txt_screen}
+	for i=0 to 3: {var:player_hp}(i)={var:player_hp_max}(i) : {var:player_mp}(i)={var:player_mp_max}(i) : next
+	x=10:y=5:cr=3
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
-'mainloop
+' __  __    _    ___ _   _ _     ___   ___  ____  
+'|  \/  |  / \  |_ _| \ | | |   / _ \ / _ \|  _ \ 
+'| |\/| | / _ \  | ||  \| | |  | | | | | | | |_) |
+'| |  | |/ ___ \ | || |\  | |__| |_| | |_| |  __/ 
+'|_|  |_/_/   \_\___|_| \_|_____\___/ \___/|_|    
+'
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:mainloop}
 	'var_spritebank mainloop
@@ -419,9 +409,6 @@ x=10:y=5:cr=3
 	if a$="s"  then zy=y+1:goto{:mainloop_if_newpos}
 	if a$="fu" then {var:joy_map_true}=0 : goto {:goto_inventar}
 	if a$="fd" then {var:joy_map_true}=0 : goto {:goto_equipment}
-	'->MOD SHOP
-	'if a$="q"  then {var:joy_map_true}=0 : goto {:goto_shop}
-
 
 	if a$=chr$(13) and ut$="gefunden" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_gefunden} :ut$="":goto{:mainloop_oldpos}
 	if a$=chr$(13) and ut$="schalter" then {var:joy_map_true}=0 :gosub{:gosub_raumaktion_schalter} :ut$="":goto{:mainloop_oldpos}
@@ -685,9 +672,15 @@ x=10:y=5:cr=3
 		'npc raum 10 (0) c=50 lena 
 		'poke {usedef:start_map}+0 +{var:npc_posx}(0)+{var:npc_posy}(0)*60,50-{var:npc_flag}(0)*50
 		return
-''--------------------->
-'-> inventar/equipmnent
-''--------------------->
+
+'"""""""""""""""""""""""""""""""""""""""""""""""""
+' ___ _____ _____ __  __ 
+'|_ _|_   _| ____|  \/  |
+' | |  | | |  _| | |\/| |
+' | |  | | | |___| |  | |
+'|___| |_| |_____|_|  |_|
+'
+'"""""""""""""""""""""""""""""""""""""""""""""""""
 {:goto_inventar}
 	gosub{:gosub_clear_top}
 	gosub {:gosub_clear_info_txt}
@@ -801,37 +794,6 @@ x=10:y=5:cr=3
 			if sl=1 then q={var:player_ruestung}(p):{var:player_ruestung}(p)={var:inventar}(m) :{var:inventar}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
 		'ausruesten sl=4 element
 			if sl=4 then q={var:player_relikt}(p):{var:player_relikt}(p)={var:inventar}(m) :{var:inventar}(m)=q :gosub {:gosub_clear_top}:goto{:equipment_ini}
-{:goto_shop}
-	gosub{:gosub_clear_top}
-	gosub {:gosub_clear_info_txt}
-	'-> sprite all off
-	poke {usedef:sprite_on_off},{%:00000000}
-	poke {usedef:raster_bak},0
-	gosub{:gosub_print_rahmen_mitte}
-	'                               123456789a123456789b123456789c12345678
-	print"{home}{down}{right}{white}shop                                 ";
-	mx=2:my=4:mc=14
-
-	{:shop_menu}
-	'--------------------->
-	' -> inventar menu
-	'--------------------->
-	gosub{:gosub_shop_menu}
-	if {var:inventar}(m)=99 then gosub{:gosub_clear_map}:goto{:mainloop_cleartop}
-
-	'--------------------->
-	' -> nimm inventar
-	'--------------------->
-	'nimm item
-		{var:nimm_item}=peek({usedef:RAM2}+m)
-		gosub{:gosub_inventar_add_item}
-
-	'loesche inventar
-		poke {usedef:RAM2}+m,0
-
-	'goto shop menu
-		goto{:shop_menu}
-
 '--------------------->
 '-> gosub item menu
 '--------------------->
@@ -1003,16 +965,14 @@ x=10:y=5:cr=3
 	'ini sort
 		a=0
 	'copy inventar -> RAM1 : del inventar
-		for i=0 to 99
-		poke {usedef:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0
-		next i
+		for i=0 to 99 : poke {usedef:RAM1}+i,{var:inventar}(i): {var:inventar}(i)=0 : next i
 	'gosub mt
 		if mt=0  then gosub {:search_zurueck} : gosub {:search_waffe}    : a=50 : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
 		if mt=1  then gosub {:search_zurueck} : gosub {:search_ruestung} : a=50 : gosub {:search_waffe} : gosub {:search_essbar} : gosub {:search_magie} : gosub {:search_relikt}
 		if mt=2  then gosub {:search_zurueck} : gosub {:search_essbar}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt}
 		if mt=3  then gosub {:search_zurueck} : gosub {:search_magie}    : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_relikt}
 		if mt=4  then gosub {:search_zurueck} : gosub {:search_relikt}   : a=50 : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_essbar} : gosub {:search_magie}
-		if mt=-1 then gosub {:search_essbar}   : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt} : a=50 : gosub {:search_zurueck}
+		if mt=-1 then gosub {:search_essbar}  : gosub {:search_waffe} : gosub {:search_ruestung} : gosub {:search_magie} : gosub {:search_relikt} : a=50 : gosub {:search_zurueck}
 	return
 
 	'"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1053,106 +1013,16 @@ x=10:y=5:cr=3
 	'wenn inventar max
 		if is=99 then return
 	goto{:inventar_next}
-{:gosub_shop_menu}
-
-	'--------------------->
-	'mc  = menu count max (4 oder 16)
-	'mm% = zaehler print menu
-	'mo  = menu offset    ( +/-4 oder +/-16 )
-	'mi  = mo-1           ( shop_itemnr(0-13) )
-	'--------------------->
-
-	m=0:mo=0
-	{:shop_menu_pos}
-		mi=mo-1:mm%=0
-		gosub {:shop_shop_menu_clear}
-
-	'--------------------->
-	'->loop print
-	'--------------------->
-
-	{:shop_menu_print}
-			mi=mi+1
-		'print pos menue + mm% down
-			print"{home}{white}"left$(cd$,my+mm%)spc(mx)" ";
-
-		'print item
-
-
-			if {var:item_cat}(peek({usedef:RAM2}+mi))=9  then print {var:item_name}(peek({usedef:RAM2}+mi));
-			if {var:item_cat}(peek({usedef:RAM2}+mi))=-1 then print {var:item_name}(peek({usedef:RAM2}+mi));
-			if {var:item_name}(peek({usedef:RAM2}+mi)) ="apfel   " and {var:item_cat}(peek({usedef:RAM2}+mi))=2 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  essbar    hp ";{var:item_mana}(peek({usedef:RAM2}+mi))
-			if {var:item_name}(peek({usedef:RAM2}+mi)) ="pilz    " and {var:item_cat}(peek({usedef:RAM2}+mi))=2 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  essbar    mp ";{var:item_mana}(peek({usedef:RAM2}+mi))
-			if {var:item_cat}(peek({usedef:RAM2}+mi))=0 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  waffe     atk";{var:item_atk}(peek({usedef:RAM2}+mi));
-			if {var:item_cat}(peek({usedef:RAM2}+mi))=1 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  ruestung  def";{var:item_def}(peek({usedef:RAM2}+mi));
-			if {var:item_cat}(peek({usedef:RAM2}+mi))=3 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  magie     mp ";{var:item_mana}(peek({usedef:RAM2}+mi));
-			if {var:item_cat}(peek({usedef:RAM2}+mi))=4 then print {var:item_name}(peek({usedef:RAM2}+mi)); "  relikt    rel";{var:item_mana}(peek({usedef:RAM2}+mi));
-
-		'mm=menu zaehler
-			mm%=mm%+1
-		'wenn menue zaehler = mc = 14
-			if mm%=mc then{:shop_menu_auswertung}
-		'wenn menue zaehler <49
-			if mi<49 then{:shop_menu_print}
-
-	'--------------------->
-	'->end loop print
-	'--------------------->
-
-	'--------------------->
-	'->joyauswertung
-	'--------------------->
-
-	{:shop_menu_auswertung}
-		cp={usedef:bildschirmspeicher}+mx+my*40
-	{:shop_menu_joyauswertung}
-		'print cursor
-			poke cp+(m-mo)*40,35
-		'gosub joy
-			gosub{:gosub_joy}
-		'print leerzeichen
-			poke cp+(m-mo)*40,32
-		'joy auf/ab return
-			if a$="w"then m=m-1:goto{:shop_menu_auswertung_posmenu}
-			if a$="s"then m=m+1:goto{:shop_menu_auswertung_posmenu}
-			if a$=chr$(13)then return
-			if a$="fu" then return
-			if a$="fd" then return
-		goto{:shop_menu_joyauswertung}
-	return
-
-	'--------------------->
-	'->auswertung auf / ab
-	'--------------------->
-
-	{:shop_menu_auswertung_posmenu}
-		if m=-1 then m=0 : goto {:shop_menu_auswertung}
-		if m=50 then m=49: goto {:shop_menu_auswertung}
-	
-	{:shop_menu_auswertung_auf_ab}
-
-	'wenn menu=13 < mo=14 then mo=mo-14
-		if m<mo then mo=mo-mc:goto{:shop_menu_pos}
-
-	'wenn menu=14 >= mo+14 then mo=mo+14
-		if m>=mo+mc then mo=mo+mc:goto {:shop_menu_pos}
-
-	'wenn kein seitenwechsel dann shop_menu_joyauswertung
-		goto{:shop_menu_joyauswertung}
-
-	'--------------------->
-	'->clear menu
-	'--------------------->
-	{:shop_shop_menu_clear}
-		for i=0 to 13
-			print"{home}{white}"left$(cd$,my+i)spc(mx)" ";
-			print"                                    ";
-		next i
-		return
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
-'battel
+' ____    _  _____ _____ _____ _     
+'| __ )  / \|_   _|_   _| ____| |    
+'|  _ \ / _ \ | |   | | |  _| | |    
+'| |_) / ___ \| |   | | | |___| |___ 
+'|____/_/   \_\_|   |_| |_____|_____| 
+'
 '"""""""""""""""""""""""""""""""""""""""""""""""""
+'NOTIZ->
 	'fight_active(xx) -1        = player/monster tot
 	'fight_active(xx) -2/4/7/.. = player/monster aktiv
 	'"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1178,7 +1048,6 @@ x=10:y=5:cr=3
 	'	fight_level(ce)=fight_level(ce)/2
 	'	fight_level(ce) min 5
 	'""""""""""""""""""""""""""""""""""""""""""
-
 {:battel}
 	'var_spritebank battle
 		{var:var_spritebank}={$:a0}
@@ -1656,7 +1525,6 @@ x=10:y=5:cr=3
 	{var:fight_mp_max}(i)       =       {var:player_mp_max}(i)
 	next
 	return
-
 {:gosub_battel_print_monster_hp}
 	zm=0: 'zaehler montster
 	for j=4 to 7
@@ -1674,7 +1542,6 @@ x=10:y=5:cr=3
 		cm=cm+1
 	next
 	return
-
 {:gosub_battel_print_all_monster_tile}
 	for i=4 to 11:if {var:fight_active}(i)=-1 then {:monster_tile_next}
 	print"{home}"left$(cd$,{var:fight_posy}(i));spc({var:fight_posx}(i));{var:monster_tile}({var:fight_active}(i))
@@ -1715,7 +1582,6 @@ x=10:y=5:cr=3
 	'print playertile right
 		if c < 4 then print"{home}"left$(cd$,5+c*3)spc(37){var:player_tile}(c);
 	return
-
 {:goto_battel_gewonnen}
 	poke {usedef:raster_bak},0
 	'print rahmen ohne hp monster
@@ -1772,7 +1638,12 @@ x=10:y=5:cr=3
 	goto{:start}
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
-'gosub
+'  ____  ___  ____  _   _ ____  
+' / ___|/ _ \/ ___|| | | | __ ) 
+'| |  _| | | \___ \| | | |  _ \ 
+'| |_| | |_| |___) | |_| | |_) |
+' \____|\___/|____/ \___/|____/ 
+' 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 {:gosub_heilen}
 		for i=0 to 3:if {var:player_activ}(i)=0 then{:heilen_next}
@@ -1875,7 +1746,6 @@ x=10:y=5:cr=3
 	sp=sp+40
 	next i
 	return
-
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'sprite
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1946,7 +1816,6 @@ x=10:y=5:cr=3
 	poke {usedef:sprite_on_off},peek({usedef:sprite_on_off}) and {%:11111111}-bi%
 	'-> player sprite off direkt poke {%:00000000}
 	return
-
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'rahmen
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -1993,7 +1862,6 @@ x=10:y=5:cr=3
 	print"{$c6}{$c7:38}{up:3}";
 	poke 50151,72:poke 56295,9 '50151 = letzte pos bidschirmspeicher 56295= letzte pos farbspeicher
 	return
-
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'txt
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2109,7 +1977,6 @@ x=10:y=5:cr=3
 		if st=0 then i=i+1: goto{:input_screen_seq}
 		close 1:poke 56322,255
 	return
-
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'validate
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2128,7 +1995,6 @@ x=10:y=5:cr=3
 	if b > 9999 then b=9999
 	t$=str$(b)
 	e$=right$("0000"+right$(t$,len(t$)-1),4):return
-
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'joy
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2155,8 +2021,6 @@ x=10:y=5:cr=3
 			if b$="d" then a$="d"  : return
 			if b$="w" then a$="w"  : return
 			if b$="s" then a$="s"  : return
-			'->MOD SHOP
-			'if b$="q" then a$="q"  : return
 			if b$=chr$(13) then a$=chr$(13) :return
 		'warten fire und keine bewegung return
 			if j=127 and a$=chr$(13) then return
@@ -2185,7 +2049,6 @@ x=10:y=5:cr=3
 	'fire
 		if j=111 then a$=chr$(13)
 	goto {:joywait_fire}
-
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'delay
 '"""""""""""""""""""""""""""""""""""""""""""""""""
@@ -2203,7 +2066,12 @@ x=10:y=5:cr=3
 	return
 
 '"""""""""""""""""""""""""""""""""""""""""""""""""
-'data
+' ____    _  _____  _    
+'|  _ \  / \|_   _|/ \   
+'| | | |/ _ \ | | / _ \  
+'| |_| / ___ \| |/ ___ \ 
+'|____/_/   \_\_/_/   \_\
+'
 '"""""""""""""""""""""""""""""""""""""""""""""""""
 'monster
 	'{var:monster_xxx}(x)
@@ -2338,7 +2206,4 @@ x=10:y=5:cr=3
 	data "        ",00,00,00,00,00,-1  :'item nummer = 97
 	data "        ",00,00,00,00,00,-1  :'item nummer = 98
 	data "zurueck ",00,00,00,00,00,09  :'item nummer = 99
-
-'"""""""""""""""""""""""""""""""""""""""""""""""""
 'tile
-'"""""""""""""""""""""""""""""""""""""""""""""""""
