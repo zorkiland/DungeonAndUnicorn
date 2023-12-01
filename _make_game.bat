@@ -28,6 +28,7 @@ xcopy PETSCII\bin\map1.prg *.* /Y
 xcopy PETSCII\bin\sprite.prg *.* /Y
 
 
+
 REM MERGE TO MAIN
 copy /b main_code.bas + main_tile.bas main.bas /y
 
@@ -39,35 +40,38 @@ REM BACK BASIC
 c64list main.prg -txt -ovr
 
 
+REM ***********************************************************************
+REM
+REM c1541 image.d64 -dir <oder list>
+REM c1541 image.d64 -extract
+REM
+REM ***********************************************************************
+
+REM c64list compactor.bas -prg -ovr
+REM blitz compactor.prg -o bcompactor.prg
+REM c1541 -format "compactor,id" d64 compactor.d64
+REM c1541 -attach compactor.d64 -write bcompactor.prg bcompactor
+REM c1541 -attach compactor.d64 -write compactor.prg compactor
+REM c1541 -attach compactor.d64 -write main.prg main
+REM x64 -warp compactor.d64
+REM c1541 compactor.d64 -dir
+REM c1541 compactor.d64 -read com com.prg
+
+REM ***********************************************************************
+
+
 REM BLITZ
-REM blitz main.prg -o blitz.prg
-node reblitz64.js main.prg blitz.prg i,j
+blitz main.prg -o blitz.prg
+REM blitz com.prg -o blitz.prg
+REM node reblitz64.js main.prg blitz.prg i,j
 
 
 REM EXOMIZER
 exomizer sfx basic blitz.prg -o game.prg -n
 
-REM COPY PRG->VICE\bin
-REM xcopy main.prg VICE\bin\*.* /Y
-REM xcopy compactor.prg VICE\bin\*.* /Y
-xcopy blitz.prg VICE\bin\*.* /Y
-xcopy game.prg VICE\bin\*.* /Y
-xcopy asm.raster.prg VICE\bin\*.* /Y
-xcopy txt.intro.seq VICE\bin\*.* /Y
-xcopy txt.nibelheim.seq VICE\bin\*.* /Y
-xcopy charset.prg VICE\bin\*.* /Y
-xcopy map0.prg VICE\bin\*.* /Y
-xcopy map1.prg VICE\bin\*.* /Y
-xcopy sprite.prg VICE\bin\*.* /Y
-
-
 
 REM SCHREIBE DISK
-cd VICE
-cd bin
 c1541 -format "unicorn,id" d64 unicorn.d64
-REM c1541 -attach unicorn.d64 -write main.prg main
-REM c1541 -attach unicorn.d64 -write compactor.prg compactor
 c1541 -attach unicorn.d64 -write game.prg game
 c1541 -attach unicorn.d64 -write charset.prg charset
 c1541 -attach unicorn.d64 -write map0.prg map0
@@ -77,14 +81,12 @@ c1541 -attach unicorn.d64 -write asm.raster.prg asm.raster
 c1541 -attach unicorn.d64 -write txt.intro.seq txt.intro,s
 c1541 -attach unicorn.d64 -write txt.nibelheim.seq txt.nibelheim,s
 
-
-cd..
-cd..
-
-REM COPY VICE\bin\dungen.D64-> ROOT
-xcopy VICE\bin\unicorn.d64 *.* /Y
-
 REM CLEAN TEMPDATA
+REM del com.prg
+REM del compactor.prg
+REM del bcompactor.prg
+REM del compactor.d64
+
 del main.prg
 del blitz.prg
 REM del game.prg
@@ -95,6 +97,7 @@ del map1.prg
 del sprite.prg
 del main.bas
 REM del main.txt
+del blitz.prg.xref
 
 REM C64Debugger.exe -clearsettings
 C64Debugger.exe -wait 3000 -layout 1 -d64 unicorn.d64 -prg game.prg -autojmp
