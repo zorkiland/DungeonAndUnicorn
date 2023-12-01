@@ -41,6 +41,7 @@
 	'fre=5239 start mit variabeln
 	'fre=5686 neu mit def und usedef
 	'fre=6434 kill shop	
+	'fre=6523 item copy
 	'https://www.asciiart.eu/text-to-ascii-art standart und straight
 	'
 'C64List def
@@ -322,35 +323,8 @@
 		j=j+1
 		next i
 'start condition
-	{var:inventar}(0)=99
 	{var:player_activ}(0)=1
-'start condition magic
-	{var:inventar}(1) =4   'feuer
-	{var:inventar}(2) =5   'polar
-	{var:inventar}(3) =6   'groll
-	{var:inventar}(4) =7   'bombe
-	{var:inventar}(5) =12  'blind
-	{var:inventar}(6) =9   'heilen
-'start conditionrelikt
-	{var:inventar}(7)=18   'level1
-	{var:inventar}(8)=19   'level2
-	{var:inventar}(9)=20   'level3
-	{var:inventar}(10)=21  'attack1
-	{var:inventar}(11)=22  'attack2
-	{var:inventar}(12)=23  'attack3
-	{var:inventar}(13)=24  'defence1
-	{var:inventar}(14)=25  'defence2
-	{var:inventar}(15)=26  'defence3
-	{var:inventar}(16)=27  'speed1
-	{var:inventar}(17)=28  'speed2
-	{var:inventar}(18)=29  'speed3
-'start condition waffen ruestung
-	{var:inventar}(19)=14  'rock
-	{var:inventar}(20)=16  'weste
-	{var:inventar}(21)=17  'schild
-	{var:inventar}(22)=11  'flegel
-	{var:inventar}(23)=13  'speer
-	{var:inventar}(24)=15  'schwert
+	for i=0 to 99: {var:inventar}(i)=i : next
 'gosub raumaktion
 	gosub {:gosub_raumaktion_variabeln}
 	gosub {:gosub_raumaktion_poke_mapspeicher}
